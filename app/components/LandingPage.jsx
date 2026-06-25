@@ -92,8 +92,15 @@ function Header({ navOpen, setNavOpen }) {
         href="#inicio"
         aria-label="Raíces Desarrolladores, ir al inicio"
         onClick={() => setNavOpen(false)}>
-        <span className="brand-name">RAÍCES</span>
-        <span className="brand-tag">Desarrolladores</span>
+        <img
+          src="/assets/images/raices_logo_transparente.png"
+          alt="Raíces Desarrolladores"
+          className="brand-logo"
+        />
+        <span className="brand-text">
+          <span className="brand-name">RAÍCES</span>
+          <span className="brand-tag">Desarrolladores</span>
+        </span>
       </a>
 
       <button
@@ -538,7 +545,14 @@ export default function LandingPage() {
       </main>
 
       <footer className="site-footer">
-        <p>RAÍCES DESARROLLADORES · Naturaleza urbana</p>
+        <div className="site-footer-brand">
+          <img
+            src="/assets/images/raices_logo_transparente.png"
+            alt="Raíces Desarrolladores"
+            className="site-footer-logo"
+          />
+          <p>RAÍCES DESARROLLADORES · Naturaleza urbana</p>
+        </div>
         <a href="#inicio">Volver arriba</a>
       </footer>
 

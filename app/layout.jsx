@@ -1,12 +1,13 @@
-import "./globals.css";
+import './globals.css';
 
 export const metadata = {
-  title: "Raíces Desarrolladores | Desarrollo inmobiliario con naturaleza urbana",
+  title: 'Raíces Desarrolladores | Desarrollo inmobiliario con naturaleza urbana',
   description:
-    "Raíces Desarrolladores crea edificios que expanden naturaleza a través de la ciudad. Primer proyecto: Ceibo Vidal, Vidal 3849.",
+    'Raíces Desarrolladores crea edificios que expanden naturaleza a través de la ciudad. Primer proyecto: Ceibo Vidal, Vidal 3849.',
   icons: {
-    icon: "/assets/favicon.svg"
-  }
+    icon: [{ url: '/assets/favicon-rounded.svg', type: 'image/svg+xml' }],
+    apple: '/assets/images/raices_logo.png?v=2',
+  },
 };
 
 export default function RootLayout({ children }) {
