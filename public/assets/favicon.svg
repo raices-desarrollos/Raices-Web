@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Raíces">
+  <rect width="64" height="64" fill="#F0EDE6"/>
+  <path d="M32 11v31" fill="none" stroke="#1A1A18" stroke-width="2" stroke-linecap="round"/>
+  <path d="M32 23c-9 0-15-5-17-12 8 0 14 4 17 12Z" fill="#7E8E5F"/>
+  <path d="M33 25c9-2 15-8 16-16-8 1-14 6-16 16Z" fill="#856040"/>
+  <path d="M32 42c-7 3-12 6-17 12M32 42c6 4 11 8 17 12M32 42v12" fill="none" stroke="#856040" stroke-width="2" stroke-linecap="round"/>
+  <path d="M24 28c0-5 3-8 8-8 5 0 8 3 8 8 0 5-3 8-8 8-5 0-8-3-8-8Z" fill="#B85C42" opacity=".9"/>
+</svg>
