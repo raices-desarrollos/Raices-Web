@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5491100000000';
 const CONTACT_EMAIL = 'contacto@raicesdesarrolladores.com.ar';
+const BASE = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 const navItems = [
   { href: '#filosofia', label: 'Filosofía' },
@@ -24,7 +25,7 @@ const typologies = [
   {
     department: 'Departamento B',
     title: 'Monoambiente',
-    image: '/assets/plans/ceibo-tipologia-monoambiente.png',
+    image: `${BASE}/assets/plans/ceibo-tipologia-monoambiente.png`,
     alt: 'Plano de monoambiente Departamento B',
     areas: [
       ['Cubierto', '35,79 m²'],
@@ -35,7 +36,7 @@ const typologies = [
   {
     department: 'Departamento C',
     title: '2 ambientes',
-    image: '/assets/plans/ceibo-tipologia-2-ambientes.png',
+    image: `${BASE}/assets/plans/ceibo-tipologia-2-ambientes.png`,
     alt: 'Plano de dos ambientes Departamento C',
     areas: [
       ['Cubierto', '48,39 m²'],
@@ -46,7 +47,7 @@ const typologies = [
   {
     department: 'Departamento A',
     title: '3 ambientes',
-    image: '/assets/plans/ceibo-tipologia-3-ambientes.png',
+    image: `${BASE}/assets/plans/ceibo-tipologia-3-ambientes.png`,
     alt: 'Plano de tres ambientes Departamento A',
     areas: [
       ['Cubierto', '68,67 m²'],
@@ -93,7 +94,7 @@ function Header({ navOpen, setNavOpen }) {
         aria-label="Raíces Desarrolladores, ir al inicio"
         onClick={() => setNavOpen(false)}>
         <img
-          src="/assets/images/raices_logo_transparente.png"
+          src={`${BASE}/assets/images/raices_logo_transparente.png`}
           alt="Raíces Desarrolladores"
           className="brand-logo"
         />
@@ -211,7 +212,7 @@ export default function LandingPage() {
         <section className="hero" id="inicio" aria-labelledby="hero-title">
           <img
             className="hero-image"
-            src="/assets/images/ceibo-vidal-fachada.png"
+            src={`${BASE}/assets/images/ceibo-vidal-fachada.png`}
             alt="Fachada residencial clara con balcones verdes y vegetación trepadora"
           />
           <div className="hero-scrim" />
@@ -304,7 +305,7 @@ export default function LandingPage() {
 
             <figure className="project-figure reveal">
               <img
-                src="/assets/images/ceibo-vidal-fachada.png"
+                src={`${BASE}/assets/images/ceibo-vidal-fachada.png`}
                 alt="Imagen conceptual de Ceibo Vidal con balcones verdes"
               />
               <figcaption>Imagen conceptual provisoria · identidad vegetal en fachada</figcaption>
@@ -337,7 +338,7 @@ export default function LandingPage() {
 
           <figure className="plan-overview reveal">
             <img
-              src="/assets/plans/ceibo-planta-tipo.png"
+              src={`${BASE}/assets/plans/ceibo-planta-tipo.png`}
               alt="Planta tipo de Ceibo Vidal con departamentos A, B y C"
             />
             <figcaption>
@@ -376,7 +377,7 @@ export default function LandingPage() {
           <div className="feature-grid">
             <article className="feature-card feature-card-wide reveal">
               <img
-                src="/assets/images/terraza-verde.png"
+                src={`${BASE}/assets/images/terraza-verde.png`}
                 alt="Terraza verde con vegetación y pileta pequeña"
               />
               <div>
@@ -391,7 +392,7 @@ export default function LandingPage() {
 
             <article className="feature-card reveal">
               <img
-                src="/assets/images/balcones-tensores.png"
+                src={`${BASE}/assets/images/balcones-tensores.png`}
                 alt="Balcones con plantas trepadoras y tensores verticales"
               />
               <div>
@@ -547,7 +548,7 @@ export default function LandingPage() {
       <footer className="site-footer">
         <div className="site-footer-brand">
           <img
-            src="/assets/images/raices_logo_transparente.png"
+            src={`${BASE}/assets/images/raices_logo_transparente.png`}
             alt="Raíces Desarrolladores"
             className="site-footer-logo"
           />
