@@ -49,7 +49,10 @@ export default function ProjectsPage() {
                 <dl className="featured-facts">
                   <div>
                     <dt className="label">Programa</dt>
-                    <dd>PB + 4 pisos · 12 unidades</dd>
+                    <dd>
+                      {entry.program}
+                      <span className="fact-sub">{entry.unitsLabel}</span>
+                    </dd>
                   </div>
                   <div>
                     <dt className="label">Entrega</dt>

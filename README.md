@@ -13,7 +13,7 @@ La identidad visual y verbal está documentada en `DESIGN_SYSTEM.md` (versión v
 - **Next.js 16** (App Router, `output: 'export'`) — sitio 100 % estático, sin servidor.
 - **React 19**, componentes funcionales en JSX, sin librería de UI.
 - **CSS puro** en `app/globals.css`, con tokens semánticos (`--bg`, `--surface`, `--text`, `--muted`, `--accent`, `--line`…).
-- **Tipografía**: M PLUS U (display, servida local desde `app/fonts/` con `next/font/local`) y Montserrat (`next/font/google`). No hay `<link>` a Google Fonts en runtime.
+- **Tipografía**: Fraunces para titulares y Montserrat para interfaz y texto (`next/font/google`). El wordmark del logo no cambia.
 - **Imágenes**: WebP optimizadas con `sharp` (única dependencia de desarrollo extra).
 
 ## Cómo correr
@@ -83,7 +83,7 @@ Reglas (`scripts/optimize-images.mjs`):
 - `public/assets/images/`: WebP, máx. 2400 px de ancho para la fachada (hero) y 1600 px para el resto. Nunca agranda.
 - `public/assets/plans/`: WebP sin pérdida, a resolución original (nitidez de líneas y cotas).
 - `public/assets/brand/` y `public/assets/partners/`: logos, no se tocan.
-- Genera `favicon-32.png`, `favicon-192.png`, `apple-touch-icon.png` y `og-image.png` en `public/assets/brand/` a partir de los logos oficiales.
+- Genera `public/favicon.ico`, `public/favicon-32x32.png` y `public/apple-touch-icon.png` a partir de `raices_logo_icono.png` (trazo Caliza `#D1C7BA` sobre Carbón `#101210`, sin redibujar la forma). `og-image.png` sigue en `public/assets/brand/`. Para regenerar solo esos archivos: `npm run optimize-images -- --favicons-only`.
 
 Los logos de Raíces son PNG de trazo negro sobre transparente. Sobre fondo oscuro se usan con `filter: brightness(0) invert(1)` (clase `.logo-on-dark`), sin recolorear el archivo.
 
