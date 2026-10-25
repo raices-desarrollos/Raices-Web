@@ -23,6 +23,11 @@ export default function FeaturedProject({ project }) {
             sizes="(max-width: 980px) 100vw, 56vw"
           />
           <span className="featured-media-veil" aria-hidden="true" />
+          <span className="media-shutter" aria-hidden="true">
+            {Array.from({ length: 6 }, (_, index) => (
+              <span key={index} style={{ '--shutter': index }} />
+            ))}
+          </span>
           <span className="featured-media-note label">{project.cover.note || 'Render de referencia'}</span>
         </Link>
 

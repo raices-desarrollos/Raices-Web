@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { brand, heroMedia, home } from '../content/site';
-import { Cota, Picture, RevealText } from './Primitives';
+import { Cota, Picture } from './Primitives';
 
 /**
  * Hero institucional a pantalla completa. Sin video final, la imagen de referencia lleva un
@@ -31,9 +31,19 @@ export default function CinematicHero() {
       </div>
 
       <div className="cine-hero-content">
-        <p className="kicker hero-anim">{hero.kicker}</p>
+        <div className="hero-kicker-row hero-anim">
+          <img
+            className="hero-mark logo-on-dark"
+            src={brand.logos.icon.src}
+            width={brand.logos.icon.width}
+            height={brand.logos.icon.height}
+            alt=""
+          />
+          <p className="kicker">{hero.kicker}</p>
+        </div>
         <h1 id="hero-title">
-          <RevealText text={hero.title} className="is-visible" />
+          <span className="hero-line hero-line-soft">{hero.titleQuiet}</span>
+          <span className="hero-line hero-line-italic">{hero.titleEmphasis}</span>
         </h1>
         <p className="hero-lead hero-anim">{hero.lead}</p>
         <div className="hero-actions hero-anim">

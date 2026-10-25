@@ -1,5 +1,4 @@
-import localFont from 'next/font/local';
-import { Montserrat } from 'next/font/google';
+import { Fraunces, Montserrat } from 'next/font/google';
 import './globals.css';
 import './cinematic.css';
 import { BASE, SITE_URL, brand, project } from './content/site';
@@ -8,15 +7,13 @@ import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import ScrollEffects from './components/ScrollEffects';
 
-// M PLUS U (display) no está en el catálogo de next/font/google todavía, así que
-// se sirve local desde app/fonts (variable, latin, 300–500). Montserrat sí va por Google.
-const display = localFont({
-  src: './fonts/m-plus-u-latin.woff2',
-  weight: '300 500',
-  style: 'normal',
+// Titulares editoriales. El wordmark del logo sigue siendo Montserrat y no se reemplaza.
+const display = Fraunces({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  style: ['normal', 'italic'],
   display: 'swap',
-  variable: '--font-mplus',
-  fallback: ['Helvetica Neue', 'Arial', 'sans-serif'],
+  variable: '--font-fraunces',
 });
 
 const body = Montserrat({
@@ -55,10 +52,11 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: `${BASE}/assets/brand/favicon-32.png`, sizes: '32x32', type: 'image/png' },
-      { url: `${BASE}/assets/brand/favicon-192.png`, sizes: '192x192', type: 'image/png' },
+      { url: `${BASE}/favicon.ico`, sizes: 'any' },
+      { url: `${BASE}/favicon-32x32.png`, sizes: '32x32', type: 'image/png' },
     ],
-    apple: [{ url: `${BASE}/assets/brand/apple-touch-icon.png`, sizes: '180x180', type: 'image/png' }],
+    apple: [{ url: `${BASE}/apple-touch-icon.png`, sizes: '180x180', type: 'image/png' }],
+    shortcut: `${BASE}/favicon.ico`,
   },
   robots: { index: true, follow: true },
 };

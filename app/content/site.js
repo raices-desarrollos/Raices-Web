@@ -105,6 +105,8 @@ export const home = {
   hero: {
     kicker: 'Desarrolladora inmobiliaria · Buenos Aires',
     title: 'Espacios para echar raíces.',
+    titleQuiet: 'Espacios para',
+    titleEmphasis: 'echar raíces.',
     lead: 'Desarrollamos espacios donde la arquitectura, el diseño y nuevas formas de habitar se encuentran.',
     primary: { label: 'Explorar proyectos', href: routes.projects },
     secondary: { label: 'Contactanos', href: routes.contact },

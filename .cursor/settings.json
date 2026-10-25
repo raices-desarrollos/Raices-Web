@@ -1,0 +1,10 @@
+{
+  "plugins": {
+    "21st": {
+      "enabled": true
+    },
+    "higgsfield": {
+      "enabled": true
+    }
+  }
+}

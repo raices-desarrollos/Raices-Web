@@ -6,3 +6,7 @@ dist/
 *.log
 .env*
 !.env.example
+.vercel
+
+.playwright-mcp/
+tmp-qa/

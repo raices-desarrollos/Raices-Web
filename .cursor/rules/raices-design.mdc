@@ -1,0 +1,19 @@
+---
+description: Identidad visual de Raíces Developers. Consultar antes de cambiar la UI.
+alwaysApply: true
+---
+
+# Raíces Developers
+
+Sitio institucional de Raíces Developers (Buenos Aires). Dirección: dark architectural luxury.
+
+Antes de modificar UI, layout, motion o assets, leé `docs/RAICES_DESIGN_SYSTEM.md` y respetá los tokens de `app/globals.css`. Si el cambio visual queda en el código, actualizá ese documento con los valores reales. No copies el sistema dentro de esta regla.
+
+- Reutilizá `app/components/` antes de crear componentes nuevos.
+- Para una pieza visual nueva, revisá 21st.dev y adaptala a esta identidad. No instales kits genéricos de SaaS.
+- Logos oficiales en `public/assets/brand/`. No los redibujes ni los reemplaces. Sobre fondo oscuro, clase `logo-on-dark`.
+- Favicon: isotipo `raices_logo_icono.png`, archivos `public/favicon.ico`, `public/favicon-32x32.png` y `public/apple-touch-icon.png`.
+- Rutas: `/`, `/proyectos`, `/proyectos/ceibo-vidal`, `/nosotros`, `/contacto`. No unifiques el sitio en una sola landing.
+- No inventes proyectos, años, métricas ni historia. Los datos viven en `app/content/site.js`.
+- Conservá el WhatsApp directo y el envío real del formulario (`NEXT_PUBLIC_FORM_ENDPOINT`). No simules un envío.
+- Verificá cambios visuales importantes con Playwright (~1440, ~768, ~390) y respetá `prefers-reduced-motion`.

@@ -36,8 +36,8 @@
   --radius-button: 2px;
   --line-width: 0.75px;
 
-  /* --font-mplus y --font-montserrat las define next/font en <html>. */
-  --font-display: var(--font-mplus, 'M PLUS U'), 'Helvetica Neue', Arial, sans-serif;
+  /* --font-fraunces y --font-montserrat las define next/font en <html>. */
+  --font-display: var(--font-fraunces, Fraunces), 'Iowan Old Style', Palatino, serif;
   --font-body: var(--font-montserrat, 'Montserrat'), 'Helvetica Neue', Arial, sans-serif;
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -162,10 +162,10 @@ h3 {
 }
 
 h1 {
-  font-size: clamp(42px, 6.4vw, 92px);
-  font-weight: 300;
-  line-height: 1.02;
-  letter-spacing: -0.022em;
+  font-size: clamp(48px, 7.2vw, 108px);
+  font-weight: 400;
+  line-height: 0.96;
+  letter-spacing: -0.03em;
 }
 
 h2 {
@@ -407,10 +407,8 @@ p + p {
 .site-header.is-scrolled,
 .site-header.nav-active,
 .site-header:not(.is-home) {
-  background: rgba(10, 13, 11, 0.88);
+  background: var(--bg);
   border-bottom-color: var(--line);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
 }
 
 .site-header.is-scrolled,
