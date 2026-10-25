@@ -36,8 +36,14 @@ export const contact = {
   whatsappDisplay: '+54 9 11 3699-4200',
   whatsappMessage: 'Hola, quiero recibir información sobre Ceibo Vidal.',
   email: 'contacto@raicesdesarrolladores.com.ar',
-  /** Endpoint externo (ej. Formspree). Si está vacío, el formulario usa WhatsApp. */
+  /**
+   * Endpoint del worker de email (`functions/contact-worker.js`).
+   * Si está vacío, el formulario no finge un envío: avisa que el email no está activo.
+   * CONTACT_TO_EMAIL y RESEND_API_KEY viven solo en el worker, nunca en el frontend.
+   */
   formEndpoint: process.env.NEXT_PUBLIC_FORM_ENDPOINT || '',
+  /** Motivos del formulario. El primero es el valor por defecto. */
+  subjects: ['Ceibo Vidal', 'Consulta general'],
 };
 
 export const social = {
@@ -47,14 +53,92 @@ export const social = {
   instagram: '',
 };
 
+/** Rutas internas. Siempre usar <Link> con estas rutas (Next agrega basePath y barra final). */
+export const routes = {
+  home: '/',
+  projects: '/proyectos',
+  project: (slug) => `/proyectos/${slug}`,
+  about: '/nosotros',
+  contact: '/contacto',
+};
+
 export const navItems = [
-  { href: '#filosofia', label: 'Filosofía' },
-  { href: '#ceibo-vidal', label: 'Ceibo Vidal' },
-  { href: '#tipologias', label: 'Tipologías' },
-  { href: '#verde', label: 'Verde' },
-  { href: '#ubicacion', label: 'Ubicación' },
-  { href: '#contacto', label: 'Contacto' },
+  { href: routes.projects, label: 'Proyectos' },
+  { href: routes.about, label: 'Nosotros' },
+  { href: routes.contact, label: 'Contacto' },
 ];
+
+/**
+ * Anclas de la landing anterior → rutas nuevas. Un enlace viejo como `/#tipologias`
+ * sigue llegando a destino (ver components/LegacyHashRedirect.jsx).
+ */
+export const legacyHashRoutes = {
+  '#inicio': routes.home,
+  '#filosofia': routes.about,
+  '#identidad': `${routes.about}#identidad`,
+  '#ceibo-vidal': routes.project('ceibo-vidal'),
+  '#tipologias': `${routes.project('ceibo-vidal')}#tipologias`,
+  '#verde': `${routes.project('ceibo-vidal')}#verde`,
+  '#ubicacion': `${routes.project('ceibo-vidal')}#ubicacion`,
+  '#contacto': routes.contact,
+};
+
+/**
+ * Medios del hero institucional. Sin video final, se usa una imagen de referencia con
+ * movimiento de cámara simulado. Para activar el video definitivo: copiarlo a
+ * `public/assets/video/` y definir NEXT_PUBLIC_HERO_VIDEO=/assets/video/<archivo>.mp4
+ * (H.264, sin audio, ideal ≤ 6 MB). El poster sigue siendo la imagen de abajo.
+ */
+export const heroMedia = {
+  video: process.env.NEXT_PUBLIC_HERO_VIDEO ? asset(process.env.NEXT_PUBLIC_HERO_VIDEO) : '',
+  image: {
+    src: asset('/assets/images/balcones-tensores.webp'),
+    width: 1536,
+    height: 1024,
+    alt: '',
+  },
+  note: 'Imagen de referencia',
+};
+
+/** Copy de la Home institucional. */
+export const home = {
+  hero: {
+    kicker: 'Desarrolladora inmobiliaria · Buenos Aires',
+    title: 'Espacios para echar raíces.',
+    lead: 'Desarrollamos espacios donde la arquitectura, el diseño y nuevas formas de habitar se encuentran.',
+    primary: { label: 'Explorar proyectos', href: routes.projects },
+    secondary: { label: 'Contactanos', href: routes.contact },
+  },
+  about: {
+    kicker: 'Raíces Developers',
+    title: 'Arquitectura que deja huella.',
+    lead: 'Raíces nace para desarrollar edificios que no se sientan como piezas repetidas del mercado. Cada proyecto toma el nombre de un árbol autóctono y busca dejar algo vivo en su entorno.',
+    principles: [
+      {
+        label: 'Naturaleza integrada',
+        text: 'El verde entra en la decisión de fachada, balcones, terraza, riego y mantenimiento. No es decoración: es parte del proyecto.',
+      },
+      {
+        label: 'Identidad propia',
+        text: 'Edificios con nombre de árbol autóctono y una firma reconocible, pensados para un barrio concreto y no para repetirse.',
+      },
+      {
+        label: 'Largo plazo',
+        text: 'Construimos con mirada de largo plazo: edificios que ganan valor con el tiempo y una desarrolladora con criterio propio.',
+      },
+    ],
+    link: { label: 'Conocer Raíces', href: routes.about },
+  },
+  featured: {
+    kicker: 'Proyecto destacado',
+    link: { label: 'Descubrir el proyecto' },
+  },
+  cta: {
+    title: 'Construyamos lo que viene.',
+    text: 'Para compradores e inversores que quieran construir ciudad con más naturaleza.',
+    link: { label: 'Hablemos', href: routes.contact },
+  },
+};
 
 export const project = {
   name: 'Ceibo Vidal',
@@ -227,3 +311,39 @@ export const identityPoints = [
   'El verde es una decisión de proyecto y de marca: mejora la vida cotidiana y deja una firma reconocible.',
   'Construimos con mirada de largo plazo: edificios que ganan valor con el tiempo y una desarrolladora con criterio propio.',
 ];
+
+/**
+ * Galería de Ceibo Vidal. Para reemplazar renders: cambiar `src`, `width`, `height` y `alt`.
+ * Las piezas sobre fondo blanco (renders de unidades) viven en Tipologías, sobre lámina Lino.
+ */
+export const gallery = [
+  { ...project.facade, caption: 'Fachada sobre Vidal', note: project.renderNote },
+  { ...greenFeatures.terrace, caption: 'Terraza común', note: greenFeatures.referenceNote },
+  { ...greenFeatures.balconies, caption: 'Balcones con tensores', note: greenFeatures.referenceNote },
+];
+
+/**
+ * Portfolio. Cada desarrollo es una entrada; `/proyectos/[slug]` se genera a partir de acá.
+ * Hoy existe un único proyecto. No agregar desarrollos que no estén confirmados.
+ */
+export const projects = [
+  {
+    slug: 'ceibo-vidal',
+    name: project.name,
+    code: project.code,
+    status: project.status,
+    location: `${project.neighborhood}, ${project.city}`,
+    locationLong: `${project.address}, ${project.neighborhood}, ${project.city}`,
+    headline: 'Un edificio bajo, claro y vegetal.',
+    summary:
+      'Planta baja y cuatro pisos de tres unidades con balcón, rematados por una terraza propia. Verde integrado desde el proyecto, a cuatro cuadras del Parque Saavedra.',
+    delivery: project.delivery,
+    deliveryYear: project.deliveryYear,
+    logo: project.logo,
+    cover: project.facade,
+    gallery,
+    specs,
+  },
+];
+
+export const getProject = (slug) => projects.find((entry) => entry.slug === slug);

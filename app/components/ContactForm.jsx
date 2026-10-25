@@ -1,30 +1,46 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { contact } from '../content/site';
-import { buildInquiryMessage, mailtoHref, whatsappHref } from '../lib/contact';
-import { trackFormSubmit, trackWhatsAppClick } from '../lib/analytics';
-import { WhatsAppIcon } from './Icons';
+import { trackFormSubmit } from '../lib/analytics';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const USES_ENDPOINT = Boolean(contact.formEndpoint);
-
-const initialFields = { nombre: '', email: '', telefono: '', mensaje: '', consentimiento: false };
+const MIN_FILL_MS = 3000; // un humano tarda más que esto en completar el formulario
 
 function validate(fields) {
   const errors = {};
   if (!fields.nombre.trim()) errors.nombre = 'Escribí tu nombre.';
   if (!fields.email.trim()) errors.email = 'Escribí tu email.';
   else if (!EMAIL_PATTERN.test(fields.email.trim())) errors.email = 'Revisá el formato del email.';
+  if (!fields.mensaje.trim()) errors.mensaje = 'Contanos brevemente qué querés saber.';
   if (!fields.consentimiento) errors.consentimiento = 'Necesitamos tu consentimiento para responderte.';
   return errors;
 }
 
-export default function ContactForm() {
+/**
+ * Formulario de contacto.
+ *  - Con NEXT_PUBLIC_FORM_ENDPOINT: POST JSON al worker (`functions/contact-worker.js`),
+ *    que envía el email con Resend. El éxito se confirma solo si el servidor respondió OK.
+ *  - Sin endpoint: no se finge un envío. El formulario lo dice y WhatsApp sigue disponible.
+ */
+export default function ContactForm({ defaultSubject }) {
+  const initialFields = {
+    nombre: '',
+    email: '',
+    asunto: defaultSubject || contact.subjects[0],
+    mensaje: '',
+    consentimiento: false,
+  };
   const [fields, setFields] = useState(initialFields);
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
   const [honeypot, setHoneypot] = useState('');
+  const startedAt = useRef(0);
+
+  useEffect(() => {
+    startedAt.current = Date.now();
+  }, []);
 
   const update = (event) => {
     const { name, value, type, checked } = event.target;
@@ -53,80 +69,65 @@ export default function ContactForm() {
     const payload = {
       nombre: fields.nombre.trim(),
       email: fields.email.trim(),
-      telefono: fields.telefono.trim(),
+      asunto: fields.asunto,
       mensaje: fields.mensaje.trim(),
     };
 
-    if (USES_ENDPOINT) {
-      setStatus('sending');
-      try {
-        const response = await fetch(contact.formEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ ...payload, _subject: 'Consulta por Ceibo Vidal' }),
-        });
-        if (!response.ok) throw new Error(`HTTP ${response.status}`);
-        trackFormSubmit('endpoint');
-        setStatus('sent');
-        setFields(initialFields);
-      } catch {
-        setStatus('error');
-      }
+    if (!USES_ENDPOINT) {
+      setStatus('unconfigured');
       return;
     }
 
-    // Sin backend: se arma el mensaje y se abre WhatsApp con el texto prellenado.
-    const href = whatsappHref(buildInquiryMessage(payload));
-    trackFormSubmit('whatsapp');
-    trackWhatsAppClick('form');
-    const opened = window.open(href, '_blank', 'noopener,noreferrer');
-    if (!opened) window.location.href = href;
-    setStatus('sent');
+    setStatus('sending');
+    try {
+      const response = await fetch(contact.formEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          ...payload,
+          website: honeypot,
+          elapsedMs: Date.now() - startedAt.current,
+          minFillMs: MIN_FILL_MS,
+        }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok || data.ok === false) throw new Error(data.error || `HTTP ${response.status}`);
+      trackFormSubmit('endpoint');
+      setStatus('sent');
+      setFields(initialFields);
+    } catch {
+      setStatus('error');
+    }
   }
 
-  function handleEmailFallback() {
-    trackFormSubmit('email');
-  }
-
-  const emailHref = mailtoHref({
-    body: buildInquiryMessage({
-      nombre: fields.nombre.trim(),
-      email: fields.email.trim(),
-      telefono: fields.telefono.trim(),
-      mensaje: fields.mensaje.trim(),
-    }),
-  });
-
-  const sentMessage = USES_ENDPOINT
-    ? 'Recibimos tu consulta. Te respondemos a la brevedad.'
-    : 'Se abrió WhatsApp con tu consulta. Si no se abrió, usá el botón de WhatsApp o escribinos por email.';
+  const sentMessage = 'Recibimos tu mensaje. Te respondemos a la brevedad.';
 
   return (
     <form className="contact-form reveal" onSubmit={handleSubmit} noValidate>
-      <div className={`field ${errors.nombre ? 'is-invalid' : ''}`}>
-        <label htmlFor="contact-nombre">Nombre</label>
-        <input
-          id="contact-nombre"
-          name="nombre"
-          type="text"
-          autoComplete="name"
-          placeholder="Tu nombre"
-          value={fields.nombre}
-          onChange={update}
-          aria-invalid={errors.nombre ? 'true' : undefined}
-          aria-describedby={errors.nombre ? 'error-nombre' : undefined}
-          required
-        />
-        {errors.nombre ? (
-          <p className="field-error" id="error-nombre">
-            {errors.nombre}
-          </p>
-        ) : null}
-      </div>
-
       <div className="field-row">
+        <div className={`field ${errors.nombre ? 'is-invalid' : ''}`}>
+          <label htmlFor="contact-nombre">Nombre</label>
+          <input
+            id="contact-nombre"
+            name="nombre"
+            type="text"
+            autoComplete="name"
+            placeholder="Tu nombre"
+            value={fields.nombre}
+            onChange={update}
+            aria-invalid={errors.nombre ? 'true' : undefined}
+            aria-describedby={errors.nombre ? 'error-nombre' : undefined}
+            required
+          />
+          {errors.nombre ? (
+            <p className="field-error" id="error-nombre">
+              {errors.nombre}
+            </p>
+          ) : null}
+        </div>
+
         <div className={`field ${errors.email ? 'is-invalid' : ''}`}>
-          <label htmlFor="contact-email">Email</label>
+          <label htmlFor="contact-email">Correo electrónico</label>
           <input
             id="contact-email"
             name="email"
@@ -146,28 +147,21 @@ export default function ContactForm() {
             </p>
           ) : null}
         </div>
-
-        <div className="field">
-          <label htmlFor="contact-telefono">
-            Teléfono <span className="field-optional">Opcional</span>
-          </label>
-          <input
-            id="contact-telefono"
-            name="telefono"
-            type="tel"
-            autoComplete="tel"
-            inputMode="tel"
-            placeholder="+54 9 11 …"
-            value={fields.telefono}
-            onChange={update}
-          />
-        </div>
       </div>
 
       <div className="field">
-        <label htmlFor="contact-mensaje">
-          Mensaje <span className="field-optional">Opcional</span>
-        </label>
+        <label htmlFor="contact-asunto">Motivo</label>
+        <select id="contact-asunto" name="asunto" value={fields.asunto} onChange={update}>
+          {contact.subjects.map((subject) => (
+            <option key={subject} value={subject}>
+              {subject}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className={`field ${errors.mensaje ? 'is-invalid' : ''}`}>
+        <label htmlFor="contact-mensaje">Mensaje</label>
         <textarea
           id="contact-mensaje"
           name="mensaje"
@@ -175,15 +169,23 @@ export default function ContactForm() {
           placeholder="Quiero recibir información sobre las unidades disponibles."
           value={fields.mensaje}
           onChange={update}
+          aria-invalid={errors.mensaje ? 'true' : undefined}
+          aria-describedby={errors.mensaje ? 'error-mensaje' : undefined}
+          required
         />
+        {errors.mensaje ? (
+          <p className="field-error" id="error-mensaje">
+            {errors.mensaje}
+          </p>
+        ) : null}
       </div>
 
       {/* Honeypot: oculto para personas, visible para bots. */}
       <div className="hp-field" aria-hidden="true">
-        <label htmlFor="contact-empresa">Empresa</label>
+        <label htmlFor="contact-website">Sitio web</label>
         <input
-          id="contact-empresa"
-          name="empresa"
+          id="contact-website"
+          name="website"
           type="text"
           tabIndex={-1}
           autoComplete="off"
@@ -204,9 +206,7 @@ export default function ContactForm() {
             aria-describedby={errors.consentimiento ? 'error-consentimiento' : undefined}
             required
           />
-          <span>
-            Acepto que Raíces Developers use estos datos para responder mi consulta sobre Ceibo Vidal.
-          </span>
+          <span>Acepto que Raíces Developers use estos datos para responder mi consulta.</span>
         </label>
         {errors.consentimiento ? (
           <p className="field-error" id="error-consentimiento">
@@ -216,23 +216,23 @@ export default function ContactForm() {
       </div>
 
       <div className="form-actions">
-        <button className="button" type="submit" disabled={status === 'sending'}>
-          {USES_ENDPOINT ? null : <WhatsAppIcon size={16} />}
-          {status === 'sending'
-            ? 'Enviando…'
-            : USES_ENDPOINT
-              ? 'Enviar consulta'
-              : 'Enviar por WhatsApp'}
+        <button className="button button-fill" type="submit" disabled={status === 'sending'}>
+          {status === 'sending' ? 'Enviando…' : 'Enviar mensaje'}
         </button>
-        <a className="text-link" href={emailHref} onClick={handleEmailFallback}>
-          Prefiero escribir por email
-        </a>
+        <p className="form-hint">
+          {USES_ENDPOINT
+            ? 'Tu mensaje llega al equipo de Raíces por email.'
+            : 'El envío por email todavía no está activo. Mientras tanto, escribinos por WhatsApp.'}
+        </p>
       </div>
 
       <p className="form-status" role="status" aria-live="polite">
         {status === 'sent' ? sentMessage : null}
+        {status === 'unconfigured'
+          ? 'El envío por email todavía no está configurado. Usá el botón de WhatsApp para escribirnos ahora.'
+          : null}
         {status === 'error'
-          ? 'No pudimos enviar la consulta. Probá de nuevo o escribinos por WhatsApp.'
+          ? 'No pudimos enviar el mensaje. Probá de nuevo en unos minutos o escribinos por WhatsApp.'
           : null}
       </p>
     </form>

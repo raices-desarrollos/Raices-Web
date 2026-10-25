@@ -1,9 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { brand, navItems } from '../content/site';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { brand, navItems, routes } from '../content/site';
+
+const normalize = (path) => (path.length > 1 ? path.replace(/\/$/, '') : path);
 
 export default function Header() {
+  const pathname = usePathname();
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -13,6 +18,11 @@ export default function Header() {
     window.addEventListener('scroll', updateHeader, { passive: true });
     return () => window.removeEventListener('scroll', updateHeader);
   }, []);
+
+  // El menú móvil se cierra al navegar.
+  useEffect(() => {
+    setNavOpen(false);
+  }, [pathname]);
 
   useEffect(() => {
     document.body.classList.toggle('nav-open', navOpen);
@@ -27,12 +37,14 @@ export default function Header() {
     return () => document.removeEventListener('keydown', closeOnEscape);
   }, []);
 
+  const current = normalize(pathname || '/');
+  const isActive = (href) => current === href || (href !== '/' && current.startsWith(`${href}/`));
   const close = () => setNavOpen(false);
 
   return (
     <header
-      className={`site-header ${scrolled ? 'is-scrolled' : ''} ${navOpen ? 'nav-active' : ''}`}>
-      <a className="brand" href="#inicio" aria-label={`${brand.name}, ir al inicio`} onClick={close}>
+      className={`site-header ${current === '/' ? 'is-home' : ''} ${scrolled ? 'is-scrolled' : ''} ${navOpen ? 'nav-active' : ''}`}>
+      <Link className="brand" href={routes.home} aria-label={`${brand.name}, ir al inicio`} onClick={close}>
         <img
           src={brand.logos.text.src}
           width={brand.logos.text.width}
@@ -41,7 +53,7 @@ export default function Header() {
           className="brand-logo logo-on-dark"
           decoding="async"
         />
-      </a>
+      </Link>
 
       <button
         className="nav-toggle"
@@ -56,13 +68,18 @@ export default function Header() {
 
       <nav className="site-nav" id="site-nav" aria-label="Navegación principal">
         {navItems.map((item) => (
-          <a key={item.href} href={item.href} onClick={close}>
+          <Link
+            key={item.href}
+            href={item.href}
+            onClick={close}
+            className={isActive(item.href) ? 'is-active' : undefined}
+            aria-current={isActive(item.href) ? 'page' : undefined}>
             {item.label}
-          </a>
+          </Link>
         ))}
-        <a className="button button-small site-nav-cta" href="#contacto" onClick={close}>
+        <Link className="button button-small site-nav-cta" href={routes.contact} onClick={close}>
           Consultar
-        </a>
+        </Link>
       </nav>
     </header>
   );

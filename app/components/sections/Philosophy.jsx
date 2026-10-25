@@ -1,5 +1,6 @@
 import { SectionHeader } from '../Primitives';
 
+/** Filosofía de Raíces: naturaleza como decisión de proyecto. */
 export default function Philosophy() {
   return (
     <section className="section section-alt" id="filosofia" aria-labelledby="filosofia-title">
@@ -8,7 +9,7 @@ export default function Philosophy() {
         <div className="reveal">
           <p className="kicker">Naturaleza urbana</p>
           <h2 id="filosofia-title" className="title-stroke">
-            La ciudad también puede echar raíces.
+            La naturaleza no es decoración. Es parte del proyecto.
           </h2>
         </div>
         <div className="text-stack reveal">
@@ -18,9 +19,8 @@ export default function Philosophy() {
             su entorno.
           </p>
           <p>
-            La naturaleza no es decoración. Es parte del proyecto: entra en la decisión de fachada,
-            balcones, terraza, riego y mantenimiento. Invertir en verde es una decisión de largo
-            plazo, y la sostenemos en cada edificio.
+            El verde entra en la decisión de fachada, balcones, terraza, riego y mantenimiento.
+            Invertir en verde es una decisión de largo plazo, y la sostenemos en cada edificio.
           </p>
           <p className="quote">Raíces construye edificios que tienen historia antes de inaugurarse.</p>
         </div>

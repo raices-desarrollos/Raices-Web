@@ -8,7 +8,7 @@ export default function Identity() {
         <h2 id="identidad-title" className="title-stroke">
           Menos repetición. Más identidad propia.
         </h2>
-        <p>La naturaleza no es decoración. Es parte del proyecto.</p>
+        <p>Tres decisiones que definen cada proyecto de Raíces.</p>
       </div>
 
       <ol className="identity-list reveal-stagger">

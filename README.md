@@ -1,6 +1,6 @@
 # Raíces Developers — Sitio web
 
-Sitio institucional de Raíces Developers: una landing única, en tema oscuro, que presenta la marca y su primer proyecto, **Ceibo Vidal** (Vidal 3849, Saavedra, CABA), y lleva todo el recorrido hacia el contacto por WhatsApp.
+Sitio institucional de Raíces Developers, en tema oscuro. La Home presenta la marca; Ceibo Vidal (Vidal 3849, Saavedra, CABA) tiene su propia página. El contacto es por formulario (email, cuando el worker está activo) y WhatsApp.
 
 ## Qué es Raíces
 
@@ -42,18 +42,21 @@ Copiar `.env.example` a `.env.local` y ajustar. Todas son `NEXT_PUBLIC_*` porque
 | `NEXT_PUBLIC_BASE_PATH` | Prefijo de ruta cuando el sitio no vive en la raíz del dominio. Es la **única fuente** del `basePath` (la usan `next.config.mjs`, las rutas de imágenes y la metadata). | vacío (raíz) |
 | `NEXT_PUBLIC_SITE_URL` | Origen público, sin basePath. Se usa para canonical, Open Graph y `sitemap.xml`. | `https://raices-desarrollos.github.io` |
 | `NEXT_PUBLIC_WHATSAPP_NUMBER` | Número de WhatsApp en formato internacional sin `+` ni espacios. | `5491136994200` |
-| `NEXT_PUBLIC_FORM_ENDPOINT` | Opcional. Endpoint externo de formularios (ej. Formspree). | vacío |
+| `NEXT_PUBLIC_FORM_ENDPOINT` | URL pública del worker de email (`functions/contact-worker.js`). | vacío |
+| `NEXT_PUBLIC_HERO_VIDEO` | Ruta del video del hero institucional, si existe. | vacío |
+
+`CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` y `RESEND_API_KEY` **no** van al frontend: se configuran como secrets del worker.
 
 ### Formulario de contacto
 
-El sitio no tiene backend, así que el formulario funciona de dos modos:
+El sitio se exporta estático. El formulario **no finge un envío**:
 
-- **Sin `NEXT_PUBLIC_FORM_ENDPOINT`** (por defecto): el botón principal arma el mensaje con los datos cargados y abre WhatsApp con el texto prellenado.
-- **Con `NEXT_PUBLIC_FORM_ENDPOINT`**: hace `fetch` POST (JSON) a esa URL y muestra estado de éxito o error.
+- **Con `NEXT_PUBLIC_FORM_ENDPOINT`**: POST JSON al worker, que envía el email con Resend. Éxito solo si el servidor responde OK.
+- **Sin endpoint**: el formulario lo dice y WhatsApp sigue disponible.
 
-En ambos casos hay un enlace secundario "Prefiero escribir por email" (`mailto:contacto@raicesdesarrolladores.com.ar`), validación en el cliente, honeypot anti-spam y checkbox de consentimiento.
+Pasos para activar el email: `functions/README.md`. `CONTACT_TO_EMAIL` está pendiente de confirmar antes de producción.
 
-Los eventos (clic en WhatsApp, envío del formulario) pasan por `app/lib/analytics.js`, un único punto para enchufar analytics más adelante. Hoy no envía nada.
+Los eventos (clic en WhatsApp, envío del formulario) pasan por `app/lib/analytics.js`. Hoy no envía nada.
 
 ## Contenido
 
@@ -88,35 +91,21 @@ Los logos de Raíces son PNG de trazo negro sobre transparente. Sobre fondo oscu
 
 ```
 app/
-  layout.jsx            — Fuentes, metadata (SEO, Open Graph, Twitter), favicons
-  page.jsx              — Entry point
-  robots.js             — robots.txt (estático, con basePath)
-  sitemap.js            — sitemap.xml (estático, con basePath)
-  globals.css           — Sistema de diseño en CSS (tokens, componentes, responsive)
-  content/site.js       — Única fuente de datos del sitio
-  lib/contact.js        — Enlaces de WhatsApp y mailto
-  lib/analytics.js      — Hook único de eventos (no-op hasta conectar un proveedor)
-  fonts/                — M PLUS U (woff2, variable, latin)
-  components/
-    LandingPage.jsx     — Orquesta las secciones, reveal y parallax del hero
-    Header.jsx          — Navegación fija con wordmark
-    ContactForm.jsx     — Formulario (WhatsApp / endpoint / email)
-    Primitives.jsx      — SectionHeader, Cota, WhatsAppLink, Picture
-    Icons.jsx
-    sections/           — Hero, IntroBand, Philosophy, Project, Typologies, Green,
-                          Location, Identity, Partners, Contact, Footer
+  page.jsx              — Home institucional
+  proyectos/            — Portfolio y /proyectos/[slug]
+  nosotros/             — Presentación de Raíces
+  contacto/             — Formulario y canales
+  cinematic.css         — Intro, hero, galería, transiciones
+  globals.css           — Tokens y sistema de diseño
+  content/site.js       — Única fuente de datos (incluye `projects` para futuros desarrollos)
+  components/           — Header, Footer, LogoIntro, CinematicHero, FeaturedProject,
+                          ProjectGallery, ContactForm, WhatsAppButton, secciones de Ceibo
 
 public/assets/
-  brand/                — Logos de Raíces y Ceibo, favicons, OG image
-  images/               — Fachada, renders de unidades, mapa, imágenes de referencia (WebP)
-  plans/                — Planta tipo y tipologías (WebP sin pérdida)
-  partners/             — Logos de G&D Developers y Daimar Developers
+  brand/ images/ plans/ partners/ video/
 
-scripts/
-  optimize-images.mjs   — Pipeline de imágenes con sharp
-  generate_presentation.py — Genera Raices-Inversores.pptx (no pertenece a la web)
-
-DESIGN_SYSTEM.md        — Identidad visual y verbal vigente
+functions/
+  contact-worker.js     — Envío real de email con Resend (desplegar aparte)
 ```
 
 ## Deploy

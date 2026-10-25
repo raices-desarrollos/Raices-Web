@@ -8,6 +8,9 @@ const basePath = (process.env.NEXT_PUBLIC_BASE_PATH || '').replace(/\/$/, '');
 const nextConfig = {
   reactStrictMode: true,
   output: 'export',
+  // Cada ruta se exporta como carpeta con index.html (/proyectos/ceibo-vidal/index.html):
+  // es lo que un hosting estático como GitHub Pages resuelve sin configuración.
+  trailingSlash: true,
   images: { unoptimized: true },
   ...(basePath && { basePath, assetPrefix: basePath }),
 };

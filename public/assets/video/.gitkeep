@@ -1,0 +1,2 @@
+# Colocar acá el video del hero institucional (H.264, sin audio).
+# Luego definir NEXT_PUBLIC_HERO_VIDEO=/assets/video/<archivo>.mp4

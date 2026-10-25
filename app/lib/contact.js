@@ -14,11 +14,14 @@ export function mailtoHref({ subject = 'Consulta por Ceibo Vidal', body = '' } =
 }
 
 /** Arma el texto de consulta a partir de los campos del formulario. */
-export function buildInquiryMessage({ nombre, email, telefono, mensaje }) {
-  const lines = ['Hola, quiero recibir información sobre Ceibo Vidal.', ''];
+export function buildInquiryMessage({ nombre, email, asunto, mensaje }) {
+  const intro =
+    asunto && asunto !== 'Consulta general'
+      ? `Hola, quiero recibir información sobre ${asunto}.`
+      : 'Hola, quiero hacer una consulta a Raíces Developers.';
+  const lines = [intro, ''];
   if (nombre) lines.push(`Nombre: ${nombre}`);
   if (email) lines.push(`Email: ${email}`);
-  if (telefono) lines.push(`Teléfono: ${telefono}`);
   if (mensaje) lines.push('', mensaje);
   return lines.join('\n').trim();
 }

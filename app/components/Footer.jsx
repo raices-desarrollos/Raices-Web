@@ -1,5 +1,6 @@
-import { brand, contact, navItems, project } from '../../content/site';
-import { mailtoHref } from '../../lib/contact';
+import Link from 'next/link';
+import { brand, contact, navItems, project, projects, routes } from '../content/site';
+import { mailtoHref } from '../lib/contact';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -20,11 +21,17 @@ export default function Footer() {
           <p className="site-footer-claim">{brand.claim}</p>
         </div>
 
-        <nav className="site-footer-nav" aria-label="Secciones">
+        <nav className="site-footer-nav" aria-label="Secciones del sitio">
+          <Link href={routes.home}>Inicio</Link>
           {navItems.map((item) => (
-            <a key={item.href} href={item.href}>
+            <Link key={item.href} href={item.href}>
               {item.label}
-            </a>
+            </Link>
+          ))}
+          {projects.map((entry) => (
+            <Link key={entry.slug} href={routes.project(entry.slug)}>
+              {entry.name}
+            </Link>
           ))}
         </nav>
 
@@ -45,7 +52,7 @@ export default function Footer() {
           © {year} {brand.name} · {brand.city}
         </p>
         <p>Renders de referencia. Las imágenes son ilustrativas y pueden variar en obra.</p>
-        <a href="#inicio">Volver arriba</a>
+        <a href="#contenido">Volver arriba</a>
       </div>
     </footer>
   );

@@ -1,7 +1,12 @@
 import localFont from 'next/font/local';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
+import './cinematic.css';
 import { BASE, SITE_URL, brand, project } from './content/site';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton';
+import ScrollEffects from './components/ScrollEffects';
 
 // M PLUS U (display) no está en el catálogo de next/font/google todavía, así que
 // se sirve local desde app/fonts (variable, latin, 300–500). Montserrat sí va por Google.
@@ -21,27 +26,30 @@ const body = Montserrat({
   variable: '--font-montserrat',
 });
 
-const title = `${brand.name} · ${brand.claim.replace(/\.$/, '')}`;
-const description = `${brand.name} desarrolla edificios con verde integrado desde el proyecto e identidad propia. Primer proyecto: ${project.name}, ${project.address}, ${project.neighborhood}, ${project.city}. Unidades de 1, 2 y 3 ambientes, entrega prevista para ${project.deliveryYear}.`;
+const defaultTitle = `${brand.name} · ${brand.claim.replace(/\.$/, '')}`;
+const description = `${brand.name} desarrolla edificios con verde integrado desde el proyecto e identidad propia en Buenos Aires. Primer proyecto: ${project.name}, ${project.address}, ${project.neighborhood}, ${project.city}.`;
 
 export const metadata = {
   metadataBase: new URL(`${SITE_URL}/`),
-  title,
+  title: {
+    default: defaultTitle,
+    template: `%s · ${brand.name}`,
+  },
   description,
   applicationName: brand.name,
-  alternates: { canonical: `${SITE_URL}/` },
+  alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     locale: 'es_AR',
-    url: `${SITE_URL}/`,
+    url: '/',
     siteName: brand.name,
-    title,
+    title: defaultTitle,
     description,
     images: [{ url: brand.ogImage, width: 1200, height: 630, alt: `Logo de ${brand.name}` }],
   },
   twitter: {
     card: 'summary_large_image',
-    title,
+    title: defaultTitle,
     description,
     images: [brand.ogImage],
   },
@@ -56,7 +64,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: '#21201E',
+  themeColor: '#0A0D0B',
   colorScheme: 'dark',
   width: 'device-width',
   initialScale: 1,
@@ -64,8 +72,25 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" className={`${display.variable} ${body.variable}`}>
-      <body>{children}</body>
+    <html lang="es" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "(function(){var d=document.documentElement;try{var seen=sessionStorage.getItem('raices-intro-seen');var rm=window.matchMedia('(prefers-reduced-motion: reduce)').matches;d.dataset.intro=(seen||rm)?'seen':'playing';}catch(e){d.dataset.intro='seen';}})();",
+          }}
+        />
+      </head>
+      <body>
+        <a className="skip-link" href="#contenido">
+          Saltar al contenido
+        </a>
+        <Header />
+        {children}
+        <Footer />
+        <WhatsAppButton />
+        <ScrollEffects />
+      </body>
     </html>
   );
 }

@@ -1,6 +1,7 @@
 import { project, specs } from '../../content/site';
-import { Cota, Picture, SectionHeader } from '../Primitives';
+import { Cota, SectionHeader } from '../Primitives';
 
+/** Presentación arquitectónica y ficha técnica de Ceibo Vidal. */
 export default function Project() {
   const amenities = [
     ...project.amenities.groundFloor,
@@ -9,26 +10,17 @@ export default function Project() {
   ];
 
   return (
-    <section className="section project-section" id="ceibo-vidal" aria-labelledby="proyecto-title">
-      <SectionHeader>{project.code}</SectionHeader>
+    <section className="section project-section" id="proyecto" aria-labelledby="proyecto-title">
+      <SectionHeader>Presentación</SectionHeader>
 
-      <div className="project-layout">
-        <div className="project-copy reveal">
-          <img
-            className="project-logo"
-            src={project.logo.src}
-            width={project.logo.width}
-            height={project.logo.height}
-            alt="Ceibo"
-            loading="lazy"
-            decoding="async"
-          />
-          <p className="kicker">
-            {project.address} · {project.neighborhood}, {project.city}
-          </p>
+      <div className="split-grid project-intro">
+        <div className="reveal">
+          <p className="kicker">Arquitectura</p>
           <h2 id="proyecto-title" className="title-stroke">
-            Un edificio bajo, claro y vegetal.
+            Dejar nuestras propias raíces en Saavedra.
           </h2>
+        </div>
+        <div className="text-stack reveal">
           <p>
             En un barrio en crecimiento, conectado y con identidad, decidimos dejar nuestras
             propias raíces. Ceibo Vidal es un edificio que busca el equilibrio entre ciudad y aire
@@ -45,11 +37,6 @@ export default function Project() {
             <span>Entrega {project.deliveryYear}</span>
           </div>
         </div>
-
-        <figure className="project-figure reveal">
-          <Picture image={project.facade} sizes="(max-width: 980px) 100vw, 50vw" />
-          <figcaption>{project.renderNote} · Fachada sobre Vidal</figcaption>
-        </figure>
       </div>
 
       <Cota className="section-cota reveal">Ficha técnica</Cota>

@@ -5,30 +5,45 @@ import { InstagramIcon, LinkedInIcon } from '../Icons';
 import { Cota } from '../Primitives';
 import WhatsAppLink from '../WhatsAppLink';
 
-export default function Contact() {
+/**
+ * Bloque de contacto: canales directos a la izquierda y formulario a la derecha.
+ * Se usa en /contacto y, con otro título, al pie de cada proyecto.
+ */
+export default function Contact({
+  id = 'contacto',
+  kicker = 'Contacto',
+  title = 'Hablemos.',
+  text = 'Para compradores e inversores que quieran construir ciudad con más naturaleza. Te respondemos con información del proyecto, planos y unidades disponibles.',
+  cota = 'Ceibo Vidal · Entrega prevista 2029',
+  defaultSubject,
+  headingLevel = 'h2',
+  whatsappSource = 'contact',
+}) {
+  const Heading = headingLevel;
   const socialLinks = [
     social.linkedin && { href: social.linkedin, label: 'LinkedIn', Icon: LinkedInIcon },
     social.instagram && { href: social.instagram, label: 'Instagram', Icon: InstagramIcon },
   ].filter(Boolean);
 
   return (
-    <section className="section contact-section" id="contacto" aria-labelledby="contacto-title">
+    <section className="section contact-section" id={id} aria-labelledby={`${id}-title`}>
       <div className="contact-inner">
         <div className="contact-copy reveal">
-          <p className="kicker">Contacto</p>
-          <h2 id="contacto-title" className="title-stroke">
-            Hablemos de Ceibo Vidal.
-          </h2>
-          <p>
-            Para compradores e inversores que quieran construir ciudad con más naturaleza. Te
-            respondemos con información del proyecto, planos y unidades disponibles.
-          </p>
+          <p className="kicker">{kicker}</p>
+          <Heading id={`${id}-title`} className="title-stroke">
+            {title}
+          </Heading>
+          <p>{text}</p>
 
           <div className="contact-actions">
-            <WhatsAppLink source="contact" className="button button-large">
+            <WhatsAppLink source={whatsappSource} className="button button-large">
               Consultar por WhatsApp
             </WhatsAppLink>
-            <a className="contact-line" href={`https://wa.me/${contact.whatsappNumber}`} target="_blank" rel="noopener noreferrer">
+            <a
+              className="contact-line"
+              href={`https://wa.me/${contact.whatsappNumber}`}
+              target="_blank"
+              rel="noopener noreferrer">
               <span className="label">WhatsApp</span>
               <span>{contact.whatsappDisplay}</span>
             </a>
@@ -55,10 +70,10 @@ export default function Contact() {
             </div>
           ) : null}
 
-          <Cota className="contact-cota">Ceibo Vidal · Entrega prevista 2029</Cota>
+          {cota ? <Cota className="contact-cota">{cota}</Cota> : null}
         </div>
 
-        <ContactForm />
+        <ContactForm defaultSubject={defaultSubject} />
       </div>
     </section>
   );

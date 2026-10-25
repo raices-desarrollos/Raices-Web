@@ -1,14 +1,18 @@
 'use client';
 
 import { useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 /**
- * Efectos de scroll del sitio: reveal por IntersectionObserver y parallax del hero.
- * No renderiza nada; vive como cliente para que el resto de la landing quede estática.
+ * Efectos de scroll globales: reveal por IntersectionObserver y progreso de la primera
+ * pantalla (`--hero-progress`) para el parallax de los heros. No renderiza nada y se
+ * re-engancha en cada navegación para observar los elementos de la página nueva.
  */
 export default function ScrollEffects() {
+  const pathname = usePathname();
+
   useEffect(() => {
-    const elements = document.querySelectorAll('.reveal, .reveal-stagger > *');
+    const elements = document.querySelectorAll('.reveal:not(.is-visible), .reveal-stagger > *:not(.is-visible)');
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (reduceMotion || !('IntersectionObserver' in window)) {
@@ -30,7 +34,7 @@ export default function ScrollEffects() {
 
     elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -39,11 +43,12 @@ export default function ScrollEffects() {
     const update = () => {
       frame = 0;
       const progress = Math.min(window.scrollY / Math.max(window.innerHeight, 1), 1);
-      if (!reduceMotion.matches) {
-        document.documentElement.style.setProperty('--hero-progress', progress.toFixed(3));
-      }
-      // El botón flotante de WhatsApp aparece una vez superado el hero (que ya tiene su CTA).
-      document.body.classList.toggle('past-hero', progress > 0.6);
+      document.documentElement.style.setProperty(
+        '--hero-progress',
+        reduceMotion.matches ? '0' : progress.toFixed(3),
+      );
+      document.body.classList.toggle('is-scrolled', window.scrollY > 24);
+      document.body.classList.toggle('past-hero', progress > 0.62);
     };
 
     const onScroll = () => {
@@ -57,7 +62,7 @@ export default function ScrollEffects() {
       window.removeEventListener('scroll', onScroll);
       if (frame) window.cancelAnimationFrame(frame);
     };
-  }, []);
+  }, [pathname]);
 
   return null;
 }
