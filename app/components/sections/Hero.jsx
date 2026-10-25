@@ -1,5 +1,6 @@
 import { brand, project } from '../../content/site';
-import { Cota, Picture, WhatsAppLink } from '../Primitives';
+import { Cota, Picture } from '../Primitives';
+import WhatsAppLink from '../WhatsAppLink';
 
 export default function Hero() {
   return (

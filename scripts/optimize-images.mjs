@@ -6,7 +6,9 @@
  *    de ancho para la fachada (hero) y 1600 px para el resto. Nunca se agrandan.
  *  - Planos (`public/assets/plans`): WebP sin pérdida, resolución original,
  *    para mantener nitidez de líneas y cotas.
- *  - Logos (`public/assets/brand`, `public/assets/partners`): no se tocan.
+ *  - Logos (`public/assets/brand`, `public/assets/partners`): siguen siendo PNG
+ *    con transparencia y resolución original, recomprimidos con paleta de 256
+ *    colores (trazo plano + antialias). Pesan ~3 veces menos sin cambio visible.
  *  - Favicon, apple-touch-icon e imagen Open Graph: se generan a partir de
  *    `public/assets/brand/raices_logo_icono.png` y `raices_logo_completo.png`.
  *
@@ -16,7 +18,7 @@
  *   npm run optimize-images
  *   npm run optimize-images -- --keep
  */
-import { readdir, stat, unlink, mkdir } from 'node:fs/promises';
+import { readdir, stat, unlink, mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import sharp from 'sharp';
 
@@ -94,6 +96,25 @@ async function convertPlan(fileName) {
   if (!KEEP_SOURCES && src !== out) await unlink(src);
 }
 
+const LOGO_DIRS = [path.join(PUBLIC, 'assets/brand'), path.join(PUBLIC, 'assets/partners')];
+const GENERATED_BRAND = /^(favicon-|apple-touch-icon|og-image)/;
+
+/** Recomprime un logo PNG en el lugar, con paleta. Solo escribe si achica el archivo. */
+async function compressLogo(dir, fileName) {
+  const src = path.join(dir, fileName);
+  const before = (await stat(src)).size;
+  const buffer = await sharp(src)
+    .png({ palette: true, quality: 90, effort: 10, compressionLevel: 9 })
+    .toBuffer();
+
+  if (buffer.length >= before) {
+    console.log(`  ${fileName}  ${kb(before)} (ya óptimo)`);
+    return;
+  }
+  await writeFile(src, buffer);
+  console.log(`  ${fileName}  ${kb(before)} → ${kb(buffer.length)}`);
+}
+
 /** Trazo negro sobre transparente → trazo blanco (equivale a brightness(0) invert(1)). */
 function whiteStroke(input) {
   return sharp(input).ensureAlpha().negate({ alpha: false });
@@ -156,6 +177,12 @@ async function main() {
 
   console.log('\nPlanos');
   for (const file of await listSources(PLAN_RULES.dir)) await convertPlan(file);
+
+  console.log('\nLogos');
+  for (const dir of LOGO_DIRS) {
+    const files = (await listSources(dir)).filter((name) => /\.png$/i.test(name) && !GENERATED_BRAND.test(name));
+    for (const file of files) await compressLogo(dir, file);
+  }
 
   console.log('\nFavicon, apple-touch-icon y Open Graph');
   await generateBrandDerivatives();

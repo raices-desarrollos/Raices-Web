@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { brand, navItems } from '../content/site';
 
-export default function Header({ navOpen, setNavOpen }) {
+export default function Header() {
+  const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -24,7 +25,7 @@ export default function Header({ navOpen, setNavOpen }) {
     };
     document.addEventListener('keydown', closeOnEscape);
     return () => document.removeEventListener('keydown', closeOnEscape);
-  }, [setNavOpen]);
+  }, []);
 
   const close = () => setNavOpen(false);
 

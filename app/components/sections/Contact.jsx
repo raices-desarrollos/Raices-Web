@@ -2,7 +2,8 @@ import { contact, social } from '../../content/site';
 import { mailtoHref } from '../../lib/contact';
 import ContactForm from '../ContactForm';
 import { InstagramIcon, LinkedInIcon } from '../Icons';
-import { Cota, WhatsAppLink } from '../Primitives';
+import { Cota } from '../Primitives';
+import WhatsAppLink from '../WhatsAppLink';
 
 export default function Contact() {
   const socialLinks = [

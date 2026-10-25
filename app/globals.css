@@ -1563,9 +1563,11 @@ body.past-hero .whatsapp-float {
   transition-delay: 270ms;
 }
 
+/* El hero entra ya legible (opacidad parcial, no 0): el contenido cuenta como
+   primer pintado y no queda oculto medio segundo detrás de la animación. */
 @keyframes heroRise {
   from {
-    opacity: 0;
+    opacity: 0.35;
     transform: translateY(18px);
   }
   to {
