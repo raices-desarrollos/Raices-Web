@@ -42,8 +42,12 @@ export default function CinematicHero() {
           <p className="kicker">{hero.kicker}</p>
         </div>
         <h1 id="hero-title">
-          <span className="hero-line hero-line-soft">{hero.titleQuiet}</span>
-          <span className="hero-line hero-line-italic">{hero.titleEmphasis}</span>
+          <span className="hero-line hero-line-soft">
+            <span>{hero.titleQuiet}</span>
+          </span>
+          <span className="hero-line hero-line-italic">
+            <span>{hero.titleEmphasis}</span>
+          </span>
         </h1>
         <p className="hero-lead hero-anim">{hero.lead}</p>
         <div className="hero-actions hero-anim">
@@ -62,6 +66,11 @@ export default function CinematicHero() {
         </Cota>
         <span className="hero-note label">{heroMedia.note}</span>
       </div>
+
+      <p className="hero-rail hero-anim" aria-hidden="true">
+        <span>01</span>
+        <span>{brand.city}</span>
+      </p>
 
       <a className="scroll-cue hero-anim" href="#raices" aria-label="Bajar al contenido">
         <span className="scroll-cue-line" aria-hidden="true" />

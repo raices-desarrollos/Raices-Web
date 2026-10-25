@@ -17,7 +17,7 @@ export default function Home() {
       <CinematicHero />
       <AboutTeaser />
       <FeaturedProject project={featured} />
-      <CtaBand title={home.cta.title} text={home.cta.text} link={home.cta.link} />
+      <CtaBand title={home.cta.title} text={home.cta.text} link={home.cta.link} cota="Buenos Aires" />
     </>
   );
 }

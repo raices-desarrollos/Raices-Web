@@ -214,6 +214,27 @@ html[data-intro='playing'] .whatsapp-float {
 
 .hero-line {
   display: block;
+  overflow: hidden;
+  padding-bottom: 0.08em;
+}
+
+.hero-line > span {
+  display: block;
+  transform: translateY(108%);
+  animation: lineRise 900ms var(--ease) both;
+}
+
+.hero-line-soft > span {
+  animation-delay: 90ms;
+}
+
+.hero-line-italic > span {
+  animation-delay: 220ms;
+}
+
+html[data-intro='playing'] .hero-line > span,
+html[data-intro='playing'] .cine-hero .hero-anim {
+  animation-play-state: paused;
 }
 
 .hero-line-soft {
@@ -261,6 +282,28 @@ html[data-intro='playing'] .whatsapp-float {
   justify-content: flex-start;
 }
 
+.hero-rail {
+  position: absolute;
+  z-index: 1;
+  top: calc(var(--header-height) + 28px);
+  left: 18px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+
+.hero-rail span:first-child {
+  color: var(--accent);
+}
+
 .scroll-cue {
   position: absolute;
   right: var(--gutter);
@@ -294,6 +337,15 @@ html[data-intro='playing'] .whatsapp-float {
   }
   to {
     object-position: 54% 46%;
+  }
+}
+
+@keyframes lineRise {
+  from {
+    transform: translateY(108%);
+  }
+  to {
+    transform: none;
   }
 }
 
@@ -417,11 +469,67 @@ html[data-intro='playing'] .whatsapp-float {
 
 .about-teaser-inner {
   display: grid;
-  grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
-  gap: clamp(40px, 6vw, 96px);
-  width: min(100%, var(--container));
+  grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.82fr);
+  grid-template-areas:
+    'head plate'
+    'body plate';
+  gap: clamp(28px, 4vw, 56px) clamp(36px, 5vw, 72px);
+  width: min(100%, 1280px);
   margin: 0 auto;
-  align-items: start;
+  align-items: stretch;
+}
+
+.about-teaser-head {
+  grid-area: head;
+}
+
+.about-teaser-body {
+  grid-area: body;
+}
+
+.about-plate {
+  grid-area: plate;
+  position: relative;
+  margin: 0;
+  min-height: 100%;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.about-plate img {
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  object-fit: cover;
+  object-position: center 42%;
+}
+
+.about-plate::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 32%;
+  background: linear-gradient(180deg, transparent, rgba(10, 13, 11, 0.78));
+  pointer-events: none;
+}
+
+.about-plate-note {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  z-index: 1;
+  color: var(--text);
+}
+
+.mask-reveal {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1100ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.mask-reveal.is-visible {
+  clip-path: inset(0);
 }
 
 .about-teaser-lead {
@@ -526,6 +634,31 @@ html[data-intro='playing'] .whatsapp-float {
   z-index: 2;
 }
 
+.featured-hover-meta {
+  position: absolute;
+  left: 20px;
+  bottom: 20px;
+  z-index: 2;
+  display: grid;
+  gap: 6px;
+  max-width: 28ch;
+  color: var(--text);
+  font-family: var(--font-display);
+  font-size: 18px;
+  line-height: 1.25;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+.featured-media:hover .featured-hover-meta,
+.featured-media:focus-visible .featured-hover-meta {
+  opacity: 1;
+  transform: none;
+}
+
 /* Persiana adaptada de Shutter Reveal (21st.dev): seis bandas del fondo que se abren una vez. */
 .media-shutter {
   position: absolute;
@@ -581,7 +714,20 @@ html[data-intro='playing'] .whatsapp-float {
 .featured-facts dd {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: clamp(18px, 1.5vw, 22px);
+  line-height: 1.2;
+}
+
+.fact-sub {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  line-height: 1.4;
+  text-transform: uppercase;
+  color: var(--text-soft);
 }
 
 /* --------------------------------------------------------------------------
@@ -604,6 +750,22 @@ html[data-intro='playing'] .whatsapp-float {
 .cta-band h2 {
   max-width: 10ch;
   font-size: clamp(44px, 7vw, 96px);
+}
+
+.cta-band h2::after {
+  content: '';
+  display: block;
+  width: 72px;
+  height: 2px;
+  margin-top: 28px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 900ms var(--ease) 200ms;
+}
+
+.cta-band-inner.is-visible h2::after {
+  transform: scaleX(1);
 }
 
 .cta-text {
@@ -688,6 +850,23 @@ html[data-intro='playing'] .whatsapp-float {
   background: var(--surface);
   cursor: zoom-in;
   overflow: hidden;
+}
+
+.gallery-trigger {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1100ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.gallery-item:nth-child(2) .gallery-trigger {
+  transition-delay: 120ms;
+}
+
+.gallery-item:nth-child(3) .gallery-trigger {
+  transition-delay: 240ms;
+}
+
+.gallery-strip.is-visible .gallery-trigger {
+  clip-path: inset(0);
 }
 
 .gallery-trigger img {
@@ -790,15 +969,69 @@ html[data-intro='playing'] .whatsapp-float {
   margin-bottom: 28px;
 }
 
+/* El hero de proyecto pasa a pantalla completa, con el mismo velo que la Home. */
+.project-hero {
+  align-items: end;
+  padding-bottom: 120px;
+}
+
+.project-hero .hero-media {
+  inset: 0;
+  width: auto;
+}
+
+.project-hero .hero-image {
+  object-position: 62% 42%;
+}
+
+.project-hero .hero-scrim {
+  background:
+    linear-gradient(180deg, rgba(10, 13, 11, 0.38) 0%, rgba(10, 13, 11, 0.16) 32%, rgba(10, 13, 11, 0.62) 68%, var(--bg) 100%),
+    linear-gradient(90deg, rgba(10, 13, 11, 0.72) 0%, rgba(10, 13, 11, 0.2) 52%, rgba(10, 13, 11, 0.28) 100%);
+}
+
+.project-hero .hero-content {
+  width: min(100%, 920px);
+  margin: 0;
+}
+
+.project-hero h1 {
+  max-width: 16ch;
+  font-size: clamp(40px, 5.2vw, 84px);
+  font-style: italic;
+  font-weight: 400;
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+}
+
 /* --------------------------------------------------------------------------
    Responsive cinematográfico
    -------------------------------------------------------------------------- */
+
+@media (max-width: 1100px) {
+  .hero-rail {
+    display: none;
+  }
+}
 
 @media (max-width: 980px) {
   .about-teaser-inner,
   .featured-inner,
   .project-card {
     grid-template-columns: 1fr;
+  }
+
+  .about-teaser-inner {
+    grid-template-areas:
+      'head'
+      'plate'
+      'body';
+  }
+
+  .about-plate img {
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 4 / 5;
   }
 
   .featured-media,
@@ -852,7 +1085,8 @@ html[data-intro='playing'] .whatsapp-float {
   .logo-intro-text,
   .logo-intro-line,
   .cine-hero-image,
-  .scroll-cue-line {
+  .scroll-cue-line,
+  .hero-line > span {
     animation: none !important;
   }
 
@@ -860,8 +1094,23 @@ html[data-intro='playing'] .whatsapp-float {
   .logo-intro-text,
   .logo-intro-line,
   .rt-word > span,
-  .img-reveal img {
+  .img-reveal img,
+  .hero-line > span {
     clip-path: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .mask-reveal,
+  .gallery-trigger {
+    clip-path: none;
+  }
+
+  .cta-band h2::after {
+    transform: none;
+  }
+
+  .featured-hover-meta {
     opacity: 1;
     transform: none;
   }

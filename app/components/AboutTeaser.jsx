@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { home } from '../content/site';
+import { greenFeatures, home } from '../content/site';
 import { Cota, RevealText } from './Primitives';
 
 /** Presentación institucional breve en la Home: título editorial, texto y tres principios. */
@@ -15,6 +15,19 @@ export default function AboutTeaser() {
             <RevealText text={about.title} />
           </h2>
         </div>
+
+        <figure className="about-plate mask-reveal">
+          <img
+            src={greenFeatures.terrace.src}
+            width={greenFeatures.terrace.width}
+            height={greenFeatures.terrace.height}
+            alt={greenFeatures.terrace.alt}
+            loading="lazy"
+            decoding="async"
+            sizes="(max-width: 980px) 100vw, 42vw"
+          />
+          <figcaption className="about-plate-note label">{greenFeatures.referenceNote}</figcaption>
+        </figure>
 
         <div className="about-teaser-body">
           <p className="about-teaser-lead reveal">{about.lead}</p>

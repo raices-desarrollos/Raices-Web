@@ -73,21 +73,22 @@ La paleta de marca de carpeta de venta sigue documentada en `DESIGN_SYSTEM.md`. 
 
 | Par | Ratio | Dónde |
 | --- | --- | --- |
-| `#EAE8DF` sobre `#0A0D0B` | 15.91 | Texto principal. AAA. |
+| `#EAE8DF` sobre `#0A0D0B` | 15.91 | Texto principal y favicon de pestaña. AAA. |
 | `#A8A69C` sobre `#0A0D0B` | 8.00 | Labels. AAA. |
 | `#C4A97D` sobre `#0A0D0B` | 8.67 | Kickers y cotas. AAA. |
 | `#EAE8DF` sobre `#19382C` | 10.41 | Texto sobre el verde bosque. AAA. |
 | `#EAE8DF` sobre `#536245` | 5.34 | Texto del botón ghost en hover. AA. |
 | `#0A0D0B` sobre `#EAE8DF` | 15.91 | Botón fill. AAA. |
 | `#0A0D0B` sobre `#C4A97D` | 8.67 | Hover del botón fill. AAA. |
-| `#D1C7BA` sobre `#101210` | 11.28 | Isotipo del favicon. Caliza sobre Carbón. AAA. |
+| `#D1C7BA` sobre `#101210` | 11.28 | Apple touch icon. Caliza sobre Carbón. AAA. |
 
 ### Combinaciones permitidas
 
 - Marfil sobre negro profundo, carbón o verde bosque.
 - Arena solo para textos cortos (kicker, cota, label de acento), nunca para párrafos.
 - Musgo como relleno de hover de botón, con texto marfil.
-- Caliza `#D1C7BA` sobre Carbón `#101210`, únicamente en el favicon.
+- Caliza `#D1C7BA` sobre Carbón `#101210`, únicamente en el apple touch icon.
+- Marfil `#EAE8DF` con fondo transparente, únicamente en el favicon de pestaña.
 - Verde WhatsApp solo en el botón flotante.
 
 No poner liquen, ceibo o bronce como fondos nuevos sin revisar este archivo y el contraste.
@@ -112,6 +113,7 @@ El logo está compuesto en Montserrat y no se reemplaza. Los titulares de la int
 | h1 | Fraunces | `clamp(48px, 7.2vw, 108px)` | 400 | 0.96 | -0.03em |
 | Hero, línea chica | Fraunces | `clamp(28px, 3.2vw, 52px)` | 400 | 1.05 | -0.03em |
 | Hero, “echar raíces.” | Fraunces itálica | `clamp(46px, 11vw, 138px)` | 400 | 0.88 | -0.04em |
+| Hero de proyecto | Fraunces itálica | `clamp(40px, 5.2vw, 84px)` | 400 | 0.98 | -0.03em |
 | h2 | Display | `clamp(34px, 4.6vw, 64px)` | 400 | 1.06 | -0.018em |
 | h2 del CTA | Display | `clamp(44px, 7vw, 96px)` | 400 | hereda 1.06 | hereda |
 | h3 | Display | `clamp(20px, 2vw, 26px)` | 400 | 1.3 | 0.005em |
@@ -153,7 +155,7 @@ Los titulares no van en negrita. Mayúsculas solo en kickers, labels, cotas, bot
 - Fijo, transparente sobre el hero de la home.
 - Al scrollear, con el menú abierto, o fuera de la home: fondo sólido `--bg` y borde inferior `--line`. Sin blur.
 - Logo: `raices_logo_texto.png`, alto 36px (se compacta al scrollear), clase `logo-on-dark`.
-- Links: Proyectos, Nosotros, Contacto. Estado activo con `aria-current="page"`.
+- Links: Proyectos, Nosotros, Contacto. Cada uno lleva un índice `01`–`03` (`.nav-index`, Fraunces 10px, color `--accent`, `aria-hidden`). Estado activo con `aria-current="page"` y subrayado arena.
 - CTA “Consultar” usa `.button.button-small`.
 - Menú móvil: botón de dos trazos, cierra con Escape, al navegar y bloquea el scroll del body (`.nav-open`).
 
@@ -163,9 +165,19 @@ Los titulares no van en negrita. Mayúsculas solo en kickers, labels, cotas, bot
 - Si existe `NEXT_PUBLIC_HERO_VIDEO`, un `<video>` mudo, en loop, con esa imagen de poster. Hoy no hay video: no se usa stock.
 - Velos lineales hacia `--bg` más un grano SVG al 18 %.
 - Kicker, h1, lead y dos botones: “Explorar proyectos” (`.button-fill`) y “Contactanos” (`.button`).
+- El lead es: “Desarrollamos espacios que integran arquitectura, diseño y nuevas formas de habitar.”
+- Las dos líneas del h1 suben desde una máscara (`.hero-line > span`, `lineRise`, 900ms). Mientras `data-intro="playing"`, esa animación queda en pausa.
 - Pie: cota `Raíces Developers · Buenos Aires` y la nota “Imagen de referencia”.
-- Indicador `.scroll-cue` hacia `#raices`.
+- Indicador `.scroll-cue` hacia `#raices`. Se oculta bajo 980px.
+- Riel vertical `.hero-rail`: “01” en arena y “Buenos Aires”. Se oculta bajo 1100px. Es decorativo (`aria-hidden`).
 - El wordmark no se repite dentro del hero: está en el header y en la intro.
+
+### Hero de proyecto (`.project-hero`)
+
+- Misma altura de pantalla que la Home. La fachada ocupa todo el fondo (`object-position: 62% 42%`).
+- Velo con los mismos negros `#0A0D0B`, no el tinta `#21201E` del hero anterior.
+- Logo Ceibo, kicker, titular itálico y dos acciones: “Ver tipologías” y WhatsApp directo.
+- Nota “Render de referencia” en el pie.
 
 ### Botones (`.button`)
 
@@ -181,16 +193,26 @@ Los titulares no van en negrita. Mayúsculas solo en kickers, labels, cotas, bot
 - 12px, peso 500, subrayado 0.75px, color `--muted`, hover `--text`.
 - `.text-link-arrow` es mayúscula, tracking 0.1em, sin subrayado.
 
+### Presentación institucional (`.about-teaser`)
+
+- Grilla `1.05fr / 0.82fr`, ancho máximo 1280px. Título a la izquierda. A la derecha, `terraza-verde.webp` a cover, alto mínimo 560px.
+- La foto es referencia, no una vista oficial del edificio. Lleva “Imagen de referencia” en marfil sobre un velo `rgba(10, 13, 11, 0.78)`.
+- Entra con `.mask-reveal`: `clip-path` desde abajo, 1100ms.
+- Bajo 980px la foto pasa entre el título y el texto, relación 4 / 5.
+
 ### Proyecto destacado y fichas
 
 - Home: `.featured`. Imagen grande, logo de Ceibo Vidal, nombre, “Saavedra, Buenos Aires”, resumen, dos datos y “Descubrir el proyecto”. No vuelca la ficha comercial.
+- Programa: “PB + 4 pisos” en Fraunces y “12 unidades” en `.fact-sub` (Montserrat 12px, mayúsculas). Evita que “unidades” quede sola en un renglón.
+- Al hover o al foco, la imagen muestra `.featured-hover-meta` con la dirección larga. En `prefers-reduced-motion` ese dato queda visible.
 - Al entrar en vista, seis bandas `.media-shutter` (color `--bg`) se abren de arriba hacia abajo. Ver Motion.
-- Portfolio: `.project-card`. Misma lógica, sin persiana. Hover de imagen: escala 1.06.
+- Portfolio: `.project-card`. Misma ficha de datos, sin persiana. Hover de imagen: escala 1.06.
 - Nota visible cuando la imagen es render de referencia.
 
 ### Galería (`.gallery-strip`)
 
 - Carril horizontal con scroll-snap. Cada ítem `min(78vw, 720px)`.
+- Cada foto entra con `clip-path` desde abajo (1100ms, stagger 0 / 120 / 240ms) cuando `.gallery-strip` recibe `.is-visible`.
 - Hover: escala 1.04 en 900ms.
 - Click abre lightbox. Caption con índice.
 - Los renders de Ceibo Vidal se tratan como referencia, no como fotografía de obra.
@@ -213,6 +235,11 @@ Los titulares no van en negrita. Mayúsculas solo en kickers, labels, cotas, bot
 - Logo completo en blanco (`logo-on-dark`), claim, navegación, email, WhatsApp, dirección de Ceibo Vidal.
 - Línea legal: los renders son ilustrativos.
 
+### Cierre (`.cta-band`)
+
+- Título hasta 96px. Al revelarse, una regla arena de 72 × 2px crece desde la izquierda (900ms, delay 200ms).
+- En la Home la cota es “Buenos Aires”.
+
 ### Intro (`.logo-intro`)
 
 - Solo en la home, una vez por sesión (`sessionStorage` `raices-intro-seen`).
@@ -231,16 +258,20 @@ No hay GSAP ni Motion. Todo es CSS más `ScrollEffects` (IntersectionObserver y 
 | `--dur` | 600ms |
 | `--dur-fast` | 320ms |
 | Persiana | 900ms, `cubic-bezier(0.76, 0, 0.24, 1)`, stagger 80ms |
+| Máscara de imagen | 1100ms, el mismo easing, `clip-path: inset(0 0 100% 0)` → `inset(0)` |
+| Línea del hero | `lineRise`, 900ms, delays 90ms y 220ms |
 
 **Intro.** ~2.3s: isotipo con `clip-path` desde la base (900ms), wordmark (700ms, delay 720ms), trazo arena (500ms, delay 1100ms). Hold 1600ms y el telón sube en 700ms. El script inline de `app/layout.jsx` pone `data-intro` antes del primer pintado para evitar el parpadeo.
 
-**Entradas.** `.reveal` y `.reveal-stagger` suben 18px y aparecen en 600ms. `.reveal-text` revela palabra por palabra. `.page-enter` (en `app/template.jsx`) funde cada navegación en 700ms.
+**Entradas.** `.reveal` y `.reveal-stagger` suben 18px y aparecen en 600ms. `.reveal-text` revela palabra por palabra. `.mask-reveal` (terraza de la Home) y las fotos de la galería se descubren con la máscara de 1100ms. La galería escalona 0 / 120 / 240ms. `.page-enter` (en `app/template.jsx`) funde cada navegación en 700ms.
 
-**Scroll.** Parallax leve del hero. Sin scroll hijacking.
+**Scroll.** Parallax leve del hero. `ScrollEffects` observa `.reveal`, `.reveal-stagger > *` y `.mask-reveal`. Sin scroll hijacking.
 
-**Hover.** Imagen de ficha 1.06, galería 1.04, flecha de botón +4px, WhatsApp −2px y escala 1.04.
+**Hover.** Imagen de ficha 1.06, galería 1.04, flecha de botón +4px, WhatsApp −2px y escala 1.04. En Ceibo Vidal de la Home, la dirección aparece sobre la foto.
 
-**Reduced motion.** El script no muestra la intro. CSS anula animaciones, deja el texto y las imágenes visibles y oculta `.media-shutter`.
+**Reduced motion.** El script no muestra la intro. CSS anula animaciones, deja el texto y las imágenes visibles, anula las máscaras y oculta `.media-shutter`.
+
+**Sin JavaScript.** `@media (scripting: none)` muestra reveals, máscaras y el titular del hero, y oculta la persiana.
 
 ---
 
@@ -248,7 +279,8 @@ No hay GSAP ni Motion. Todo es CSS más `ScrollEffects` (IntersectionObserver y 
 
 - Fotos y renders: WebP en `public/assets/images/`. Planos en `public/assets/plans/`.
 - Hero y fachadas a `object-fit: cover`. Galería con alto `clamp(280px, 48vh, 560px)`.
-- Overlays: gradiente a `--bg` en el hero; velo inferior en la imagen destacada.
+- Overlays: gradiente a `--bg` en el hero; velo inferior en la imagen destacada; velo inferior `rgba(10, 13, 11, 0.78)` en la terraza de la Home.
+- `body` usa `overflow-x: clip`.
 - Video solo si `NEXT_PUBLIC_HERO_VIDEO` apunta a un archivo real en `public/assets/video/`. H.264, sin audio, ideal ≤ 6 MB. No hay video genérico cargado.
 - Pipeline: `npm run optimize-images`. Logos PNG no se recomprimen si no achican.
 - Oficiales: logos en `public/assets/brand/` y logos de socios en `public/assets/partners/`.
@@ -292,22 +324,32 @@ No hay GSAP ni Motion. Todo es CSS más `ScrollEffects` (IntersectionObserver y 
 | Hero Scroll Video Pin | 25482 | Solo ficha. Descartado: pin de scroll y GSAP sin un video propio. | — |
 | Horizontal Feature Reveal | 26062 | Solo ficha. Descartado: track horizontal que secuestra el scroll. | — |
 | Immersive Full Screen Navigation | 27229 | Solo ficha. El header editorial actual es más directo para cuatro destinos. | — |
+| Mask Reveal (balick) | 39591 | Solo ficha: la cuota de código de 21st.dev estaba en 0/2. Se adaptó la idea de `clip-path` desde abajo, 1100ms, en la terraza de la Home y en la galería. | No se instaló. Sin zoom de settle ni Framer Motion. |
+| Vertical Cut Reveal (cnippet-dev) | 18595 | Solo ficha. El titular del hero sube línea por línea desde una máscara (`lineRise`). | No es por carácter. No se instaló. |
+| lumina-interactive-list | 9952 | Solo ficha. Los índices `01`–`03` de la navegación. | No hay lista que cambie de foto: hay un solo proyecto. |
+| Soft Blur In | 19835 | Solo ficha. Descartado: el blur por letra ablanda el titular editorial. | — |
+| Editorial service list | 37530 | Solo ficha. Los principios ya tenían número y regla. | — |
+| Sterling Gate: Kinetic Navigation | 10003 | Solo ficha. Descartado: menú a pantalla para cuatro destinos. | — |
 
-Otras fichas vistas y no implementadas: Cinematic landing Hero (11494), Cinematic Product Scroll (17441), Immersive Scroll Gallery (2025), ImgText Reveal (25481).
+Otras fichas vistas y no implementadas: Cinematic landing Hero (11494), Cinematic Product Scroll (17441), Immersive Scroll Gallery (2025), ImgText Reveal (25481), Hero Shutter Text (9989), Real Estate Search Hero, Hero Scrub, Cinematic Orbit Hero (daiwiikharihar).
 
 ---
 
 ## K. Registro de decisiones
 
-1. **Se trabajó sobre el sitio existente** (Next.js, App Router, export estático), no sobre un proyecto nuevo. Punto de recuperación git: rama `backup/pre-premium-pass` en `d658f12`.
-2. **Fraunces en los titulares.** M PLUS U se mantiene en la carpeta de venta y en el archivo de marca, pero en la web los títulos pasaron a Fraunces (itálica solo en la frase principal del hero) para que la Home se lea como pieza editorial. Montserrat sigue en navegación, botones, párrafos y en el wordmark.
+1. **Se trabajó sobre el sitio existente** (Next.js, App Router, export estático), no sobre un proyecto nuevo. Puntos de recuperación: `backup/pre-premium-pass` en `d658f12` y `backup/pre-art-direction-2026-10-25` en `95ed0a2`.
+2. **Fraunces en los titulares.** M PLUS U se mantiene en la carpeta de venta y en el archivo de marca, pero en la web los títulos pasaron a Fraunces. La itálica se usa en “echar raíces.” y en el titular de Ceibo Vidal. Montserrat sigue en navegación, botones, párrafos y en el wordmark.
 3. **Fondo `#0A0D0B`, no `#21201E`.** El tinta de carpeta queda como token de marca. La web usa el negro más profundo pedido para la dirección cinematográfica.
 4. **Acento arena, no bronce.** `--bronze` (`#A58E68`) está declarado y no pinta componentes. El acento real es `--arena` (`#C4A97D`), que además cumple AAA sobre `--bg`.
 5. **Header sólido.** Se quitó el `backdrop-filter`. El vidrio no aporta y contradice la dirección.
 6. **Persiana solo en Ceibo Vidal de la home.** Es el momento que el brief pedía más cuidado. El resto entra con el reveal de 18px para no repetir el efecto.
 7. **Sin video de hero.** No hay un archivo de calidad en el repo. La imagen de balcones lleva deriva lenta. El video se activa con variable de entorno, no con stock.
-8. **Favicon en Caliza sobre Carbón**, generado desde `raices_logo_icono.png` sin redibujar la forma. Ver la sección siguiente.
+8. **Favicon de pestaña dibujado en una grilla de 16 px.** Reescalar el isotipo fino lo convierte en una mancha. La pestaña usa una reducción óptica del mismo signo: torre abierta, ala derecha y tres raíces, en marfil y sin placa. 32 y 48 px son esa grilla por 2 y por 3. El archivo `raices_logo_icono.png` no se reemplaza. El apple touch icon sigue en Caliza sobre Carbón. Ver la sección siguiente.
 9. **Formulario.** Sigue exigiendo endpoint real. Documentado como pendiente de entorno si `NEXT_PUBLIC_FORM_ENDPOINT` está vacío.
+10. **La Home institucional no puede ser solo texto.** La terraza de referencia ocupa la columna derecha. Sigue marcada como imagen de referencia.
+11. **Ceibo Vidal abre a pantalla completa.** El hero partido dejaba la fachada en una columna y se leía como ficha, no como proyecto.
+12. **El dato de unidades va en una segunda línea** (`.fact-sub`), con los textos ya verificados: “PB + 4 pisos” y “12 unidades”.
+13. **No se instaló código de 21st.dev en este pase.** La cuota diaria de recuperación estaba agotada. Las máscaras y el corte del titular se escribieron en CSS a partir de las fichas.
 
 ---
 
@@ -317,21 +359,23 @@ El favicon es el isotipo de Raíces Developers, no el de Ceibo Vidal.
 
 **Original.** `public/assets/brand/raices_logo_icono.png`. PNG de paleta, 749×893, trazo negro (`#000000`) sobre transparencia. No es vectorial: no hay `favicon.svg`.
 
-**Generados** por `scripts/optimize-images.mjs` (`npm run optimize-images -- --favicons-only`). El script no redibuja la forma. Toma el alfa del PNG, pinta ese trazo en Caliza `#D1C7BA` y lo compone sobre Carbón `#101210`, los tokens de `DESIGN_SYSTEM.md`.
+**Generados** por `scripts/optimize-images.mjs` (`npm run optimize-images -- --favicons-only`). El script no redibuja la forma. Toma el alfa del PNG.
 
-El trazo del original mide unos 18 px. A 180 px sigue ocupando más de un píxel y se escala con Lanczos, con antialias. A 16, 32 y 48 px esa misma tinta cubriría una fracción de píxel y se apagaría. En esos tamaños cada píxel que el trazo cubre pasa a Caliza sólida. Es el mismo mapa de tinta cuantizado a la grilla.
+El trazo del original mide unos 18 px sobre 749×893. A 180 px sigue ocupando más de un píxel y se escala con Lanczos, en Caliza sobre Carbón. A 16 px ese trazo no entra en la grilla: reescalarlo, aunque se le engorde un píxel, cierra el vano y la pestaña muestra una mancha.
+
+La pestaña no usa ese reescalado. `TAB_MARK` en `scripts/optimize-images.mjs` es una grilla de 16×16, marfil `#EAE8DF`, fondo transparente. Conserva la torre con el vano abierto, el ala de la derecha y tres raíces. 32 px y 48 px son esa misma grilla multiplicada por 2 y por 3, píxel a píxel, sin filtro.
 
 | Archivo | Tamaño | Notas |
 | --- | --- | --- |
-| `public/favicon.ico` | 16, 32 y 48 | PNG embebidos. Lo pide el navegador aunque no haya `<link>`. |
-| `public/favicon-32x32.png` | 32×32 | Icono de la pestaña. Padding 6 %. |
-| `public/apple-touch-icon.png` | 180×180 | Fondo opaco, padding 18 % para el recorte de iOS. |
+| `public/favicon.ico` | 16, 32 y 48 | PNG embebidos. `metadata.icons` lo pide con `?v=5` para saltar la caché del navegador. |
+| `public/favicon-32x32.png` | 32×32 | La grilla de 16 ×2. |
+| `public/apple-touch-icon.png` | 180×180 | Isotipo oficial, Caliza sobre Carbón, padding 18 %. |
 
 **Configuración.** `metadata.icons` en `app/layout.jsx` apunta a esos tres archivos, con `BASE` para respetar `basePath`. El layout raíz cubre Home, Proyectos, Ceibo Vidal, Nosotros y Contacto. No hay `app/favicon.ico` ni iconos de Vercel, Next.js u otra plantilla.
 
 **Reglas**
 
 - Regenerar desde el isotipo oficial. No sustituir por el logo de Ceibo ni por un icono de plantilla.
-- El trazo del favicon es Caliza y el fondo es Carbón. La versión blanca del logo es para header, footer e intro.
-- A 32 y 48 px se leen la torre, el vano y las raíces. A 16 px el vano no entra en la grilla: queda la silueta de la torre sobre la masa de raíces. No engrosar el dibujo a mano para “mejorar” el 16.
+- El trazo de la pestaña es marfil y el fondo es transparente. Caliza sobre Carbón queda solo en el apple touch icon. La versión blanca del logo es para header, footer e intro.
+- No volver a generar la pestaña reescalando `raices_logo_icono.png`. Si cambia el isotipo oficial, se redibuja `TAB_MARK` a 16 px.
 - Open Graph sigue aparte: `public/assets/brand/og-image.png`, logo completo en blanco sobre `#21201E`.

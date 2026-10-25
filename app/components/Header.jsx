@@ -67,13 +67,16 @@ export default function Header() {
       </button>
 
       <nav className="site-nav" id="site-nav" aria-label="Navegación principal">
-        {navItems.map((item) => (
+        {navItems.map((item, index) => (
           <Link
             key={item.href}
             href={item.href}
             onClick={close}
             className={isActive(item.href) ? 'is-active' : undefined}
             aria-current={isActive(item.href) ? 'page' : undefined}>
+            <span className="nav-index" aria-hidden="true">
+              {String(index + 1).padStart(2, '0')}
+            </span>
             {item.label}
           </Link>
         ))}

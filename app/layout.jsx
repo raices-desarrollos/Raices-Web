@@ -52,11 +52,11 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: `${BASE}/favicon.ico`, sizes: 'any' },
-      { url: `${BASE}/favicon-32x32.png`, sizes: '32x32', type: 'image/png' },
+      { url: `${BASE}/favicon.ico?v=5`, sizes: 'any' },
+      { url: `${BASE}/favicon-32x32.png?v=5`, sizes: '32x32', type: 'image/png' },
     ],
     apple: [{ url: `${BASE}/apple-touch-icon.png`, sizes: '180x180', type: 'image/png' }],
-    shortcut: `${BASE}/favicon.ico`,
+    shortcut: `${BASE}/favicon.ico?v=5`,
   },
   robots: { index: true, follow: true },
 };

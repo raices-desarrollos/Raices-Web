@@ -28,6 +28,10 @@ export default function FeaturedProject({ project }) {
               <span key={index} style={{ '--shutter': index }} />
             ))}
           </span>
+          <span className="featured-hover-meta">
+            <span className="label">Ubicación</span>
+            <span>{project.locationLong}</span>
+          </span>
           <span className="featured-media-note label">{project.cover.note || 'Render de referencia'}</span>
         </Link>
 
@@ -53,7 +57,10 @@ export default function FeaturedProject({ project }) {
           <dl className="featured-facts">
             <div>
               <dt className="label">Programa</dt>
-              <dd>PB + 4 pisos · 12 unidades</dd>
+              <dd>
+                {project.program}
+                <span className="fact-sub">{project.unitsLabel}</span>
+              </dd>
             </div>
             <div>
               <dt className="label">Entrega</dt>

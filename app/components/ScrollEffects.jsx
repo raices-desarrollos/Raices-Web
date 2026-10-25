@@ -12,7 +12,9 @@ export default function ScrollEffects() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const elements = document.querySelectorAll('.reveal:not(.is-visible), .reveal-stagger > *:not(.is-visible)');
+    const elements = document.querySelectorAll(
+      '.reveal:not(.is-visible), .reveal-stagger > *:not(.is-visible), .mask-reveal:not(.is-visible)',
+    );
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if (reduceMotion || !('IntersectionObserver' in window)) {

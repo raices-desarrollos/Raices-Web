@@ -70,6 +70,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip;
   font-family: var(--font-body);
   font-size: 15.5px;
   line-height: 1.7;
@@ -446,6 +447,15 @@ p + p {
   text-transform: uppercase;
   color: var(--text-soft);
   transition: color var(--dur-fast) ease;
+}
+
+.nav-index {
+  margin-right: 8px;
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  color: var(--accent);
 }
 
 .site-nav a:not(.button)::after {
@@ -1882,5 +1892,22 @@ body.past-hero .whatsapp-float {
   .reveal-stagger > * {
     opacity: 1;
     transform: none;
+  }
+}
+
+@media (scripting: none) {
+  .reveal,
+  .reveal-stagger > *,
+  .mask-reveal,
+  .rt-word > span,
+  .hero-line > span,
+  .gallery-trigger {
+    opacity: 1;
+    transform: none;
+    clip-path: none;
+  }
+
+  .media-shutter {
+    display: none;
   }
 }
