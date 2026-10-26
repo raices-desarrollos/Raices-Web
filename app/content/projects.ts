@@ -1,5 +1,5 @@
 import { ceiboVidalContent } from './ceibo-vidal';
-import { brand, routes } from './shared';
+import { routes } from './shared';
 
 /**
  * Registry de desarrollos. Cada entrada es un archivo propio en `app/content/`.
@@ -24,20 +24,23 @@ export function getProject(slug: string): ProjectContent | undefined {
 
 export const projectsContent = {
   seo: {
-    title: 'Proyectos',
-    description:
-      'Desarrollos de Raíces Developers en Buenos Aires. Ceibo Vidal, en Saavedra: planta baja y cuatro pisos con balcones, terraza propia y verde integrado desde el proyecto.',
-    ogTitle: `Proyectos · ${brand.name}`,
+    title: 'Proyectos | Raíces Developers',
+    description: 'Conocé los desarrollos inmobiliarios de Raíces Developers en Buenos Aires.',
+    ogTitle: 'Proyectos | Raíces Developers',
   },
   header: {
     kicker: 'Proyectos',
-    title: 'Edificios con nombre propio.',
-    lead: 'Cada desarrollo de Raíces toma el nombre de un árbol autóctono y se piensa para un barrio concreto. Hoy, Ceibo Vidal en Saavedra.',
+    title: 'Nuestros desarrollos.',
+    /**
+     * Adaptación editorial, no es cita literal del brief.
+     * Ver docs/CONTENT_REVIEW.md.
+     */
+    lead: 'Cada proyecto sigue una idea simple: hacer edificios en los que nosotros mismos viviríamos.',
   },
   listLabel: 'Desarrollos',
   card: {
-    viewLabel: 'Ver el proyecto',
-    ariaSuffix: 'ver el proyecto',
+    viewLabel: 'Descubrir el proyecto',
+    ariaSuffix: 'descubrir el proyecto',
   },
   upcoming: {
     label: 'Próximos desarrollos',

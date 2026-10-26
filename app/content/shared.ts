@@ -19,7 +19,11 @@ export const asset = (path: string) => `${BASE}${path}`;
 export const brand = {
   name: 'Raíces Developers',
   shortName: 'Raíces',
-  claim: 'Naturaleza urbana con criterio.',
+  /** Mensaje principal. Brief GAMISU. */
+  idea: 'Hacemos edificios donde nosotros mismos viviríamos.',
+  /** Slogan secundario. No compite con el mensaje principal. */
+  slogan: 'Espacios para echar raíces.',
+  claim: 'Espacios para echar raíces.',
   city: 'Buenos Aires',
   logos: {
     full: { src: asset('/assets/brand/raices_logo_completo.png'), width: 789, height: 856 },
@@ -60,8 +64,9 @@ export const legacyHashRoutes = {
 } as const;
 
 export const seo = {
-  defaultTitle: `${brand.name} · ${brand.claim.replace(/\.$/, '')}`,
-  description: `${brand.name} desarrolla edificios con verde integrado desde el proyecto e identidad propia en Buenos Aires. Primer proyecto: Ceibo Vidal, Vidal 3849, Saavedra, CABA.`,
+  defaultTitle: 'Raíces Developers | Desarrolladora inmobiliaria en Buenos Aires',
+  description:
+    'Hacemos edificios donde nosotros mismos viviríamos. Conocé Raíces Developers y nuestros desarrollos en Buenos Aires.',
   locale: 'es_AR',
   ogImageAlt: `Logo de ${brand.name}`,
 } as const;
@@ -85,14 +90,14 @@ export const ui = {
   labels: {
     program: 'Programa',
     delivery: 'Entrega',
-    deliveryPrefixed: (year: string) => `Prevista ${year}`,
+    deliveryPrefixed: (year: string) => `Prevista para ${year}`,
     location: 'Ubicación',
     synthesis: 'Síntesis',
   },
   cta: {
-    title: 'Construyamos lo que viene.',
-    text: 'Para compradores e inversores que quieran construir ciudad con más naturaleza.',
-    link: { label: 'Hablemos', href: routes.contact },
+    title: 'Hablemos.',
+    text: 'Te respondemos con información del proyecto, planos y unidades disponibles.',
+    link: { label: 'Contacto', href: routes.contact },
   },
   notFound: {
     kicker: 'Error 404',

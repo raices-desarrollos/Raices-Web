@@ -14,7 +14,7 @@ La interfaz parte de Carbón `#101210` y Caliza `#D1C7BA`. El resto de tokens se
 
 **Personalidad visual:** dark architectural luxury. Editorial, cinematográfica y sobria. Arquitectura contemporánea, atención al detalle, confianza sin lenguaje de inmobiliaria genérica.
 
-**Conceptos:** naturaleza urbana con criterio; edificios con nombre de árbol autóctono; verde pensado desde el proyecto; identidad propia.
+**Conceptos:** hacemos edificios donde nosotros mismos viviríamos; criterio, simplicidad y soluciones duraderas. El slogan secundario es «Espacios para echar raíces.». La vegetación integrada sigue en la identidad arquitectónica y no reemplaza ese mensaje.
 
 **Principios**
 
@@ -115,14 +115,14 @@ El logo está compuesto en Montserrat y no se reemplaza. Los titulares de la int
 | Elemento | Familia | Tamaño | Peso | Alto de línea | Tracking |
 | --- | --- | --- | --- | --- | --- |
 | h1 | Fraunces | `clamp(48px, 7.2vw, 108px)` | 400 | 0.96 | -0.03em |
-| Hero, línea chica | Fraunces | `clamp(28px, 3.2vw, 52px)` | 400 | 1.05 | -0.03em |
-| Hero, “echar raíces.” | Fraunces itálica | `clamp(46px, 11vw, 138px)` | 400 | 0.88 | -0.04em |
-| Hero de proyecto | Fraunces itálica | `clamp(40px, 5.2vw, 84px)` | 400 | 0.98 | -0.03em |
+| Hero, línea chica | Fraunces | `clamp(22px, 2.4vw, 34px)` | 400 | 1.15 | -0.03em |
+| Hero, mensaje principal | Fraunces itálica | `clamp(36px, 4.8vw, 72px)` | 400 | 1.02 | -0.035em |
+| Hero de proyecto | Fraunces itálica | `clamp(36px, 4.6vw, 72px)` | 400 | 1.05 | -0.03em |
 | h2 | Display | `clamp(34px, 4.6vw, 64px)` | 400 | 1.06 | -0.018em |
 | About, línea chica | Fraunces | `clamp(28px, 3vw, 42px)` | 400 | 1.08 | -0.025em |
-| About, “deja huella.” | Fraunces itálica | `clamp(40px, 5.4vw, 72px)` | 400 | 0.96 | -0.03em |
+| About, énfasis | Fraunces itálica | `clamp(40px, 5.4vw, 72px)` | 400 | 0.96 | -0.03em |
 | Featured, nombre | Fraunces | `clamp(40px, 5vw, 72px)` | 400 | hereda | hereda |
-| h2 del CTA | Display | `clamp(44px, 7vw, 96px)` | 400 | hereda 1.06 | hereda |
+| h2 del CTA | Display | `clamp(44px, 7vw, 96px)`; si la frase es larga, `clamp(34px, 4.6vw, 64px)` | 400 | 1.06 | hereda |
 | h3 | Display | `clamp(20px, 2vw, 26px)` | 400 | 1.3 | 0.005em |
 | Cuerpo | Montserrat | 15.5px | 400 | 1.7 | 0 |
 | Lead del hero | Montserrat | `clamp(16px, 1.5vw, 18px)` | 400 | 1.7 | 0 |
@@ -172,8 +172,8 @@ Los titulares no van en negrita. Mayúsculas solo en kickers, labels, cotas, bot
 - `min-height: 100svh`. Imagen `balcones-tensores.webp` a cover, Ken Burns de 32s y parallax con `--hero-progress`. Recorte `46% 48%` (en mobile `42% 38%`) para que se lea el balcón y la trepadora.
 - Si existe `NEXT_PUBLIC_HERO_VIDEO`, un `<video>` mudo, en loop, con esa imagen de poster. Hoy no hay video: no se usa stock.
 - Velos lineales hacia Carbón, abiertos en el centro, más un grano SVG al 12 %. El velo usa `--veil`, no un negro inventado.
-- Kicker, h1, lead y dos botones: “Explorar proyectos” (`.button-fill`) y “Contactanos” (`.button`).
-- El lead es: “Desarrollamos espacios que integran arquitectura, diseño y nuevas formas de habitar.”
+- Kicker, h1, lead y dos botones: “Explorar proyectos” (`.button-fill`) y “Conocer Raíces” (`.button`).
+- El h1 es el mensaje principal, en dos líneas: “Hacemos edificios” y, en itálica, “donde nosotros mismos viviríamos.”. El ancho máximo es `16ch` para que la segunda línea corte sola.
 - Las dos líneas del h1 suben desde una máscara (`.hero-line > span`, `lineRise`, 900ms). Mientras `data-intro="playing"`, esa animación queda en pausa.
 - Pie: cota `Raíces Developers · Buenos Aires` y la nota “Imagen de referencia”.
 - Indicador `.scroll-cue` hacia `#raices`. Se oculta bajo 980px.
@@ -184,7 +184,7 @@ Los titulares no van en negrita. Mayúsculas solo en kickers, labels, cotas, bot
 
 - Misma altura de pantalla que la Home. La fachada ocupa todo el fondo (`object-position: 62% 42%`).
 - Velo con Carbón (`--veil`), no el tinta `#21201E`.
-- Logo Ceibo, kicker, titular itálico y dos acciones: “Ver tipologías” y WhatsApp directo.
+- Logo Ceibo como nombre del proyecto, kicker “Ceibo Vidal · Saavedra”, titular itálico “Un equilibrio entre ciudad y aire libre.” y dos acciones: “Explorar tipologías” y WhatsApp directo.
 - Nota “Render de referencia” en el pie.
 
 ### Botones (`.button`)
@@ -203,7 +203,7 @@ Los titulares no van en negrita. Mayúsculas solo en kickers, labels, cotas, bot
 
 ### Presentación institucional (`.about-teaser`)
 
-- Grilla `1.05fr / 0.82fr`, ancho máximo 1280px. Título a la izquierda, partido como el hero: “Arquitectura que” en Fraunces `clamp(28px, 3vw, 42px)` y “deja huella.” en itálica `clamp(40px, 5.4vw, 72px)`. A la derecha, `terraza-verde.webp` a cover, alto mínimo 640px.
+- Grilla `1.05fr / 0.82fr`, ancho máximo 1280px. Título a la izquierda, partido como el hero: “Pensados para” en Fraunces `clamp(28px, 3vw, 42px)` y “quienes los habitan.” en itálica `clamp(40px, 5.4vw, 72px)`, con ancho máximo `14ch`. A la derecha, `terraza-verde.webp` a cover, alto mínimo 640px.
 - La foto es referencia, no una vista oficial del edificio. Lleva “Imagen de referencia” en Caliza sobre un velo `rgba(var(--veil), 0.78)`.
 - Entra con `.mask-reveal`: el `clip-path` recorta la imagen, no la caja. La figura también lleva `.reveal` para que IntersectionObserver vea el borde real (un clip a 0 px no interseca y la foto no aparecía).
 - Bajo 980px la foto pasa entre el título y el texto, relación 4 / 5.
@@ -242,12 +242,12 @@ Los titulares no van en negrita. Mayúsculas solo en kickers, labels, cotas, bot
 
 ### Footer (`.site-footer`)
 
-- Logo completo en Caliza (`logo-on-dark`), claim, navegación, email, WhatsApp, dirección de Ceibo Vidal.
+- Logo completo en Caliza (`logo-on-dark`), slogan secundario “Espacios para echar raíces.”, navegación, email, WhatsApp, dirección de Ceibo Vidal.
 - Línea legal: los renders son ilustrativos.
 
 ### Cierre (`.cta-band`)
 
-- Título hasta 96px. Al revelarse, una regla arena de 72 × 2px crece desde la izquierda (900ms, delay 200ms).
+- Título hasta 96px. Si la frase supera los 28 caracteres (cierre de la Home), baja a `clamp(34px, 4.6vw, 64px)` y el ancho pasa a `14ch`. Al revelarse, una regla arena de 72 × 2px crece desde la izquierda (900ms, delay 200ms).
 - En la Home lleva atmósfera: `terraza-verde.webp` al 34 % de opacidad, saturación 0.7, bajo un velo a Carbón y un radial de Caliza al 8 %. En páginas internas no se repite la foto.
 - En la Home la cota es “Buenos Aires”.
 
@@ -358,7 +358,7 @@ Otras fichas vistas y no implementadas: Cinematic landing Hero (11494), Cinemati
 ## K. Registro de decisiones
 
 1. **Se trabajó sobre el sitio existente** (Next.js, App Router, export estático), no sobre un proyecto nuevo. Puntos de recuperación: `backup/pre-premium-pass` en `d658f12` y `backup/pre-art-direction-2026-10-25` en `95ed0a2`.
-2. **Fraunces en los titulares.** M PLUS U se mantiene en la carpeta de venta y en el archivo de marca, pero en la web los títulos pasaron a Fraunces. La itálica se usa en “echar raíces.” y en el titular de Ceibo Vidal. Montserrat sigue en navegación, botones, párrafos y en el wordmark.
+2. **Fraunces en los titulares.** M PLUS U se mantiene en la carpeta de venta y en el archivo de marca, pero en la web los títulos pasaron a Fraunces. La itálica se usa en el mensaje principal y en el titular de Ceibo Vidal. Montserrat sigue en navegación, botones, párrafos y en el wordmark.
 3. **Fondo Carbón `#101210`, texto Caliza `#D1C7BA`.** El negro más profundo `#0A0D0B` y el marfil `#EAE8DF` se abandonaron: alejaban la web del lockup oficial. El tinta de carpeta sigue como token de marca.
 4. **Acento arena, no bronce.** `--bronze` (`#A58E68`) está declarado y no pinta componentes. El acento real es `--arena` (`#C4A97D`), que además cumple AAA sobre `--bg`.
 5. **Header sólido.** Se quitó el `backdrop-filter`. El vidrio no aporta y contradice la dirección.

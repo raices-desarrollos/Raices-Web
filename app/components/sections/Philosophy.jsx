@@ -10,7 +10,7 @@ export default function Philosophy() {
       <SectionHeader>{philosophy.sectionLabel}</SectionHeader>
       <div className="split-grid">
         <div className="reveal">
-          <p className="kicker">{philosophy.kicker}</p>
+          {philosophy.kicker ? <p className="kicker">{philosophy.kicker}</p> : null}
           <h2 id="filosofia-title" className="title-stroke">
             {philosophy.title}
           </h2>

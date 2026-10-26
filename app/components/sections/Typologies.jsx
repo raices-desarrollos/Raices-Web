@@ -24,6 +24,7 @@ export default function Typologies({ content, renderNote }) {
             <div className="typology-copy">
               <span className="label">{typology.department}</span>
               <h3>{typology.title}</h3>
+              {typology.program ? <p className="typology-program">{typology.program}</p> : null}
               <dl>
                 {typology.areas.map((area) => (
                   <div key={area.label}>

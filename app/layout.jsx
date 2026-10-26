@@ -80,7 +80,7 @@ export default function RootLayout({ children }) {
           }}
         />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <a className="skip-link" href="#contenido">
           {ui.skipToContent}
         </a>

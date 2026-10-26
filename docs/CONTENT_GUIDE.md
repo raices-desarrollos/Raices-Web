@@ -36,15 +36,15 @@ Ejemplos reales:
 - Tres principios: `homeContent.about.principles`.
 - Texto del proyecto destacado (el nombre, la ubicación y el resumen salen de Ceibo Vidal): `homeContent.featured`.
 
-El cierre “Construyamos lo que viene.” se comparte con otras páginas. Está en `app/content/shared.ts`, dentro de `ui.cta`.
+El cierre de la Home está en `homeContent.cta`. El de las páginas interiores está en `app/content/shared.ts`, dentro de `ui.cta`. La voz y las fuentes oficiales están en `docs/CONTENT_STRATEGY.md`. Las cifras en conflicto, en `docs/CONTENT_REVIEW.md`.
 
 ```ts
 export const homeContent = {
   hero: {
     kicker: 'Desarrolladora inmobiliaria · Buenos Aires',
-    titleQuiet: 'Espacios para',
-    titleEmphasis: 'echar raíces.',
-    lead: 'Desarrollamos espacios que integran arquitectura, diseño y nuevas formas de habitar.',
+    titleQuiet: 'Hacemos edificios',
+    titleEmphasis: 'donde nosotros mismos viviríamos.',
+    lead: 'Creemos que un edificio debe estar pensado primero para quien lo va a habitar —y después para quien lo va a vender—.',
     primaryCta: { label: 'Explorar proyectos', href: routes.projects },
   },
   // ...
@@ -80,7 +80,7 @@ export const ceiboVidalContent = {
   address: 'Vidal 3849',
   neighborhood: 'Saavedra',
   city: 'CABA',
-  headline: 'Un edificio bajo, claro y vegetal.',
+  headline: 'Un equilibrio entre ciudad y aire libre.',
   deliveryYear: '2029',
   // ...
 } as const;
@@ -179,11 +179,13 @@ npm run build      # export estático en out/
 
 | Quiero cambiar… | Archivo |
 | --- | --- |
-| “Espacios para echar raíces.” | `home.ts` → `hero` |
-| “La ciudad también puede echar raíces.” | `about.ts` → `header.title` |
-| “Edificios con nombre propio.” | `projects.ts` → `header.title` |
+| Mensaje principal del hero | `home.ts` → `hero` |
+| Slogan secundario del footer | `shared.ts` → `brand.claim` |
+| Filosofía de Nosotros | `about.ts` |
+| “Nuestros desarrollos.” | `projects.ts` → `header.title` |
 | Superficies del monoambiente | `ceibo-vidal.ts` → `typologies.units` |
 | WhatsApp o email | `contact.ts` → `contact` |
 | Ítems del menú | `shared.ts` → `navItems` |
-| “Construyamos lo que viene.” | `shared.ts` → `ui.cta` |
+| Cierre de la Home | `home.ts` → `cta` |
+| Cierre de páginas interiores | `shared.ts` → `ui.cta` |
 | Mensaje de “página no encontrada” | `shared.ts` → `ui.notFound` |

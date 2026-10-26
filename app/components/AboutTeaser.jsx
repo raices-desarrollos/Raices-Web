@@ -36,6 +36,7 @@ export default function AboutTeaser() {
 
         <div className="about-teaser-body">
           <p className="about-teaser-lead reveal">{about.lead}</p>
+          {about.bridge ? <h3 className="about-bridge reveal">{about.bridge}</h3> : null}
 
           <ol className="principles reveal-stagger">
             {about.principles.map((principle, index) => (
@@ -48,6 +49,8 @@ export default function AboutTeaser() {
               </li>
             ))}
           </ol>
+
+          {about.quote ? <p className="quote reveal">{about.quote}</p> : null}
 
           <div className="about-teaser-foot reveal">
             <Cota className="about-cota">{about.cota}</Cota>

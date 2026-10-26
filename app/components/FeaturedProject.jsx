@@ -40,9 +40,7 @@ export default function FeaturedProject({ project }) {
         </Link>
 
         <div className="featured-copy reveal">
-          <p className="kicker">
-            {homeContent.featured.kicker} · {project.code}
-          </p>
+          <p className="kicker">{homeContent.featured.kicker}</p>
           <img
             className="featured-logo"
             src={project.logo.src}
@@ -56,7 +54,11 @@ export default function FeaturedProject({ project }) {
             <RevealText text={project.name} />
           </h2>
           <p className="featured-location">{project.locationShort}</p>
-          <p className="featured-summary">{project.summary}</p>
+          <div className="featured-summary">
+            {(project.homeParagraphs ?? [project.summary]).map((paragraph) => (
+              <p key={paragraph}>{paragraph}</p>
+            ))}
+          </div>
 
           <dl className="featured-facts">
             <div>

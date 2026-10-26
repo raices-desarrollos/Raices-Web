@@ -5,7 +5,7 @@ import { PageHeader, RevealText } from '../components/Primitives';
 import CtaBand from '../components/CtaBand';
 
 export const metadata = {
-  title: projectsContent.seo.title,
+  title: { absolute: projectsContent.seo.title },
   description: projectsContent.seo.description,
   alternates: { canonical: projectsContent.pageCanonical },
   openGraph: { url: projectsContent.pageCanonical, title: projectsContent.seo.ogTitle },

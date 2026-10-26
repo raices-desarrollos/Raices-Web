@@ -61,7 +61,7 @@ export function RevealText({ text, className = '', delay = 0 }) {
 /** Cabecera editorial de las páginas interiores. */
 export function PageHeader({ kicker, title, lead, children, id = 'page-title' }) {
   return (
-    <header className="page-header">
+    <header className={`page-header${title.length > 42 ? ' page-header-long' : ''}`}>
       <div className="page-header-inner">
         {kicker ? <p className="kicker hero-anim">{kicker}</p> : null}
         <h1 id={id} className="title-stroke">

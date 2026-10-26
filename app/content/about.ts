@@ -1,35 +1,56 @@
-import { brand, routes } from './shared';
+import { routes } from './shared';
 
+/**
+ * Filosofía institucional. Las frases de criterio, confianza y promesa son del brief GAMISU.
+ * La sección de identidad reutiliza textos ya publicados en el sitio: no están en ese brief.
+ */
 export const aboutContent = {
   seo: {
-    title: 'Nosotros',
+    title: 'Nosotros | Raíces Developers',
     description:
-      'Raíces Developers es una desarrolladora inmobiliaria de Buenos Aires. Edificios con nombre de árbol autóctono, verde integrado desde el proyecto y mirada de largo plazo.',
-    ogTitle: `Nosotros · ${brand.name}`,
+      'Conocé nuestra filosofía: criterio, simplicidad y decisiones pensadas para quienes van a habitar nuestros edificios.',
+    ogTitle: 'Nosotros | Raíces Developers',
   },
   header: {
     kicker: 'Nosotros',
-    title: 'La ciudad también puede echar raíces.',
-    lead: 'Somos una desarrolladora inmobiliaria de Buenos Aires. Hacemos edificios con identidad propia, verde integrado desde el proyecto y escala de barrio.',
+    title: 'Hacemos edificios donde nosotros mismos viviríamos.',
+    lead: 'Creemos que un edificio debe estar pensado primero para quien lo va a habitar —y después para quien lo va a vender—.',
   },
   philosophy: {
-    sectionLabel: 'Filosofía',
-    kicker: 'Naturaleza urbana',
-    title: 'La naturaleza no es decoración. Es parte del proyecto.',
+    sectionLabel: 'Qué creemos',
+    kicker: '',
+    title: 'La confianza se gana cumpliendo.',
     paragraphs: [
-      'Raíces nace para desarrollar edificios que no se sientan como piezas repetidas del mercado. Cada proyecto toma el nombre de un árbol autóctono y busca dejar algo vivo en su entorno.',
-      'El verde entra en la decisión de fachada, balcones, terraza, riego y mantenimiento. Invertir en verde es una decisión de largo plazo, y la sostenemos en cada edificio.',
+      'Comprar una propiedad es una de las decisiones más importantes en la vida de una persona.',
+      'Detrás de cada unidad hay años de trabajo, ahorro, esfuerzo y expectativas.',
     ],
-    quote: 'Raíces construye edificios que tienen historia antes de inaugurarse.',
+    quote: 'Por eso creemos que la confianza no se gana con promesas. Se gana cumpliendo.',
+  },
+  practice: {
+    id: 'construir',
+    kicker: 'Nuestra forma de construir',
+    title: 'Tomamos decisiones con criterio.',
+    lead: 'Creemos que la buena arquitectura y la buena ingeniería tienen algo en común: cuando están bien hechas, no necesitan explicarse.',
+    points: [
+      'Valoramos la simplicidad.',
+      'Preferimos las soluciones duraderas a las modas.',
+      'Nos gustan los espacios luminosos, funcionales y fáciles de vivir.',
+    ],
+  },
+  promise: {
+    id: 'promesa',
+    kicker: 'Nuestra promesa',
+    title: 'Vamos a construir cada proyecto como si fuera para nosotros.',
   },
   identity: {
-    kicker: 'Por qué Raíces',
-    title: 'Menos repetición. Más identidad propia.',
-    lead: 'Tres decisiones que definen cada proyecto de Raíces.',
+    id: 'identidad',
+    kicker: 'Identidad',
+    title: 'La naturaleza no es decoración. Es parte del proyecto.',
+    lead: 'Cada proyecto toma el nombre de un árbol autóctono y se piensa para un barrio concreto.',
     points: [
-      'Cada edificio se nombra como un árbol autóctono: Ceibo, Jacarandá, Ombú y los que vengan.',
-      'El verde es una decisión de proyecto y de marca: mejora la vida cotidiana y deja una firma reconocible.',
-      'Construimos con mirada de largo plazo: edificios que ganan valor con el tiempo y una desarrolladora con criterio propio.',
+      'El verde entra en la decisión de fachada, balcones y terraza. No es decoración: es parte del proyecto.',
+      'Edificios con nombre de árbol autóctono y una firma reconocible, pensados para un barrio concreto.',
+      'La vegetación se integra a la arquitectura y al entorno urbano.',
     ],
   },
   pageCanonical: `${routes.about}/`,

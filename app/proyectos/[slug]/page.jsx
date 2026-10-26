@@ -20,7 +20,7 @@ export async function generateMetadata({ params }) {
   const entry = getProject(slug);
   if (!entry) return {};
   return {
-    title: entry.seo.title,
+    title: { absolute: entry.seo.title },
     description: entry.seo.description,
     alternates: { canonical: entry.pageCanonical },
     openGraph: {
@@ -54,6 +54,8 @@ export default async function ProjectPage({ params }) {
           id={entry.contact.id}
           kicker={entry.contact.kicker}
           title={entry.contact.title}
+          text={entry.contact.text}
+          cota={entry.contact.note}
           defaultSubject={entry.contact.defaultSubject}
           whatsappSource="project-contact"
         />

@@ -24,10 +24,9 @@ export const social = {
 
 export const contactContent = {
   seo: {
-    title: 'Contacto',
-    description:
-      'Escribinos por WhatsApp o por el formulario para recibir información sobre Ceibo Vidal y los próximos desarrollos de Raíces Developers.',
-    ogTitle: `Contacto · ${brand.name}`,
+    title: 'Contacto | Raíces Developers',
+    description: 'Contactá a Raíces Developers para recibir información sobre nuestros proyectos inmobiliarios.',
+    ogTitle: 'Contacto | Raíces Developers',
   },
   header: {
     kicker: 'Contacto',
@@ -42,7 +41,7 @@ export const contactContent = {
   defaults: {
     kicker: 'Contacto',
     title: 'Hablemos.',
-    text: 'Para compradores e inversores que quieran construir ciudad con más naturaleza. Te respondemos con información del proyecto, planos y unidades disponibles.',
+    text: 'Te respondemos con información del proyecto, planos y unidades disponibles.',
     cota: 'Ceibo Vidal · Entrega prevista 2029',
   },
   channels: {

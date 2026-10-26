@@ -1,6 +1,5 @@
 import { homeContent } from '@/content/home';
 import { featuredProject } from '@/content/projects';
-import { ui } from '@/content/shared';
 import LogoIntro from './components/LogoIntro';
 import CinematicHero from './components/CinematicHero';
 import AboutTeaser from './components/AboutTeaser';
@@ -18,9 +17,9 @@ export default function Home() {
       <AboutTeaser />
       <FeaturedProject project={featuredProject} />
       <CtaBand
-        title={ui.cta.title}
-        text={ui.cta.text}
-        link={ui.cta.link}
+        title={homeContent.cta.title}
+        text={homeContent.cta.text}
+        link={homeContent.cta.link}
         cota={homeContent.cta.cota}
         atmosphere={homeContent.cta.atmosphere}
       />

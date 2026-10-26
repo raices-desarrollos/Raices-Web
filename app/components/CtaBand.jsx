@@ -4,7 +4,9 @@ import { Cota, RevealText } from './Primitives';
 /** Cierre de página: título grande, una frase y un único botón. */
 export default function CtaBand({ title, text, link, cota, atmosphere }) {
   return (
-    <section className={`cta-band${atmosphere ? ' has-atmosphere' : ''}`} aria-labelledby="cta-title">
+    <section
+      className={`cta-band${atmosphere ? ' has-atmosphere' : ''}${title.length > 28 ? ' cta-band-long' : ''}`}
+      aria-labelledby="cta-title">
       {atmosphere ? (
         <div className="cta-atmosphere" aria-hidden="true">
           <img src={atmosphere.src} width={atmosphere.width} height={atmosphere.height} alt="" />

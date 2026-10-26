@@ -23,13 +23,11 @@ export default function ProjectHero({ entry }) {
           fetchPriority="high"
           decoding="sync"
         />
-        <p className="kicker hero-anim">
-          {entry.code} · {entry.locationLong}
-        </p>
+        <p className="kicker hero-anim">{entry.hero.kicker || `${entry.code} · ${entry.locationLong}`}</p>
         <h1 id="hero-title" className="title-stroke">
           <RevealText text={entry.headline} className="is-visible" />
         </h1>
-        <p className="hero-lead hero-anim">{entry.summary}</p>
+        <p className="hero-lead hero-anim">{entry.hero.lead || entry.summary}</p>
         <div className="hero-actions hero-anim">
           <Link className="button button-fill" href={entry.hero.primaryCta.href}>
             {entry.hero.primaryCta.label}

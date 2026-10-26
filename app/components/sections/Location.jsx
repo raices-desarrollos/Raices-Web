@@ -11,6 +11,7 @@ export default function Location({ content }) {
           <h2 id="ubicacion-title" className="title-stroke">
             {content.intro}
           </h2>
+          {content.lead ? <p className="location-lead">{content.lead}</p> : null}
           <dl className="location-points">
             {content.points.map((point) => (
               <div key={point.label}>

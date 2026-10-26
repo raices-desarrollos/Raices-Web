@@ -23,13 +23,13 @@ const atmosphereImage = {
 
 export const homeContent = {
   hero: {
-    kicker: 'Desarrolladora inmobiliaria · Buenos Aires',
-    title: 'Espacios para echar raíces.',
-    titleQuiet: 'Espacios para',
-    titleEmphasis: 'echar raíces.',
-    lead: 'Desarrollamos espacios que integran arquitectura, diseño y nuevas formas de habitar.',
+    kicker: 'Raíces Developers',
+    title: 'Hacemos edificios donde nosotros mismos viviríamos.',
+    titleQuiet: 'Hacemos edificios',
+    titleEmphasis: 'donde nosotros mismos viviríamos.',
+    lead: 'Creemos que un edificio debe estar pensado primero para quien lo va a habitar —y después para quien lo va a vender—.',
     primaryCta: { label: 'Explorar proyectos', href: routes.projects },
-    secondaryCta: { label: 'Contactanos', href: routes.contact },
+    secondaryCta: { label: 'Conocer Raíces', href: routes.about },
     cota: `${brand.name} · ${brand.city}`,
     media: {
       video: process.env.NEXT_PUBLIC_HERO_VIDEO ? asset(process.env.NEXT_PUBLIC_HERO_VIDEO) : '',
@@ -38,36 +38,42 @@ export const homeContent = {
     },
   },
   about: {
-    kicker: 'Raíces Developers',
-    title: 'Arquitectura que deja huella.',
-    titleQuiet: 'Arquitectura que',
-    titleEmphasis: 'deja huella.',
-    lead: 'Raíces nace para desarrollar edificios que no se sientan como piezas repetidas del mercado. Cada proyecto toma el nombre de un árbol autóctono y busca dejar algo vivo en su entorno.',
+    kicker: 'Nuestra filosofía',
+    title: 'Pensados para quienes los habitan.',
+    titleQuiet: 'Pensados para',
+    titleEmphasis: 'quienes los habitan.',
+    lead: 'Por eso buscamos que cada elección tenga un propósito, que cada espacio funcione bien y que cada proyecto siga teniendo sentido con el paso de los años.',
+    bridge: 'Tomamos decisiones con criterio.',
     principles: [
       {
-        label: 'Naturaleza integrada',
-        text: 'El verde entra en la decisión de fachada, balcones, terraza, riego y mantenimiento. No es decoración: es parte del proyecto.',
+        label: 'Simplicidad',
+        text: 'Valoramos la simplicidad.',
       },
       {
-        label: 'Identidad propia',
-        text: 'Edificios con nombre de árbol autóctono y una firma reconocible, pensados para un barrio concreto y no para repetirse.',
+        label: 'Durabilidad',
+        text: 'Preferimos las soluciones duraderas a las modas.',
       },
       {
-        label: 'Largo plazo',
-        text: 'Construimos con mirada de largo plazo: edificios que ganan valor con el tiempo y una desarrolladora con criterio propio.',
+        label: 'Funcionalidad',
+        text: 'Nos gustan los espacios luminosos, funcionales y fáciles de vivir.',
       },
     ],
+    quote:
+      'La buena arquitectura y la buena ingeniería tienen algo en común: cuando están bien hechas, no necesitan explicarse.',
     link: { label: 'Conocer Raíces', href: routes.about },
-    cota: 'Naturaleza urbana con criterio',
+    cota: brand.slogan,
     image: atmosphereImage,
   },
   featured: {
-    kicker: 'Proyecto destacado',
-    link: { label: 'Descubrir el proyecto' },
-    mediaAriaSuffix: 'descubrir el proyecto',
+    kicker: 'Proyecto 001 · Saavedra',
+    link: { label: 'Descubrir Ceibo Vidal' },
+    mediaAriaSuffix: 'descubrir Ceibo Vidal',
   },
   cta: {
     cota: 'Buenos Aires',
+    title: 'Construimos espacios donde da placer vivir.',
+    text: 'Vamos a construir cada proyecto como si fuera para nosotros.',
+    link: { label: 'Conocé nuestros proyectos', href: routes.projects },
     atmosphere: atmosphereImage,
   },
 } as const;

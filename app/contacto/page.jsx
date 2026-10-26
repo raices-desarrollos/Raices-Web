@@ -3,7 +3,7 @@ import { PageHeader } from '../components/Primitives';
 import Contact from '../components/sections/Contact';
 
 export const metadata = {
-  title: contactContent.seo.title,
+  title: { absolute: contactContent.seo.title },
   description: contactContent.seo.description,
   alternates: { canonical: contactContent.pageCanonical },
   openGraph: { url: contactContent.pageCanonical, title: contactContent.seo.ogTitle },
