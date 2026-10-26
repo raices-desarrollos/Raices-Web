@@ -60,9 +60,9 @@ Los eventos (clic en WhatsApp, envío del formulario) pasan por `app/lib/analyti
 
 ## Contenido
 
-Todos los datos (marca, contacto, redes, proyecto, tipologías, ubicación, socios) viven en `app/content/site.js`. Si falta un dato, se deja un `TODO:` ahí; no se inventa.
+Los textos y datos (marca, contacto, redes, proyectos, tipologías, ubicación, socios) viven en `app/content/`, separados por página. Cómo editarlos: `docs/CONTENT_GUIDE.md`. Si falta un dato, se deja un `TODO:` ahí; no se inventa.
 
-Pendientes marcados con `TODO:` en ese archivo:
+Pendientes marcados con `TODO:` en `app/content/contact.ts`:
 
 - URL de LinkedIn de Raíces Developers.
 - URL de Instagram de Raíces Developers.
@@ -97,7 +97,7 @@ app/
   contacto/             — Formulario y canales
   cinematic.css         — Intro, hero, galería, transiciones
   globals.css           — Tokens y sistema de diseño
-  content/site.js       — Única fuente de datos (incluye `projects` para futuros desarrollos)
+  content/              — Textos y datos por página (home, about, projects, ceibo-vidal, contact, shared)
   components/           — Header, Footer, LogoIntro, CinematicHero, FeaturedProject,
                           ProjectGallery, ContactForm, WhatsAppButton, secciones de Ceibo
 

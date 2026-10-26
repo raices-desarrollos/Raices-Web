@@ -1,28 +1,25 @@
+import { aboutContent } from '@/content/about';
 import { SectionHeader } from '../Primitives';
 
 /** Filosofía de Raíces: naturaleza como decisión de proyecto. */
 export default function Philosophy() {
+  const { philosophy } = aboutContent;
+
   return (
     <section className="section section-alt" id="filosofia" aria-labelledby="filosofia-title">
-      <SectionHeader>Filosofía</SectionHeader>
+      <SectionHeader>{philosophy.sectionLabel}</SectionHeader>
       <div className="split-grid">
         <div className="reveal">
-          <p className="kicker">Naturaleza urbana</p>
+          <p className="kicker">{philosophy.kicker}</p>
           <h2 id="filosofia-title" className="title-stroke">
-            La naturaleza no es decoración. Es parte del proyecto.
+            {philosophy.title}
           </h2>
         </div>
         <div className="text-stack reveal">
-          <p>
-            Raíces nace para desarrollar edificios que no se sientan como piezas repetidas del
-            mercado. Cada proyecto toma el nombre de un árbol autóctono y busca dejar algo vivo en
-            su entorno.
-          </p>
-          <p>
-            El verde entra en la decisión de fachada, balcones, terraza, riego y mantenimiento.
-            Invertir en verde es una decisión de largo plazo, y la sostenemos en cada edificio.
-          </p>
-          <p className="quote">Raíces construye edificios que tienen historia antes de inaugurarse.</p>
+          {philosophy.paragraphs.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
+          <p className="quote">{philosophy.quote}</p>
         </div>
       </div>
     </section>

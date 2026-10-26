@@ -1,18 +1,20 @@
-import { identityPoints } from '../../content/site';
+import { aboutContent } from '@/content/about';
 
 export default function Identity() {
+  const { identity } = aboutContent;
+
   return (
     <section className="section identity-section" id="identidad" aria-labelledby="identidad-title">
       <div className="identity-copy reveal">
-        <p className="kicker">Por qué Raíces</p>
+        <p className="kicker">{identity.kicker}</p>
         <h2 id="identidad-title" className="title-stroke">
-          Menos repetición. Más identidad propia.
+          {identity.title}
         </h2>
-        <p>Tres decisiones que definen cada proyecto de Raíces.</p>
+        <p>{identity.lead}</p>
       </div>
 
       <ol className="identity-list reveal-stagger">
-        {identityPoints.map((point, index) => (
+        {identity.points.map((point, index) => (
           <li key={point}>
             <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
             <p>{point}</p>

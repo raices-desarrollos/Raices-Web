@@ -1,28 +1,27 @@
-import { routes } from '../content/site';
+import { contactContent } from '@/content/contact';
 import { PageHeader } from '../components/Primitives';
 import Contact from '../components/sections/Contact';
 
 export const metadata = {
-  title: 'Contacto',
-  description:
-    'Escribinos por WhatsApp o por el formulario para recibir información sobre Ceibo Vidal y los próximos desarrollos de Raíces Developers.',
-  alternates: { canonical: `${routes.contact}/` },
-  openGraph: { url: `${routes.contact}/`, title: 'Contacto · Raíces Developers' },
+  title: contactContent.seo.title,
+  description: contactContent.seo.description,
+  alternates: { canonical: contactContent.pageCanonical },
+  openGraph: { url: contactContent.pageCanonical, title: contactContent.seo.ogTitle },
 };
 
 export default function ContactPage() {
   return (
     <>
       <PageHeader
-        kicker="Contacto"
-        title="Hablemos."
-        lead="Te respondemos con información del proyecto, planos y unidades disponibles."
+        kicker={contactContent.header.kicker}
+        title={contactContent.header.title}
+        lead={contactContent.header.lead}
       />
       <Contact
         id="formulario"
-        kicker="Canales"
-        title="Escribinos."
-        text="Dejanos un mensaje o escribinos por WhatsApp. Te respondemos con información del proyecto, planos y unidades disponibles."
+        kicker={contactContent.section.kicker}
+        title={contactContent.section.title}
+        text={contactContent.section.text}
         headingLevel="h2"
       />
     </>

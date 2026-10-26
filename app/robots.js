@@ -1,4 +1,4 @@
-import { SITE_URL } from './content/site';
+import { SITE_URL } from '@/content/shared';
 
 export const dynamic = 'force-static';
 

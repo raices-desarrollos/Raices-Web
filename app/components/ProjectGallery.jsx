@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { ui } from '@/content/shared';
 import { SectionHeader } from './Primitives';
 
 /**
@@ -8,7 +9,7 @@ import { SectionHeader } from './Primitives';
  * y visor a pantalla completa con <dialog> nativo: teclado, foco y cierre con Escape
  * resueltos por el navegador.
  */
-export default function ProjectGallery({ items, title = 'Galería', id = 'galeria' }) {
+export default function ProjectGallery({ items, title = ui.gallery.title, id = 'galeria' }) {
   const stripRef = useRef(null);
   const dialogRef = useRef(null);
   const [active, setActive] = useState(null);
@@ -53,14 +54,14 @@ export default function ProjectGallery({ items, title = 'Galería', id = 'galeri
     <section className="section gallery-section" id={id} aria-labelledby={`${id}-title`}>
       <SectionHeader id={`${id}-title`}>{title}</SectionHeader>
 
-      <div className="gallery-strip reveal" ref={stripRef} tabIndex={0} aria-label="Imágenes del proyecto">
+      <div className="gallery-strip reveal" ref={stripRef} tabIndex={0} aria-label={ui.gallery.stripLabel}>
         {items.map((item, index) => (
           <figure className="gallery-item" key={item.src}>
             <button
               type="button"
               className="gallery-trigger"
               onClick={() => open(index)}
-              aria-label={`Ampliar: ${item.caption}`}>
+              aria-label={`${ui.gallery.enlargePrefix} ${item.caption}`}>
               <img
                 src={item.src}
                 width={item.width}
@@ -80,10 +81,10 @@ export default function ProjectGallery({ items, title = 'Galería', id = 'galeri
       </div>
 
       <div className="gallery-controls">
-        <button type="button" className="gallery-nav" onClick={() => scrollByItem(-1)} aria-label="Anterior">
+        <button type="button" className="gallery-nav" onClick={() => scrollByItem(-1)} aria-label={ui.gallery.previous}>
           ←
         </button>
-        <button type="button" className="gallery-nav" onClick={() => scrollByItem(1)} aria-label="Siguiente">
+        <button type="button" className="gallery-nav" onClick={() => scrollByItem(1)} aria-label={ui.gallery.next}>
           →
         </button>
       </div>
@@ -91,7 +92,7 @@ export default function ProjectGallery({ items, title = 'Galería', id = 'galeri
       <dialog
         className="lightbox"
         ref={dialogRef}
-        aria-label="Imagen ampliada"
+        aria-label={ui.gallery.lightbox}
         onClose={() => setActive(null)}
         onClick={(event) => {
           if (event.target === event.currentTarget) close();
@@ -107,15 +108,15 @@ export default function ProjectGallery({ items, title = 'Galería', id = 'galeri
           </figure>
         ) : null}
         <div className="lightbox-controls">
-          <button type="button" className="gallery-nav" onClick={() => step(-1)} aria-label="Anterior">
+          <button type="button" className="gallery-nav" onClick={() => step(-1)} aria-label={ui.gallery.previous}>
             ←
           </button>
-          <button type="button" className="gallery-nav" onClick={() => step(1)} aria-label="Siguiente">
+          <button type="button" className="gallery-nav" onClick={() => step(1)} aria-label={ui.gallery.next}>
             →
           </button>
         </div>
-        <button type="button" className="lightbox-close" onClick={close} aria-label="Cerrar">
-          Cerrar
+        <button type="button" className="lightbox-close" onClick={close} aria-label={ui.gallery.close}>
+          {ui.gallery.close}
         </button>
       </dialog>
     </section>

@@ -1,5 +1,7 @@
 import Link from 'next/link';
-import { brand, contact, navItems, project, projects, routes } from '../content/site';
+import { contact } from '@/content/contact';
+import { featuredProject, projects } from '@/content/projects';
+import { brand, navItems, routes, ui } from '@/content/shared';
 import { mailtoHref } from '../lib/contact';
 
 export default function Footer() {
@@ -21,8 +23,8 @@ export default function Footer() {
           <p className="site-footer-claim">{brand.claim}</p>
         </div>
 
-        <nav className="site-footer-nav" aria-label="Secciones del sitio">
-          <Link href={routes.home}>Inicio</Link>
+        <nav className="site-footer-nav" aria-label={ui.footer.sectionsLabel}>
+          <Link href={routes.home}>{ui.footer.homeLink}</Link>
           {navItems.map((item) => (
             <Link key={item.href} href={item.href}>
               {item.label}
@@ -36,13 +38,13 @@ export default function Footer() {
         </nav>
 
         <div className="site-footer-contact">
-          <span className="label">Contacto</span>
+          <span className="label">{ui.footer.contactLabel}</span>
           <a href={mailtoHref()}>{contact.email}</a>
           <a href={`https://wa.me/${contact.whatsappNumber}`} target="_blank" rel="noopener noreferrer">
             {contact.whatsappDisplay}
           </a>
           <span className="site-footer-address">
-            {project.name} · {project.address} · {project.neighborhood}, {project.city}
+            {featuredProject.name} · {featuredProject.address} · {featuredProject.neighborhood}, {featuredProject.city}
           </span>
         </div>
       </div>
@@ -51,8 +53,8 @@ export default function Footer() {
         <p>
           © {year} {brand.name} · {brand.city}
         </p>
-        <p>Renders de referencia. Las imágenes son ilustrativas y pueden variar en obra.</p>
-        <a href="#contenido">Volver arriba</a>
+        <p>{ui.footer.disclaimer}</p>
+        <a href="#contenido">{ui.footer.backToTop}</a>
       </div>
     </footer>
   );

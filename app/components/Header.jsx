@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { brand, navItems, routes } from '../content/site';
+import { brand, navItems, routes, ui } from '@/content/shared';
 
 const normalize = (path) => (path.length > 1 ? path.replace(/\/$/, '') : path);
 
@@ -44,7 +44,7 @@ export default function Header() {
   return (
     <header
       className={`site-header ${current === '/' ? 'is-home' : ''} ${scrolled ? 'is-scrolled' : ''} ${navOpen ? 'nav-active' : ''}`}>
-      <Link className="brand" href={routes.home} aria-label={`${brand.name}, ir al inicio`} onClick={close}>
+      <Link className="brand" href={routes.home} aria-label={ui.header.brandHomeLabel} onClick={close}>
         <img
           src={brand.logos.text.src}
           width={brand.logos.text.width}
@@ -58,7 +58,7 @@ export default function Header() {
       <button
         className="nav-toggle"
         type="button"
-        aria-label={navOpen ? 'Cerrar menú' : 'Abrir menú'}
+        aria-label={navOpen ? ui.header.closeMenu : ui.header.openMenu}
         aria-expanded={navOpen}
         aria-controls="site-nav"
         onClick={() => setNavOpen((value) => !value)}>
@@ -66,7 +66,7 @@ export default function Header() {
         <span />
       </button>
 
-      <nav className="site-nav" id="site-nav" aria-label="Navegación principal">
+      <nav className="site-nav" id="site-nav" aria-label={ui.header.navLabel}>
         {navItems.map((item, index) => (
           <Link
             key={item.href}
@@ -81,7 +81,7 @@ export default function Header() {
           </Link>
         ))}
         <Link className="button button-small site-nav-cta" href={routes.contact} onClick={close}>
-          Consultar
+          {ui.header.consultCta}
         </Link>
       </nav>
     </header>

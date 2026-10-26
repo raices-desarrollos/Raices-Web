@@ -1,11 +1,11 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { brand } from '../content/site';
+import { brand, ui } from '@/content/shared';
 
 const STORAGE_KEY = 'raices-intro-seen';
-const HOLD_MS = 1600; // isotipo + logotipo en pantalla
-const LEAVE_MS = 700; // telón que se levanta
+const HOLD_MS = 1800; // isotipo + logotipo en pantalla
+const LEAVE_MS = 820; // velo que se levanta y descubre el hero
 
 /*
  * Decide antes del primer pintado si la intro se muestra. Corre inline (sin esperar a
@@ -15,8 +15,9 @@ const LEAVE_MS = 700; // telón que se levanta
  */
 /**
  * Apertura cinematográfica: negro → isotipo que se revela desde la base (como raíces) →
- * logotipo → el telón se levanta y descubre el hero. ~2,3 s en total, se puede saltar con
- * clic, Enter, Espacio o Escape, y no se repite dentro de la misma sesión.
+ * logotipo → un velo se levanta con clip-path y descubre el hero, que asienta de escala.
+ * ~2,4 s en total, se puede saltar con clic, Enter, Espacio o Escape, y no se repite
+ * dentro de la misma sesión.
  * El script que decide `data-intro` vive en layout.jsx para correr antes del primer pintado.
  */
 export default function LogoIntro() {
@@ -89,7 +90,7 @@ export default function LogoIntro() {
           <span className="logo-intro-line" />
         </div>
         <button type="button" className="logo-intro-skip" onClick={leave}>
-          Saltar
+          {ui.intro.skip}
         </button>
       </div>
     </>

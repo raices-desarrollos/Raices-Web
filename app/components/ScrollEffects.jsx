@@ -31,7 +31,7 @@ export default function ScrollEffects() {
           }
         });
       },
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
+      { rootMargin: '0px 0px -4% 0px', threshold: 0.08 },
     );
 
     elements.forEach((element) => observer.observe(element));

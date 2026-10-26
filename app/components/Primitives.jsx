@@ -64,7 +64,7 @@ export function PageHeader({ kicker, title, lead, children, id = 'page-title' })
     <header className="page-header">
       <div className="page-header-inner">
         {kicker ? <p className="kicker hero-anim">{kicker}</p> : null}
-        <h1 id={id}>
+        <h1 id={id} className="title-stroke">
           <RevealText text={title} className="is-visible" />
         </h1>
         {lead ? <p className="page-lead hero-anim">{lead}</p> : null}

@@ -2,7 +2,7 @@
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { legacyHashRoutes } from '../content/site';
+import { legacyHashRoutes } from '@/content/shared';
 
 /** Lleva las anclas de la landing anterior (`/#tipologias`, `/#contacto`…) a su página nueva. */
 export default function LegacyHashRedirect() {

@@ -1,9 +1,9 @@
 import Link from 'next/link';
-import { project } from '../../content/site';
+import { ui } from '@/content/shared';
 import { Cota, Picture, RevealText } from '../Primitives';
 import WhatsAppLink from '../WhatsAppLink';
 
-/** Hero de la página del proyecto: render de fachada en columna derecha con velo hacia Tinta. */
+/** Hero de la página del proyecto: fachada a pantalla completa, mismo velo que la Home. */
 export default function ProjectHero({ entry }) {
   return (
     <section className="hero project-hero" id="inicio" aria-labelledby="hero-title">
@@ -31,11 +31,11 @@ export default function ProjectHero({ entry }) {
         </h1>
         <p className="hero-lead hero-anim">{entry.summary}</p>
         <div className="hero-actions hero-anim">
-          <Link className="button button-fill" href="#tipologias">
-            Ver tipologías
+          <Link className="button button-fill" href={entry.hero.primaryCta.href}>
+            {entry.hero.primaryCta.label}
           </Link>
           <WhatsAppLink source="project-hero" className="button">
-            Consultar por WhatsApp
+            {entry.hero.secondaryCta.label || ui.whatsapp.consultLabel}
           </WhatsAppLink>
         </div>
       </div>
@@ -44,7 +44,7 @@ export default function ProjectHero({ entry }) {
         <Cota className="hero-cota">
           {entry.name} · {entry.locationLong}
         </Cota>
-        <span className="hero-note label">{project.renderNote}</span>
+        <span className="hero-note label">{entry.renderNote}</span>
       </div>
     </section>
   );

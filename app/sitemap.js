@@ -1,4 +1,4 @@
-import { SITE_URL, projects, routes } from './content/site';
+import { SITE_URL, projects, routes } from '@/content/index';
 
 export const dynamic = 'force-static';
 

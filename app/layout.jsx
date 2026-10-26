@@ -1,7 +1,7 @@
 import { Fraunces, Montserrat } from 'next/font/google';
 import './globals.css';
 import './cinematic.css';
-import { BASE, SITE_URL, brand, project } from './content/site';
+import { BASE, SITE_URL, brand, seo, ui } from '@/content/shared';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
@@ -23,31 +23,28 @@ const body = Montserrat({
   variable: '--font-montserrat',
 });
 
-const defaultTitle = `${brand.name} · ${brand.claim.replace(/\.$/, '')}`;
-const description = `${brand.name} desarrolla edificios con verde integrado desde el proyecto e identidad propia en Buenos Aires. Primer proyecto: ${project.name}, ${project.address}, ${project.neighborhood}, ${project.city}.`;
-
 export const metadata = {
   metadataBase: new URL(`${SITE_URL}/`),
   title: {
-    default: defaultTitle,
+    default: seo.defaultTitle,
     template: `%s · ${brand.name}`,
   },
-  description,
+  description: seo.description,
   applicationName: brand.name,
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
-    locale: 'es_AR',
+    locale: seo.locale,
     url: '/',
     siteName: brand.name,
-    title: defaultTitle,
-    description,
-    images: [{ url: brand.ogImage, width: 1200, height: 630, alt: `Logo de ${brand.name}` }],
+    title: seo.defaultTitle,
+    description: seo.description,
+    images: [{ url: brand.ogImage, width: 1200, height: 630, alt: seo.ogImageAlt }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: defaultTitle,
-    description,
+    title: seo.defaultTitle,
+    description: seo.description,
     images: [brand.ogImage],
   },
   icons: {
@@ -62,7 +59,7 @@ export const metadata = {
 };
 
 export const viewport = {
-  themeColor: '#0A0D0B',
+  themeColor: '#101210',
   colorScheme: 'dark',
   width: 'device-width',
   initialScale: 1,
@@ -70,7 +67,11 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="es" className={`${display.variable} ${body.variable}`} suppressHydrationWarning>
+    <html
+      lang="es"
+      className={`${display.variable} ${body.variable}`}
+      data-scroll-behavior="smooth"
+      suppressHydrationWarning>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -81,7 +82,7 @@ export default function RootLayout({ children }) {
       </head>
       <body>
         <a className="skip-link" href="#contenido">
-          Saltar al contenido
+          {ui.skipToContent}
         </a>
         <Header />
         {children}

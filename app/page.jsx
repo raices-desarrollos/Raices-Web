@@ -1,4 +1,6 @@
-import { home, projects } from './content/site';
+import { homeContent } from '@/content/home';
+import { featuredProject } from '@/content/projects';
+import { ui } from '@/content/shared';
 import LogoIntro from './components/LogoIntro';
 import CinematicHero from './components/CinematicHero';
 import AboutTeaser from './components/AboutTeaser';
@@ -8,16 +10,20 @@ import LegacyHashRedirect from './components/LegacyHashRedirect';
 
 /** Home institucional de Raíces. El detalle de cada desarrollo vive en /proyectos/[slug]. */
 export default function Home() {
-  const featured = projects[0];
-
   return (
     <>
       <LogoIntro />
       <LegacyHashRedirect />
       <CinematicHero />
       <AboutTeaser />
-      <FeaturedProject project={featured} />
-      <CtaBand title={home.cta.title} text={home.cta.text} link={home.cta.link} cota="Buenos Aires" />
+      <FeaturedProject project={featuredProject} />
+      <CtaBand
+        title={ui.cta.title}
+        text={ui.cta.text}
+        link={ui.cta.link}
+        cota={homeContent.cta.cota}
+        atmosphere={homeContent.cta.atmosphere}
+      />
     </>
   );
 }

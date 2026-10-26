@@ -1,5 +1,7 @@
+import { ui } from '@/content/shared';
+
 /** Banda de síntesis: tres datos cortos con etiqueta. */
-export default function IntroBand({ items, label = 'Síntesis' }) {
+export default function IntroBand({ items, label = ui.labels.synthesis }) {
   return (
     <section className="intro-band reveal-stagger" aria-label={label}>
       {items.map((item) => (

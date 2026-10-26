@@ -6,6 +6,8 @@
 :root {
   /* Paleta de marca */
   --tinta: #21201e;
+  --carbon: #101210;
+  --caliza: #d1c7ba;
   --blanco: #f8f7f4;
   --lino: #f0ede6;
   --arena: #c4a97d;
@@ -14,22 +16,23 @@
   --ceibo: #b85c42;
   --niebla: #6e6f68;
 
-  /* Tokens semánticos — dark architectural luxury, sobre la paleta oficial. */
-  --bg: #0a0d0b;
-  --bg-alt: #101812;
-  --surface: #161a17;
+  /* Tokens semánticos — dark architectural luxury, a partir de Carbón y Caliza. */
+  --bg: var(--carbon);
+  --bg-alt: #161714;
+  --surface: #1c1d1a;
   --surface-2: #19382c;
   --surface-light: var(--lino);
-  --text: #eae8df;
-  --text-soft: rgba(234, 232, 223, 0.78);
-  --muted: #a8a69c; /* Niebla aclarada para cumplir AA sobre el fondo nuevo */
+  --text: var(--caliza);
+  --text-soft: rgba(209, 199, 186, 0.78);
+  --muted: #a89e90;
   --accent: var(--arena);
   --bronze: #a58e68;
   --accent-green: var(--liquen);
   --green-deep: var(--musgo);
-  --line: rgba(234, 232, 223, 0.14);
-  --line-strong: rgba(234, 232, 223, 0.32);
+  --line: rgba(209, 199, 186, 0.16);
+  --line-strong: rgba(209, 199, 186, 0.34);
   --line-on-light: rgba(133, 96, 64, 0.22);
+  --veil: 16, 18, 16;
   --wa: #25d366;
 
   --radius: 8px;
@@ -124,9 +127,9 @@ figure {
   outline-offset: 3px;
 }
 
-/* Logos de trazo negro sobre fondo oscuro → versión blanca (sin recolorear el archivo). */
+/* Logos de trazo negro sobre Carbón → Caliza (sin redibujar el archivo). */
 .logo-on-dark {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(87%) sepia(8%) saturate(280%) hue-rotate(346deg) brightness(92%) contrast(88%);
 }
 
 .skip-link {
@@ -298,12 +301,15 @@ p + p {
    -------------------------------------------------------------------------- */
 
 .button {
+  position: relative;
+  z-index: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   min-height: 46px;
   padding: 13px 24px;
+  overflow: hidden;
   border: 1px solid var(--text);
   border-radius: var(--radius-button);
   background: transparent;
@@ -316,16 +322,30 @@ p + p {
   text-transform: uppercase;
   cursor: pointer;
   transition:
-    background var(--dur-fast) ease,
-    border-color var(--dur-fast) ease,
-    color var(--dur-fast) ease;
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease);
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--green-deep);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform var(--dur-fast) var(--ease);
 }
 
 .button:hover,
 .button:focus-visible {
-  background: var(--green-deep);
   border-color: var(--green-deep);
-  color: var(--text);
+  color: var(--blanco);
+}
+
+.button:hover::before,
+.button:focus-visible::before {
+  transform: scaleY(1);
 }
 
 .button-fill {
@@ -334,9 +354,12 @@ p + p {
   color: var(--bg);
 }
 
+.button-fill::before {
+  background: var(--accent);
+}
+
 .button-fill:hover,
 .button-fill:focus-visible {
-  background: var(--accent);
   border-color: var(--accent);
   color: var(--bg);
 }
@@ -446,7 +469,7 @@ p + p {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-soft);
-  transition: color var(--dur-fast) ease;
+  transition: color var(--dur-fast) var(--ease);
 }
 
 .nav-index {
@@ -456,6 +479,14 @@ p + p {
   font-weight: 400;
   letter-spacing: 0.06em;
   color: var(--accent);
+  opacity: 0.72;
+  transition: opacity var(--dur-fast) var(--ease);
+}
+
+.site-nav a:not(.button):hover .nav-index,
+.site-nav a:not(.button):focus-visible .nav-index,
+.site-nav a.is-active .nav-index {
+  opacity: 1;
 }
 
 .site-nav a:not(.button)::after {
@@ -774,7 +805,7 @@ p + p {
 }
 
 .project-figure {
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
   border: var(--line-width) solid var(--line);
   background: var(--surface);
@@ -806,7 +837,7 @@ p + p {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border: var(--line-width) solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
   background: var(--surface);
 }
@@ -884,7 +915,7 @@ p + p {
 /* Lámina técnica: planos (líneas oscuras) sobre bloque Lino. */
 .plan-sheet {
   padding: clamp(14px, 2vw, 28px);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface-light);
 }
 
@@ -912,7 +943,7 @@ p + p {
   display: grid;
   grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
   border: var(--line-width) solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
   background: var(--surface);
 }
@@ -1017,7 +1048,7 @@ p + p {
   display: grid;
   grid-template-rows: auto 1fr;
   border: var(--line-width) solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
   background: var(--surface);
 }
@@ -1316,10 +1347,11 @@ p + p {
 .contact-form {
   display: grid;
   gap: 24px;
-  padding: clamp(24px, 3.5vw, 40px);
-  border: var(--line-width) solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
+  padding: clamp(8px, 2vw, 16px) 0 0;
+  border: 0;
+  border-top: var(--line-width) solid var(--line);
+  border-radius: 0;
+  background: transparent;
 }
 
 .field {
@@ -1730,7 +1762,7 @@ body.past-hero .whatsapp-float {
     gap: 0;
     padding: 8px var(--gutter) 24px;
     border-bottom: var(--line-width) solid var(--line);
-    background: rgba(10, 13, 11, 0.98);
+    background: rgba(var(--veil), 0.98);
     transform: translateY(-130%);
     transition: transform var(--dur-fast) var(--ease);
     visibility: hidden;
@@ -1770,8 +1802,13 @@ body.past-hero .whatsapp-float {
   }
 
   .hero-scrim {
-    background:
-      linear-gradient(180deg, rgba(33, 32, 30, 0.6) 0%, rgba(33, 32, 30, 0.62) 30%, rgba(33, 32, 30, 0.9) 65%, var(--bg) 100%);
+    background: linear-gradient(
+      180deg,
+      rgba(var(--veil), 0.42) 0%,
+      rgba(var(--veil), 0.5) 30%,
+      rgba(var(--veil), 0.82) 65%,
+      var(--bg) 100%
+    );
   }
 
   .typology-sheet {
@@ -1899,9 +1936,12 @@ body.past-hero .whatsapp-float {
   .reveal,
   .reveal-stagger > *,
   .mask-reveal,
+  .mask-reveal img,
   .rt-word > span,
   .hero-line > span,
-  .gallery-trigger {
+  .gallery-trigger,
+  .logo-intro,
+  .cine-hero-media {
     opacity: 1;
     transform: none;
     clip-path: none;
