@@ -21,9 +21,11 @@ export const brand = {
   shortName: 'Raíces',
   /** Mensaje principal. Brief GAMISU. */
   idea: 'Hacemos edificios donde nosotros mismos viviríamos.',
-  /** Slogan secundario. No compite con el mensaje principal. */
-  slogan: 'Espacios para echar raíces.',
-  claim: 'Espacios para echar raíces.',
+  /**
+   * Slogan vigente. No hace falta repetirlo en cada página. «Espacios para echar raíces» fue
+   * DESCARTADO definitivamente: no escribirlo en ningún componente, contenido, SEO ni documento.
+   */
+  slogan: 'Espacios para habitar',
   city: 'Buenos Aires',
   logos: {
     full: { src: asset('/assets/brand/raices_logo_completo.png'), width: 789, height: 856 },
@@ -93,6 +95,7 @@ export const ui = {
     deliveryPrefixed: (year: string) => `Prevista para ${year}`,
     location: 'Ubicación',
     synthesis: 'Síntesis',
+    featuredStates: 'Imágenes del proyecto',
   },
   cta: {
     title: 'Hablemos.',
@@ -115,9 +118,19 @@ export const ui = {
     next: 'Siguiente',
     lightbox: 'Imagen ampliada',
     close: 'Cerrar',
+    thumbsLabel: 'Miniaturas',
+    of: 'de',
+    viewerLabel: 'Visor de imágenes',
   },
   whatsapp: {
     consultLabel: 'Consultar por WhatsApp',
+  },
+  contact: {
+    writeUs: 'Escribinos',
+    typologyInquiry: 'Consultar por esta tipología',
+  },
+  typologies: {
+    tabsLabel: 'Tipologías',
   },
   intro: {
     skip: 'Saltar',

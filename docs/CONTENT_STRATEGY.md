@@ -8,9 +8,9 @@ Documento permanente de voz. Los textos editables viven en `app/content/`. Si un
 
 Es la idea central del brief de marca (GAMISU). Es el título del hero de la home y de Nosotros. No se reemplaza por el slogan secundario ni por otra fórmula.
 
-**Slogan secundario.** Espacios para echar raíces.
+**Slogan vigente.** Espacios para habitar.
 
-Queda en el footer (`brand.claim`) y como cota de la presentación de la home. No encabeza el hero.
+Queda en el footer (`brand.slogan`) y como cota de Filosofía; no hace falta repetirlo en cada página. No encabeza el hero. «Espacios para echar raíces» fue descartado definitivamente: no usarlo. El cierre de la home usa «Construimos espacios donde da placer vivir.».
 
 **Filosofía.** Un edificio se piensa primero para quien lo va a habitar, y después para quien lo va a vender. Cada elección tiene un propósito, cada espacio funciona, y el proyecto sigue teniendo sentido con los años.
 

@@ -11,7 +11,6 @@ export function trackEvent(name, params = {}) {
   if (typeof window === 'undefined') return;
   // Sin proveedor configurado: no-op. Dejar este hook como único punto de integración.
   if (process.env.NODE_ENV !== 'production') {
-    // eslint-disable-next-line no-console
     console.debug('[analytics]', name, params);
   }
 }

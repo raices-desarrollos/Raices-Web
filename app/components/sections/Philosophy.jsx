@@ -1,5 +1,6 @@
 import { aboutContent } from '@/content/about';
 import { SectionHeader } from '../Primitives';
+import RevealLines from '../RevealLines';
 
 /** Filosofía de Raíces: naturaleza como decisión de proyecto. */
 export default function Philosophy() {
@@ -11,9 +12,7 @@ export default function Philosophy() {
       <div className="split-grid">
         <div className="reveal">
           {philosophy.kicker ? <p className="kicker">{philosophy.kicker}</p> : null}
-          <h2 id="filosofia-title" className="title-stroke">
-            {philosophy.title}
-          </h2>
+          <RevealLines as="h2" id="filosofia-title" className="title-stroke" text={philosophy.title} />
         </div>
         <div className="text-stack reveal">
           {philosophy.paragraphs.map((paragraph) => (

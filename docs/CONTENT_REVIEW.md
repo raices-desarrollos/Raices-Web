@@ -18,6 +18,35 @@ La carpeta aclara que el 4° piso ajusta levemente las superficies. La web publi
 
 **Pendiente:** definir qué juego es el aprobado para la web (planos medidos, ficha comercial redondeada, o ambos con una nota).
 
+### Auditoría de superficies por tipología (F3b)
+
+Estado: **no se modificó ningún valor**. La web mantiene los datos que ya estaban publicados hasta que Comercial apruebe un juego. Las discrepancias están marcadas.
+
+Fuente del dato publicado: `app/content/ceibo-vidal.ts` → `typologies.units[].areas` (mismos valores en `README.md` y en `scripts/generate_presentation.py`); son los metros que ya tenía la web, copiados de los planos. Fuente en la carpeta comercial: `carpeta-de-venta.html`, tres lugares: (a) ficha de unidad redondeada, (b) lista de precios de preventa (usa 37 / 54 / 82), (c) nota de planos de la página de mercado. La carpeta vive fuera de este repositorio (`Raices-Brain/knowledge/projects/ceibo-vidal/commercial/carpeta-de-venta.html`). Los valores de la tabla se verificaron contra ese archivo el 28/10/2026: ficha en las líneas 1443–1459 (71/11, 34/3, 48/6), lista de precios en 1563–1565 (82/37/54) y nota de planos en 1940–1986 (36,92 / 54,26 / 82,37).
+
+| Tipología | Concepto | Publicado en la web | Carpeta, ficha (a) | Carpeta, mercado (c) | Estado |
+| --- | --- | --- | --- | --- | --- |
+| Monoambiente, Unidad B | Cubierta | 35,79 m² | 34 m² | — | Discrepa (−1,79 m²) |
+| | Balcón | 3,27 m² | 3 m² | — | Discrepa (−0,27 m²) |
+| | Total | 39,06 m² | 37 m² | 36,92 m² | Discrepa con ambas (−2,06 / −2,14 m²) |
+| 2 ambientes, Unidad C | Cubierta | 48,39 m² | 48 m² | — | Diferencia por redondeo (−0,39 m²) |
+| | Balcón | 7,79 m² | 6 m² | — | Discrepa (−1,79 m²) |
+| | Total | 56,18 m² | 54 m² | 54,26 m² | Discrepa con ambas (−2,18 / −1,92 m²) |
+| 3 ambientes, Unidad A | Cubierta | 68,67 m² | 71 m² | — | Discrepa (+2,33 m²) |
+| | Balcón | 11,08 m² | 11 m² | — | Diferencia por redondeo (−0,08 m²) |
+| | Total | 79,75 m² | 82 m² | 82,37 m² | Discrepa con ambas (+2,25 / +2,62 m²) |
+
+Notas de la auditoría:
+
+- Coherencia interna: en la web y en la ficha (a), cubierta + balcón = total (35,79 + 3,27 = 39,06; 48,39 + 7,79 = 56,18; 68,67 + 11,08 = 79,75; 34 + 3 = 37; 48 + 6 = 54; 71 + 11 = 82). La carpeta (c) solo informa el total.
+- Las diferencias no tienen un sentido único (la web es mayor en B y C, menor en A): no es un simple redondeo ni un desfase constante.
+- La carpeta aclara que el 4° piso ajusta levemente las superficies. La web publica un solo juego por tipología.
+- **Decisión comercial (28/10/2026):** la referencia comercial principal para el diseño son las superficies redondeadas de la carpeta: **3 ambientes 82 m², monoambiente 37 m², 2 ambientes 54 m²**. Las precisas de la nota de planos (82,37 / 36,92 / 54,26 m²) quedan documentadas aquí y no reemplazan automáticamente las cifras destacadas.
+- **Los datos publicados NO se modifican todavía.** La web sigue mostrando 79,75 / 39,06 / 56,18 m² hasta la aprobación comercial definitiva. No cambiar `typologies.units[].areas` sin autorización.
+- Validación comercial: **PENDIENTE** para las tres tipologías. Ningún dato queda como «validado».
+- Cuando se apruebe un juego, se cambia solo `typologies.units[].areas` en `ceibo-vidal.ts` (y `README.md`, `scripts/generate_presentation.py` y `WEBSITE_REDESIGN_PLAN.md` §5.2.5 si corresponde).
+
+
 ## Programas de las tipologías
 
 Se publicaron los programas de las fichas de unidad (páginas de Unidad A, B y C), como pedía el encargo:

@@ -1,6 +1,8 @@
-import { contactContent } from '@/content/contact';
+import { contact, contactContent } from '@/content/contact';
+import { mailtoHref } from '../lib/contact';
 import { PageHeader } from '../components/Primitives';
 import Contact from '../components/sections/Contact';
+import WhatsAppLink from '../components/WhatsAppLink';
 
 export const metadata = {
   title: { absolute: contactContent.seo.title },
@@ -16,6 +18,17 @@ export default function ContactPage() {
         kicker={contactContent.header.kicker}
         title={contactContent.header.title}
         lead={contactContent.header.lead}
+        aside={
+          <>
+            <span className="page-header-aside-line" aria-hidden="true" />
+            <WhatsAppLink source="contact-header" className="text-link">
+              {contact.whatsappDisplay}
+            </WhatsAppLink>
+            <a className="text-link" href={mailtoHref()}>
+              {contact.email}
+            </a>
+          </>
+        }
       />
       <Contact
         id="formulario"

@@ -31,7 +31,7 @@ Esas claves no van al frontend. Un envío de prueba tiene que llegar al buzón y
 
 Los textos viven en `app/content/`. El detalle de lo que falta confirmar está en `docs/CONTENT_REVIEW.md`. Lo más urgente:
 
-- Elegir el juego de superficies de Ceibo Vidal (web vigente, ficha redondeada de la carpeta, o nota de planos).
+- Superficies de Ceibo Vidal: la referencia comercial elegida para el diseño es la ficha redondeada (82 / 37 / 54 m²). La web sigue publicando 79,75 / 39,06 / 56,18 m² hasta la aprobación definitiva. No cambiar `typologies.units[].areas` sin esa autorización. Detalle en `docs/CONTENT_REVIEW.md`.
 - Confirmar los programas de las tipologías A, B y C.
 - Decidir si se publica el esquema comercial 30/70 (hoy está en `app/content/ceibo-vidal.ts` y no se renderiza).
 - Confirmar las frases adaptadas de Home, Proyectos, Ceibo y Nosotros listadas en ese documento.

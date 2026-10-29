@@ -180,7 +180,8 @@ npm run build      # export estático en out/
 | Quiero cambiar… | Archivo |
 | --- | --- |
 | Mensaje principal del hero | `home.ts` → `hero` |
-| Slogan secundario del footer | `shared.ts` → `brand.claim` |
+| Slogan del footer («Espacios para habitar») | `shared.ts` → `brand.slogan` |
+| Línea comercial bajo la marca de Ceibo | `ceibo-vidal.ts` → `commercialLine` |
 | Filosofía de Nosotros | `about.ts` |
 | “Nuestros desarrollos.” | `projects.ts` → `header.title` |
 | Superficies del monoambiente | `ceibo-vidal.ts` → `typologies.units` |

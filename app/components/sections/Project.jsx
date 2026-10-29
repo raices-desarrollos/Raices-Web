@@ -1,4 +1,6 @@
 import { Cota, SectionHeader } from '../Primitives';
+import PhotoBand from '../PhotoBand';
+import RevealLines from '../RevealLines';
 
 /** Presentación arquitectónica y ficha técnica del proyecto. */
 export default function Project({ content }) {
@@ -9,22 +11,25 @@ export default function Project({ content }) {
       <SectionHeader>{content.sectionLabel}</SectionHeader>
 
       <div className="split-grid project-intro">
-        <div className="reveal">
-          <p className="kicker">{content.kicker}</p>
-          <h2 id="proyecto-title" className="title-stroke">
-            {content.title}
-          </h2>
+        <div>
+          <p className="kicker reveal">{content.kicker}</p>
+          <RevealLines as="h2" id="proyecto-title" className="project-title" lines={[content.title]} />
         </div>
         <div className="text-stack reveal">
           {content.paragraphs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
           {content.characteristics?.length ? (
-            <ul className="characteristic-list">
-              {content.characteristics.map((item) => (
-                <li key={item}>{item}</li>
+            <ol className="characteristic-list">
+              {content.characteristics.map((item, index) => (
+                <li key={item}>
+                  <span className="characteristic-index" aria-hidden="true">
+                    {String(index + 1).padStart(2, '0')}
+                  </span>
+                  {item}
+                </li>
               ))}
-            </ul>
+            </ol>
           ) : null}
           <div className="tag-row" aria-label={content.tagsLabel}>
             {content.tags.map((tag) => (
@@ -33,6 +38,8 @@ export default function Project({ content }) {
           </div>
         </div>
       </div>
+
+      {content.band ? <PhotoBand image={content.band} /> : null}
 
       <Cota className="section-cota reveal">{content.specsLabel}</Cota>
 

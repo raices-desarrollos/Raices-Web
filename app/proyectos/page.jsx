@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { projects, projectsContent } from '@/content/projects';
 import { routes, ui } from '@/content/shared';
-import { PageHeader, RevealText } from '../components/Primitives';
+import { PageHeader } from '../components/Primitives';
+import RevealLines from '../components/RevealLines';
 import CtaBand from '../components/CtaBand';
 
 export const metadata = {
@@ -26,7 +27,7 @@ export default function ProjectsPage() {
           {projects.map((entry, index) => (
             <li className="project-card reveal" key={entry.slug}>
               <Link
-                className="project-card-media img-reveal"
+                className="project-card-media img-curtain"
                 href={routes.project(entry.slug)}
                 aria-label={`${entry.name}: ${projectsContent.card.ariaSuffix}`}>
                 <img
@@ -36,7 +37,7 @@ export default function ProjectsPage() {
                   alt={entry.cover.alt}
                   loading={index === 0 ? 'eager' : 'lazy'}
                   decoding="async"
-                  sizes="(max-width: 980px) 100vw, 60vw"
+                  sizes="(max-width: 1023px) 100vw, 60vw"
                 />
                 <span className="featured-media-veil" aria-hidden="true" />
               </Link>
@@ -44,9 +45,7 @@ export default function ProjectsPage() {
                 <p className="kicker">
                   {entry.code} · {entry.status}
                 </p>
-                <h2>
-                  <RevealText text={entry.name} />
-                </h2>
+                <RevealLines as="h2" className="project-card-title" lines={[entry.name]} />
                 <p className="project-card-location">{entry.locationLong}</p>
                 <p className="project-card-summary">{entry.summary}</p>
                 <dl className="featured-facts">

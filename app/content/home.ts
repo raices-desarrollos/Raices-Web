@@ -11,6 +11,8 @@ const heroImage = {
   width: 1536,
   height: 1024,
   alt: '',
+  srcSet: `${asset('/assets/images/balcones-tensores-828.webp')} 828w, ${asset('/assets/images/balcones-tensores.webp')} 1536w`,
+  sizes: '100vw',
 } as const;
 
 const atmosphereImage = {

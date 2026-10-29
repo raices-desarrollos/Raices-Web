@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { contact } from '@/content/contact';
 import { brand, navItems, routes, ui } from '@/content/shared';
+import WhatsAppLink from './WhatsAppLink';
 
 const normalize = (path) => (path.length > 1 ? path.replace(/\/$/, '') : path);
 
@@ -19,10 +21,12 @@ export default function Header() {
     return () => window.removeEventListener('scroll', updateHeader);
   }, []);
 
-  // El menú móvil se cierra al navegar.
-  useEffect(() => {
+  // El menú móvil se cierra al navegar (estado derivado durante el render, sin efecto).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
     setNavOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     document.body.classList.toggle('nav-open', navOpen);
@@ -83,6 +87,12 @@ export default function Header() {
         <Link className="button button-small site-nav-cta" href={routes.contact} onClick={close}>
           {ui.header.consultCta}
         </Link>
+        <div className="site-nav-mobile">
+          <WhatsAppLink source="menu" className="button button-fill">
+            {ui.whatsapp.consultLabel}
+          </WhatsAppLink>
+          <span className="label">{contact.whatsappDisplay}</span>
+        </div>
       </nav>
     </header>
   );

@@ -1,14 +1,13 @@
 import { Picture, SectionHeader } from '../Primitives';
+import RevealLines from '../RevealLines';
 
 export default function Green({ content }) {
   return (
     <section className="section green-section" id="verde" aria-labelledby="verde-title">
       <SectionHeader>{content.sectionLabel}</SectionHeader>
-      <div className="green-intro reveal">
-        <p className="kicker">{content.kicker}</p>
-        <h2 id="verde-title" className="title-stroke">
-          {content.title}
-        </h2>
+      <div className="green-intro">
+        <p className="kicker reveal">{content.kicker}</p>
+        <RevealLines as="h2" id="verde-title" className="green-title" lines={[content.title]} />
       </div>
 
       <div className="feature-grid">
@@ -25,7 +24,11 @@ export default function Green({ content }) {
             ) : null}
             {feature.image ? (
               <figure>
-                <Picture image={feature.image} sizes={feature.wide ? '(max-width: 980px) 100vw, 60vw' : '(max-width: 980px) 100vw, 50vw'} />
+                <Picture
+                  image={feature.image}
+                  curtain={feature.wide ? 'left' : 'up'}
+                  sizes={feature.wide ? '(max-width: 1023px) 100vw, 60vw' : '(max-width: 1023px) 100vw, 50vw'}
+                />
                 <figcaption>{feature.note}</figcaption>
               </figure>
             ) : null}

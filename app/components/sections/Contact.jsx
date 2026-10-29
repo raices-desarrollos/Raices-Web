@@ -4,6 +4,7 @@ import { mailtoHref } from '../../lib/contact';
 import ContactForm from '../ContactForm';
 import { InstagramIcon, LinkedInIcon } from '../Icons';
 import { Cota } from '../Primitives';
+import RevealLines from '../RevealLines';
 import WhatsAppLink from '../WhatsAppLink';
 
 /**
@@ -29,14 +30,12 @@ export default function Contact({
   return (
     <section className="section contact-section" id={id} aria-labelledby={`${id}-title`}>
       <div className="contact-inner">
-        <div className="contact-copy reveal">
-          <p className="kicker">{kicker}</p>
-          <Heading id={`${id}-title`} className="title-stroke">
-            {title}
-          </Heading>
-          <p>{text}</p>
+        <div className="contact-copy">
+          <p className="kicker reveal">{kicker}</p>
+          <RevealLines as={Heading} id={`${id}-title`} className="contact-title" lines={[title]} />
+          <p className="reveal">{text}</p>
 
-          <div className="contact-actions">
+          <div className="contact-actions reveal">
             <WhatsAppLink source={whatsappSource} className="button button-large">
               {ui.whatsapp.consultLabel}
             </WhatsAppLink>

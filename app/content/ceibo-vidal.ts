@@ -40,6 +40,8 @@ export const ceiboVidalContent = {
   locationShort: 'Saavedra, CABA',
   locationLong: 'Vidal 3849 · Saavedra · CABA',
   headline: 'Un equilibrio entre ciudad y aire libre.',
+  /** Línea comercial oficial para ir debajo de la identificación (logo + dirección). */
+  commercialLine: 'El balance perfecto entre ciudad y aire libre',
   /** Bajada de la ficha en /proyectos. La home usa `homeParagraphs`. */
   summary: 'Ceibo Vidal es un edificio que se propone lograr el balance perfecto entre ciudad y aire libre.',
   homeParagraphs: [
@@ -62,7 +64,6 @@ export const ceiboVidalContent = {
     ogTitle: 'Ceibo Vidal | Departamentos en Saavedra',
   },
   hero: {
-    kicker: 'Ceibo Vidal · Saavedra',
     lead: 'En un barrio en crecimiento, conectado y con identidad, decidimos dejar nuestras propias raíces.',
     primaryCta: { label: 'Explorar tipologías', href: '#tipologias' },
     secondaryCta: { label: 'Consultar por WhatsApp' },
@@ -83,6 +84,7 @@ export const ceiboVidalContent = {
       'En un barrio en crecimiento, conectado y con identidad, decidimos dejar nuestras propias raíces.',
       'Ceibo Vidal es un edificio que se propone lograr el balance perfecto entre ciudad y aire libre.',
     ],
+    band: { ...balconies, note: referenceNote },
     characteristics: [
       'Planta baja con SUM in-out, cowork y cocheras.',
       'Cuatro pisos de tres unidades, cada una con balcón.',
@@ -125,6 +127,15 @@ export const ceiboVidalContent = {
       { ...balconies, caption: 'Balcones con tensores', note: referenceNote },
     ],
   },
+  /**
+   * Captions del capítulo destacado de la Home, uno por imagen de `gallery.items` y en el mismo
+   * orden. Solo reutilizan textos ya aprobados de este archivo (características y espacios comunes).
+   */
+  featuredStates: [
+    { label: 'Fachada sobre Vidal', text: 'Planta baja con SUM in-out, cowork y cocheras.' },
+    { label: 'Terraza común', text: 'Terraza común de 76 m². Jacuzzi y estar al aire libre.' },
+    { label: 'Balcones con tensores', text: 'Cuatro pisos de tres unidades, cada una con balcón.' },
+  ],
   green: {
     sectionLabel: 'Aire libre',
     kicker: 'Ceibo Vidal',
@@ -172,6 +183,8 @@ export const ceiboVidalContent = {
     units: [
       {
         id: 'tres-ambientes',
+        code: 'A',
+        inquiry: 'Hola, quiero información sobre la unidad A (3 ambientes) de Ceibo Vidal.',
         department: 'Unidad A · Frente',
         title: '3 ambientes',
         program: 'Living-comedor al frente, suite y segundo dormitorio, baño social.',
@@ -195,6 +208,8 @@ export const ceiboVidalContent = {
       },
       {
         id: 'monoambiente',
+        code: 'B',
+        inquiry: 'Hola, quiero información sobre la unidad B (Monoambiente) de Ceibo Vidal.',
         department: 'Unidad B · Contrafrente',
         title: 'Monoambiente',
         program: 'Ambiente integrado · baño completo · balcón propio.',
@@ -218,6 +233,8 @@ export const ceiboVidalContent = {
       },
       {
         id: 'dos-ambientes',
+        code: 'C',
+        inquiry: 'Hola, quiero información sobre la unidad C (2 ambientes) de Ceibo Vidal.',
         department: 'Unidad C · Contrafrente',
         title: '2 ambientes',
         program: 'Living-comedor con cocina, dormitorio en suite, baño social.',

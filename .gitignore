@@ -10,3 +10,6 @@ dist/
 
 .playwright-mcp/
 tmp-qa/
+
+# Capturas y videos de QA (pesados)
+/docs/qa/

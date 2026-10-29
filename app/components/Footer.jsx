@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { contact } from '@/content/contact';
 import { featuredProject, projects } from '@/content/projects';
 import { brand, navItems, routes, ui } from '@/content/shared';
-import { mailtoHref } from '../lib/contact';
+import { mailtoHref, whatsappHref } from '../lib/contact';
 
 export default function Footer() {
   const year = new Date().getFullYear();
@@ -20,7 +20,7 @@ export default function Footer() {
             loading="lazy"
             decoding="async"
           />
-          <p className="site-footer-claim">{brand.claim}</p>
+          <p className="site-footer-claim">{brand.slogan}</p>
         </div>
 
         <nav className="site-footer-nav" aria-label={ui.footer.sectionsLabel}>
@@ -40,7 +40,7 @@ export default function Footer() {
         <div className="site-footer-contact">
           <span className="label">{ui.footer.contactLabel}</span>
           <a href={mailtoHref()}>{contact.email}</a>
-          <a href={`https://wa.me/${contact.whatsappNumber}`} target="_blank" rel="noopener noreferrer">
+          <a href={whatsappHref()} target="_blank" rel="noopener noreferrer">
             {contact.whatsappDisplay}
           </a>
           <span className="site-footer-address">
@@ -54,7 +54,10 @@ export default function Footer() {
           © {year} {brand.name} · {brand.city}
         </p>
         <p>{ui.footer.disclaimer}</p>
-        <a href="#contenido">{ui.footer.backToTop}</a>
+        <a href="#contenido">
+          {ui.footer.backToTop}
+          <span aria-hidden="true"> ↑</span>
+        </a>
       </div>
     </footer>
   );

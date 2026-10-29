@@ -1,3 +1,5 @@
+import RevealLines from './RevealLines';
+
 /** Encabezado de sección: marcador, etiqueta en mayúscula y regla. */
 export function SectionHeader({ children, id }) {
   return (
@@ -20,9 +22,13 @@ export function Cota({ children, className = '' }) {
   );
 }
 
-/** Imagen estática con dimensiones para evitar saltos de layout. */
-export function Picture({ image, className, priority = false, sizes }) {
-  return (
+/**
+ * Imagen estática con dimensiones para evitar saltos de layout.
+ * `curtain` ('up' | 'left') la envuelve en una cortina de revelado (`.img-curtain`, Plan M05):
+ * el contenedor se descubre con clip-path una sola vez al entrar en vista.
+ */
+export function Picture({ image, className, priority = false, sizes, curtain = false }) {
+  const img = (
     <img
       className={className}
       src={image.src}
@@ -32,43 +38,30 @@ export function Picture({ image, className, priority = false, sizes }) {
       loading={priority ? 'eager' : 'lazy'}
       fetchPriority={priority ? 'high' : undefined}
       decoding={priority ? 'sync' : 'async'}
-      sizes={sizes}
+      srcSet={image.srcSet}
+      sizes={image.srcSet ? (sizes ?? image.sizes) : sizes}
     />
   );
+  if (!curtain) return img;
+  return <span className={`img-curtain${curtain === 'left' ? ' img-curtain-left' : ''}`}>{img}</span>;
 }
 
 /**
- * Texto que aparece palabra por palabra (cada palabra sube desde una máscara).
- * Se dispara con la clase `is-visible` del propio elemento o de un ancestro `.reveal`.
- * Es HTML estático: la animación es CSS pura y respeta prefers-reduced-motion.
+ * Cabecera editorial de las páginas interiores. `aside` (opcional, solo desktop) es una cota a la
+ * derecha del título: en Contacto lleva WhatsApp y email para que el dato quede en la primera
+ * pantalla.
  */
-export function RevealText({ text, className = '', delay = 0 }) {
-  const words = text.split(' ');
+export function PageHeader({ kicker, title, lead, children, aside, id = 'page-title' }) {
   return (
-    <span className={`reveal-text ${className}`.trim()}>
-      {words.map((word, index) => (
-        <span key={`${word}-${index}`}>
-          <span className="rt-word">
-            <span style={{ '--i': index + delay }}>{word}</span>
-          </span>
-          {index < words.length - 1 ? ' ' : null}
-        </span>
-      ))}
-    </span>
-  );
-}
-
-/** Cabecera editorial de las páginas interiores. */
-export function PageHeader({ kicker, title, lead, children, id = 'page-title' }) {
-  return (
-    <header className={`page-header${title.length > 42 ? ' page-header-long' : ''}`}>
+    <header className={`page-header${title.length > 42 ? ' page-header-long' : ''}${aside ? ' page-header-has-aside' : ''}`}>
       <div className="page-header-inner">
-        {kicker ? <p className="kicker hero-anim">{kicker}</p> : null}
-        <h1 id={id} className="title-stroke">
-          <RevealText text={title} className="is-visible" />
-        </h1>
-        {lead ? <p className="page-lead hero-anim">{lead}</p> : null}
-        {children}
+        <div className="page-header-main">
+          {kicker ? <p className="kicker hero-anim">{kicker}</p> : null}
+          <RevealLines as="h1" id={id} className="title-stroke" text={title} immediate />
+          {lead ? <p className="page-lead hero-anim">{lead}</p> : null}
+          {children}
+        </div>
+        {aside ? <div className="page-header-aside hero-anim">{aside}</div> : null}
       </div>
     </header>
   );
