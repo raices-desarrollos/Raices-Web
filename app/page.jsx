@@ -1,9 +1,7 @@
 import { homeContent } from '@/content/home';
 import { featuredProject } from '@/content/projects';
-import { ui } from '@/content/shared';
 import CinematicHero from './components/CinematicHero';
 import Manifesto from './components/Manifesto';
-import AboutTeaser from './components/AboutTeaser';
 import FeaturedProject from './components/FeaturedProject';
 import CtaBand from './components/CtaBand';
 import LegacyHashRedirect from './components/LegacyHashRedirect';
@@ -14,16 +12,9 @@ export default function Home() {
     <>
       <LegacyHashRedirect />
       <CinematicHero />
-      <Manifesto title={homeContent.cta.title} lead={homeContent.about.lead} />
-      <AboutTeaser />
+      <Manifesto title={homeContent.about.title} lead={homeContent.about.lead} link={homeContent.about.link} />
       <FeaturedProject project={featuredProject} />
-      <CtaBand
-        title={homeContent.cta.title}
-        text={homeContent.cta.text}
-        link={homeContent.cta.link}
-        cota={homeContent.cta.cota}
-        whatsapp={{ source: 'cta-band', label: ui.whatsapp.consultLabel }}
-      />
+      <CtaBand title={homeContent.cta.title} link={homeContent.cta.link} />
     </>
   );
 }

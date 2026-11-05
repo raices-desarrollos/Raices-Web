@@ -1,18 +1,15 @@
 import Link from 'next/link';
 import { homeContent } from '@/content/home';
 import { featuredProject } from '@/content/projects';
-import { brand, routes, ui } from '@/content/shared';
+import { routes } from '@/content/shared';
 import { Picture } from './Primitives';
 import HeroContactCard from './HeroContactCard';
 import RevealLines from './RevealLines';
-import WhatsAppLink from './WhatsAppLink';
 
 /**
  * Hero institucional a pantalla: la foto ocupa el campo, el texto la enmarca (Plan M02).
  * H1 en dos líneas explícitas (RevealLines static: sin medición, sin CLS), una sola acción
- * editorial hacia Ceibo Vidal y, en tablet y mobile, WhatsApp como único botón relleno.
- * En desktop (≥1100 px) la tarjeta de contacto lleva el único botón relleno; debajo, WhatsApp
- * inline reemplaza a la tarjeta.
+ * editorial hacia Ceibo Vidal. El contacto vive en `HeroContactCard`.
  * Si existe NEXT_PUBLIC_HERO_VIDEO, el video corre silencioso sobre la misma imagen.
  */
 export default function CinematicHero() {
@@ -55,34 +52,14 @@ export default function CinematicHero() {
               →
             </span>
           </Link>
-          <WhatsAppLink source="hero-mobile" className="button button-fill hero-whatsapp">
-            {ui.whatsapp.consultLabel}
-          </WhatsAppLink>
         </div>
       </div>
 
       <HeroContactCard />
 
-      <p className="hero-rail" aria-hidden="true">
-        <span>01</span>
-        <span>{brand.city}</span>
-      </p>
-
       <div className="cine-hero-foot hero-anim">
-        <img
-          className="hero-foot-logo logo-on-dark"
-          src={brand.logos.full.src}
-          width={brand.logos.full.width}
-          height={brand.logos.full.height}
-          alt={brand.name}
-        />
         <span className="hero-note label">{hero.media.note}</span>
       </div>
-
-      <a className="scroll-cue" href="#manifiesto" aria-label={ui.scroll.ariaLabel}>
-        <span className="scroll-cue-line" aria-hidden="true" />
-        <span className="scroll-cue-label">{ui.scroll.label}</span>
-      </a>
     </section>
   );
 }

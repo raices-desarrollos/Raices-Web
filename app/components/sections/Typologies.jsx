@@ -20,7 +20,7 @@ export default function Typologies({ content, renderNote }) {
         <figcaption>{content.floorPlanCaption}</figcaption>
       </figure>
 
-      <TypologySelector units={content.units} renderNote={renderNote} />
+      <TypologySelector units={content.units} renderNote={content.areaNote ? `${renderNote} ${content.areaNote}` : renderNote} />
     </section>
   );
 }

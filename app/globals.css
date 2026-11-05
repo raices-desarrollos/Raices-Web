@@ -344,7 +344,7 @@ p + p {
   min-height: 46px;
   padding: 13px 24px;
   overflow: hidden;
-  border: 1px solid var(--text);
+  border: 1px solid var(--line-strong);
   border-radius: var(--radius-button);
   background: transparent;
   color: var(--text);
@@ -407,6 +407,16 @@ p + p {
   transform: translateX(4px);
 }
 
+.button .download-icon {
+  flex: none;
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.button:hover .download-icon,
+.button:focus-visible .download-icon {
+  transform: translateY(2px);
+}
+
 .button:disabled {
   opacity: 0.55;
   cursor: progress;
@@ -440,6 +450,42 @@ p + p {
   color: var(--text);
 }
 
+/* Terciario: enlace de texto con flecha, sin contenedor. La línea inferior y la flecha
+   reaccionan al hover y al foco. */
+.text-link-arrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  color: var(--text);
+  text-decoration: none;
+  background: linear-gradient(currentColor, currentColor) left calc(50% + 11px) / 0 var(--line-width) no-repeat;
+  transition:
+    color var(--dur-fast) ease,
+    background-size var(--dur-med, 320ms) var(--ease);
+}
+
+.text-link-arrow:hover,
+.text-link-arrow:focus-visible {
+  color: var(--blanco);
+  background-size: calc(100% - 22px) var(--line-width);
+}
+
+.text-link-arrow-icon {
+  display: inline-block;
+  transition: transform var(--dur-fast) var(--ease);
+}
+
+.text-link-arrow:hover .text-link-arrow-icon,
+.text-link-arrow:focus-visible .text-link-arrow-icon {
+  transform: translate(3px, -3px);
+}
+
+.text-link-arrow:hover .text-link-arrow-icon.is-down,
+.text-link-arrow:focus-visible .text-link-arrow-icon.is-down {
+  transform: translateY(3px);
+}
+
 /* --------------------------------------------------------------------------
    Header
    -------------------------------------------------------------------------- */
@@ -468,6 +514,11 @@ p + p {
   z-index: -1;
   background: rgba(16, 18, 16, 0);
   transition: background var(--dur-fast) var(--ease-std);
+}
+
+/* Home sin scroll: velo superior suave para que logo y enlaces lean sobre la fotografía. */
+.site-header.is-home:not(.is-scrolled):not(.nav-active)::before {
+  background: linear-gradient(180deg, rgba(16, 18, 16, 0.5), rgba(16, 18, 16, 0));
 }
 
 /* El blur vive en el pseudo y no en el header: un backdrop-filter en el ancestro haría que
@@ -501,13 +552,13 @@ p + p {
 }
 
 .brand-logo {
-  height: 36px;
+  height: 41px;
   width: auto;
   transition: height var(--dur-fast) ease;
 }
 
 .site-header.is-scrolled .brand-logo {
-  height: 34px;
+  height: 38px;
 }
 
 .site-nav {
@@ -522,8 +573,12 @@ p + p {
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--text-soft);
+  color: rgba(231, 224, 213, 0.94);
   transition: color var(--dur-fast) var(--ease);
+}
+
+.site-header.is-home:not(.is-scrolled):not(.nav-active) .site-nav a:not(.button) {
+  text-shadow: 0 1px 14px rgba(16, 18, 16, 0.6);
 }
 
 .site-nav a:not(.button)::after {
@@ -542,7 +597,7 @@ p + p {
 .site-nav a:not(.button):hover,
 .site-nav a:not(.button):focus-visible,
 .site-nav a.is-active {
-  color: var(--text);
+  color: var(--blanco);
 }
 
 .site-nav a:not(.button):hover::after,
@@ -872,10 +927,9 @@ p + p {
   align-items: start;
 }
 
-.amenity-items {
-  display: grid;
+.amenities ul.amenity-items {
   flex: 1;
-  gap: 18px;
+  gap: 18px 40px;
   min-width: min(100%, 280px);
 }
 
@@ -1847,7 +1901,7 @@ body:has(.pj-hero):not(.wa-covered) .whatsapp-float:focus-visible {
 @media (max-width: 420px) {
   .brand-logo,
   .site-header.is-scrolled .brand-logo {
-    height: 28px;
+    height: 32px;
   }
 
   .spec-grid {
@@ -1923,4 +1977,12 @@ body:has(.pj-hero):not(.wa-covered) .whatsapp-float:focus-visible {
   .reveal-lines[data-mode='split'] {
     visibility: visible !important;
   }
+}
+
+.identity-point-label {
+  margin: 0 0 6px;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 1.6vw, 22px);
+  font-weight: 400;
+  line-height: 1.2;
 }

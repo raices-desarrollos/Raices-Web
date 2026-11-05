@@ -66,7 +66,17 @@ export const ceiboVidalContent = {
   hero: {
     lead: 'En un barrio en crecimiento, conectado y con identidad, decidimos dejar nuestras propias raíces.',
     primaryCta: { label: 'Explorar tipologías', href: '#tipologias' },
-    secondaryCta: { label: 'Consultar por WhatsApp' },
+    /** Abre WhatsApp con el mensaje predefinido del sitio (`contact.whatsappMessage`). */
+    secondaryCta: { label: 'Solicitar información' },
+  },
+  /**
+   * Carpeta comercial descargable (copia optimizada para web de docs/commercial/). Al actualizar
+   * la carpeta, reemplazar el PDF en `public/downloads/` conservando este nombre.
+   */
+  brochure: {
+    label: 'Descargar brochure',
+    href: asset('/downloads/Ceibo-Vidal-Brochure.pdf'),
+    filename: 'Ceibo-Vidal-Brochure.pdf',
   },
   intro: {
     label: 'Síntesis del proyecto',
@@ -86,9 +96,9 @@ export const ceiboVidalContent = {
     ],
     band: { ...balconies, note: referenceNote },
     characteristics: [
-      'Planta baja con SUM in-out, cowork y cocheras.',
+      'Planta baja con SUM interior–exterior y estacionamiento para seis vehículos.',
       'Cuatro pisos de tres unidades, cada una con balcón.',
-      'Terraza común con jacuzzi.',
+      'Terraza común con jacuzzi, solárium y parrilla.',
       'Terrazas privadas, bauleras y bicicletero.',
     ],
     tags: ['En desarrollo', 'PB + 4', '12 unidades', 'Entrega 2029'],
@@ -106,10 +116,10 @@ export const ceiboVidalContent = {
     amenities: [
       {
         label: 'Terraza común',
-        text: 'Terraza común de 76 m². Jacuzzi y estar al aire libre.',
+        text: 'Terraza común de 76 m² con jacuzzi, solárium y parrilla.',
       },
       {
-        label: 'SUM y cowork',
+        label: 'SUM interior–exterior',
         text: 'Planta baja. Espacio de uso mixto con cocina.',
       },
       {
@@ -128,13 +138,15 @@ export const ceiboVidalContent = {
     ],
   },
   /**
-   * Captions del capítulo destacado de la Home, uno por imagen de `gallery.items` y en el mismo
-   * orden. Solo reutilizan textos ya aprobados de este archivo (características y espacios comunes).
+   * Adelanto visual de la Home (galería horizontal). Configuración central: para sumar o
+   * reemplazar renders, agregar una entrada con `order` y el archivo en `public/assets/images/`.
+   * Solo renders reales de Ceibo Vidal; la galería completa vive en la página del proyecto.
+   * Las imágenes conservan su proporción: cada slide comparte altura y toma su ancho natural.
    */
-  featuredStates: [
-    { label: 'Fachada sobre Vidal', text: 'Planta baja con SUM in-out, cowork y cocheras.' },
-    { label: 'Terraza común', text: 'Terraza común de 76 m². Jacuzzi y estar al aire libre.' },
-    { label: 'Balcones con tensores', text: 'Cuatro pisos de tres unidades, cada una con balcón.' },
+  homeGallery: [
+    { order: 1, title: 'Fachada', ...facade },
+    { order: 2, title: 'Balcones', ...balconies },
+    { order: 3, title: 'Terraza', ...terrace },
   ],
   green: {
     sectionLabel: 'Aire libre',
@@ -145,8 +157,8 @@ export const ceiboVidalContent = {
         id: 'terrace',
         wide: true,
         label: 'Terraza común',
-        title: 'Jacuzzi y estar al aire libre.',
-        text: 'Terraza común de 76 m². Jacuzzi y estar al aire libre.',
+        title: 'Jacuzzi, solárium y parrilla.',
+        text: 'Terraza común de 76 m² con jacuzzi, solárium y parrilla.',
         image: terrace,
         note: referenceNote,
       },
@@ -165,13 +177,14 @@ export const ceiboVidalContent = {
         system: true,
         label: 'Terrazas privadas',
         title: 'Tres terrazas privadas.',
-        text: 'Una terraza común con jacuzzi y estar al aire libre, más tres terrazas privadas.',
+        text: 'Una terraza común con jacuzzi, solárium y parrilla, más tres terrazas privadas disponibles.',
       },
     ],
   },
   typologies: {
     kicker: 'Tipologías',
     title: 'Tres tipologías.',
+    areaNote: 'Superficies aproximadas, sujetas a planos finales.',
     lead: 'Tres unidades por piso, todas con balcón, alrededor de un palier central.',
     floorPlan: {
       src: asset('/assets/plans/ceibo-planta-tipo.webp'),
@@ -187,7 +200,7 @@ export const ceiboVidalContent = {
         inquiry: 'Hola, quiero información sobre la unidad A (3 ambientes) de Ceibo Vidal.',
         department: 'Unidad A · Frente',
         title: '3 ambientes',
-        program: 'Living-comedor al frente, suite y segundo dormitorio, baño social.',
+        program: 'Living comedor al frente con balcón corrido, dormitorio en suite, segundo dormitorio y dos baños completos.',
         plan: {
           src: asset('/assets/plans/ceibo-tipologia-3-ambientes.webp'),
           width: 2382,
@@ -201,9 +214,9 @@ export const ceiboVidalContent = {
           alt: 'Render en planta del tres ambientes amoblado, con dos dormitorios, dos baños, estar-comedor y balcón corrido con plantas',
         },
         areas: [
-          { label: 'Cubierto', value: '68,67 m²' },
-          { label: 'Balcón', value: '11,08 m²' },
-          { label: 'Total', value: '79,75 m²' },
+          { label: 'Cubierto', value: '71 m²' },
+          { label: 'Balcón', value: '11 m²' },
+          { label: 'Total', value: '82 m²' },
         ],
       },
       {
@@ -212,7 +225,7 @@ export const ceiboVidalContent = {
         inquiry: 'Hola, quiero información sobre la unidad B (Monoambiente) de Ceibo Vidal.',
         department: 'Unidad B · Contrafrente',
         title: 'Monoambiente',
-        program: 'Ambiente integrado · baño completo · balcón propio.',
+        program: 'Ambiente integrado con cocina completa, baño completo, espacio de guardado y balcón propio.',
         plan: {
           src: asset('/assets/plans/ceibo-tipologia-monoambiente.webp'),
           width: 2382,
@@ -226,9 +239,9 @@ export const ceiboVidalContent = {
           alt: 'Render en planta del monoambiente amoblado, con cocina, estar, cama y balcón con plantas',
         },
         areas: [
-          { label: 'Cubierto', value: '35,79 m²' },
-          { label: 'Balcón', value: '3,27 m²' },
-          { label: 'Total', value: '39,06 m²' },
+          { label: 'Cubierto', value: '34 m²' },
+          { label: 'Balcón', value: '3 m²' },
+          { label: 'Total', value: '37 m²' },
         ],
       },
       {
@@ -237,7 +250,7 @@ export const ceiboVidalContent = {
         inquiry: 'Hola, quiero información sobre la unidad C (2 ambientes) de Ceibo Vidal.',
         department: 'Unidad C · Contrafrente',
         title: '2 ambientes',
-        program: 'Living-comedor con cocina, dormitorio en suite, baño social.',
+        program: 'Living-comedor con cocina, dormitorio en suite, toilette, baño completo y balcón corrido.',
         plan: {
           src: asset('/assets/plans/ceibo-tipologia-2-ambientes.webp'),
           width: 2382,
@@ -251,9 +264,9 @@ export const ceiboVidalContent = {
           alt: 'Render en planta del dos ambientes amoblado, con dormitorio, estar-comedor y balcón',
         },
         areas: [
-          { label: 'Cubierto', value: '48,39 m²' },
-          { label: 'Balcón', value: '7,79 m²' },
-          { label: 'Total', value: '56,18 m²' },
+          { label: 'Cubierto', value: '48 m²' },
+          { label: 'Balcón', value: '6 m²' },
+          { label: 'Total', value: '54 m²' },
         ],
       },
     ],

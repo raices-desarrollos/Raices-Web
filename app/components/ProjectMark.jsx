@@ -6,7 +6,7 @@
  * Con `as` (h1/h2) la marca es el encabezado accesible de la sección: el logo aporta el nombre
  * por su `alt` y la dirección va como texto. `line` es la frase comercial oficial, opcional.
  */
-export default function ProjectMark({ project, as: Tag = 'div', id, className = '', logoWidth, priority = false, line }) {
+export default function ProjectMark({ project, as: Tag = 'div', id, className = '', logoWidth, priority = false, line, address }) {
   return (
     <div className={`project-mark ${className}`.trim()}>
       <Tag className="project-mark-heading" id={id}>
@@ -21,7 +21,7 @@ export default function ProjectMark({ project, as: Tag = 'div', id, className = 
           fetchPriority={priority ? 'high' : undefined}
           decoding={priority ? 'sync' : 'async'}
         />
-        <span className="project-mark-address">{project.address}</span>
+        <span className="project-mark-address">{address || project.address}</span>
       </Tag>
       {line ? <p className="project-mark-line">{line}</p> : null}
     </div>

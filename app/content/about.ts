@@ -14,7 +14,7 @@ export const aboutContent = {
   header: {
     kicker: 'Nosotros',
     title: 'Hacemos edificios donde nosotros mismos viviríamos.',
-    lead: 'Creemos que un edificio debe estar pensado primero para quien lo va a habitar —y después para quien lo va a vender—.',
+    lead: 'Somos una desarrolladora de Buenos Aires. Cada proyecto empieza por una pregunta: ¿cómo se va a vivir acá?',
   },
   philosophy: {
     sectionLabel: 'Qué creemos',
@@ -30,11 +30,11 @@ export const aboutContent = {
     id: 'construir',
     kicker: 'Nuestra forma de construir',
     title: 'Tomamos decisiones con criterio.',
-    lead: 'Creemos que la buena arquitectura y la buena ingeniería tienen algo en común: cuando están bien hechas, no necesitan explicarse.',
+    lead: 'Tres criterios guían cada decisión, de la obra a los detalles.',
     points: [
-      'Valoramos la simplicidad.',
-      'Preferimos las soluciones duraderas a las modas.',
-      'Nos gustan los espacios luminosos, funcionales y fáciles de vivir.',
+      { label: 'Simplicidad', text: 'Valoramos la simplicidad.' },
+      { label: 'Durabilidad', text: 'Preferimos las soluciones duraderas a las modas.' },
+      { label: 'Funcionalidad', text: 'Nos gustan los espacios luminosos, funcionales y fáciles de vivir.' },
     ],
   },
   promise: {
@@ -48,7 +48,7 @@ export const aboutContent = {
     title: 'La naturaleza no es decoración. Es parte del proyecto.',
     lead: 'Cada proyecto toma el nombre de un árbol autóctono y se piensa para un barrio concreto.',
     points: [
-      'El verde entra en la decisión de fachada, balcones y terraza. No es decoración: es parte del proyecto.',
+      'El verde entra en la decisión de fachada, balcones y terraza.',
       'Edificios con nombre de árbol autóctono y una firma reconocible, pensados para un barrio concreto.',
       'La vegetación se integra a la arquitectura y al entorno urbano.',
     ],

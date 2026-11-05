@@ -1,27 +1,35 @@
-import Link from 'next/link';
 import { contactContent } from '@/content/contact';
-import { routes, ui } from '@/content/shared';
+import { ui } from '@/content/shared';
+import { mailtoHref } from '../lib/contact';
+import { MailIcon } from './Icons';
 import WhatsAppLink from './WhatsAppLink';
 
 /**
- * Tarjeta de contacto del hero (solo desktop, Plan M15). Es el único botón relleno de la
- * primera pantalla: WhatsApp directo. Sin campos de formulario: el envío real vive en
- * /contacto (ContactForm), acá solo se enlaza.
+ * Tarjeta de contacto del hero: compacta y editorial. Dos filas de enlace con icono, separadas por
+ * una sola línea fina, con el mismo WhatsApp (mensaje predefinido) y mailto que el resto del sitio.
+ * Desktop: abajo a la derecha, alineada con el CTA; tablet y mobile: en flujo, bajo el contenido.
  */
 export default function HeroContactCard({ source = 'hero-card' }) {
+  const { channels, defaults } = contactContent;
   return (
     <aside className="hero-card" aria-label={ui.footer.contactLabel}>
       <div className="hero-card-inner hero-anim">
         <p className="label hero-card-label">{ui.footer.contactLabel}</p>
-        <p className="hero-card-title">{contactContent.defaults.title}</p>
-        <WhatsAppLink source={source} className="button button-fill hero-card-button">
-          {ui.whatsapp.consultLabel}
-        </WhatsAppLink>
-        <div className="hero-card-foot">
-          <Link className="text-link text-link-arrow" href={`${routes.contact}#formulario`}>
-            O mandanos un email
-            <span aria-hidden="true"> →</span>
-          </Link>
+        <p className="hero-card-title">{defaults.title}</p>
+        <div className="hero-card-links">
+          <WhatsAppLink source={source} iconSize={19} className="hero-card-link">
+            {channels.whatsappLabel}
+            <span className="hero-card-arrow" aria-hidden="true">
+              ↗
+            </span>
+          </WhatsAppLink>
+          <a className="hero-card-link" href={mailtoHref()}>
+            <MailIcon size={19} />
+            {channels.emailLabel}
+            <span className="hero-card-arrow" aria-hidden="true">
+              ↗
+            </span>
+          </a>
         </div>
       </div>
     </aside>

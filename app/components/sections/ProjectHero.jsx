@@ -3,13 +3,15 @@ import { ui } from '@/content/shared';
 import { Cota, Picture } from '../Primitives';
 import ProjectMark from '../ProjectMark';
 import RevealLines from '../RevealLines';
+import { DownloadIcon } from '../Icons';
 import WhatsAppLink from '../WhatsAppLink';
 
 /**
  * Hero de la página del proyecto (Plan 5.2.1): dos paneles de ancho igual. A la izquierda la
  * ficha sobre Carbón; a la derecha la fachada vertical a sangre hasta el borde, que se descubre
- * con la cortina. En mobile la fachada va arriba y el texto debajo. Una sola acción rellena
- * (WhatsApp) y una de contorno (tipologías).
+ * con la cortina. En mobile la fachada va arriba y el texto debajo. Dos acciones comerciales:
+ * primaria (Solicitar información, WhatsApp) y secundaria (Descargar brochure, PDF), más un
+ * enlace terciario hacia las tipologías.
  */
 export default function ProjectHero({ entry }) {
   return (
@@ -20,16 +22,31 @@ export default function ProjectHero({ entry }) {
         <span className="pj-hero-rule hero-anim" aria-hidden="true" />
         <p className="pj-hero-lead hero-anim">{entry.hero.lead || entry.summary}</p>
         <div className="hero-actions pj-hero-actions hero-anim">
-          <WhatsAppLink source="project-hero" className="button button-fill">
+          <WhatsAppLink source="project-hero" showIcon={false} className="button button-fill">
             {entry.hero.secondaryCta.label || ui.whatsapp.consultLabel}
-          </WhatsAppLink>
-          <Link className="button button-arrow" href={entry.hero.primaryCta.href}>
-            {entry.hero.primaryCta.label}
             <span className="button-arrow-icon" aria-hidden="true">
               →
             </span>
-          </Link>
+          </WhatsAppLink>
+          {entry.brochure ? (
+            <a
+              className="button button-download"
+              href={entry.brochure.href}
+              download={entry.brochure.filename}
+              target="_blank"
+              rel="noopener"
+              data-download="brochure">
+              {entry.brochure.label}
+              <DownloadIcon />
+            </a>
+          ) : null}
         </div>
+        <Link className="text-link text-link-arrow pj-hero-explore" href={entry.hero.primaryCta.href}>
+          {entry.hero.primaryCta.label}
+          <span className="text-link-arrow-icon is-down" aria-hidden="true">
+            ↓
+          </span>
+        </Link>
         <div className="pj-hero-foot hero-anim">
           <Cota className="pj-hero-cota">
             {entry.locationShort}
