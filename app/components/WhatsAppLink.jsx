@@ -11,6 +11,7 @@ export default function WhatsAppLink({
   children,
   message,
   iconSize = 16,
+  showIcon = true,
   ...rest
 }) {
   return (
@@ -22,7 +23,7 @@ export default function WhatsAppLink({
       data-wa-source={source}
       onClick={() => trackWhatsAppClick(source)}
       {...rest}>
-      <WhatsAppIcon size={iconSize} />
+      {showIcon ? <WhatsAppIcon size={iconSize} /> : null}
       {children}
     </a>
   );

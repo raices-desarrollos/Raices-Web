@@ -15,21 +15,13 @@ const heroImage = {
   sizes: '100vw',
 } as const;
 
-const atmosphereImage = {
-  src: asset('/assets/images/terraza-verde.webp'),
-  width: 1536,
-  height: 1024,
-  alt: 'Terraza con jacuzzi, canteros con vegetación densa, árboles y reposeras, con la ciudad de fondo',
-  note: 'Imagen de referencia',
-} as const;
-
 export const homeContent = {
   hero: {
     kicker: 'Raíces Developers',
     title: 'Hacemos edificios donde nosotros mismos viviríamos.',
     titleQuiet: 'Hacemos edificios',
     titleEmphasis: 'donde nosotros mismos viviríamos.',
-    lead: 'Creemos que un edificio debe estar pensado primero para quien lo va a habitar —y después para quien lo va a vender—.',
+    lead: 'Creemos que un edificio debe estar pensado primero para quien lo va a habitar y después para quien lo va a vender.',
     primaryCta: { label: 'Explorar proyectos', href: routes.projects },
     secondaryCta: { label: 'Conocer Raíces', href: routes.about },
     cota: `${brand.name} · ${brand.city}`,
@@ -40,42 +32,19 @@ export const homeContent = {
     },
   },
   about: {
-    kicker: 'Nuestra filosofía',
-    title: 'Pensados para quienes los habitan.',
-    titleQuiet: 'Pensados para',
-    titleEmphasis: 'quienes los habitan.',
-    lead: 'Por eso buscamos que cada elección tenga un propósito, que cada espacio funcione bien y que cada proyecto siga teniendo sentido con el paso de los años.',
-    bridge: 'Tomamos decisiones con criterio.',
-    principles: [
-      {
-        label: 'Simplicidad',
-        text: 'Valoramos la simplicidad.',
-      },
-      {
-        label: 'Durabilidad',
-        text: 'Preferimos las soluciones duraderas a las modas.',
-      },
-      {
-        label: 'Funcionalidad',
-        text: 'Nos gustan los espacios luminosos, funcionales y fáciles de vivir.',
-      },
-    ],
-    quote:
-      'La buena arquitectura y la buena ingeniería tienen algo en común: cuando están bien hechas, no necesitan explicarse.',
+    title: 'Construimos espacios donde da placer vivir.',
+    lead: 'Cada elección tiene un propósito, cada espacio funciona bien y cada proyecto sigue teniendo sentido con el paso de los años.',
     link: { label: 'Conocer Raíces', href: routes.about },
-    cota: brand.slogan,
-    image: atmosphereImage,
   },
   featured: {
     kicker: 'Proyecto 001 · Saavedra',
     link: { label: 'Descubrir Ceibo Vidal' },
+    cta: 'Explorar proyecto',
+    address: 'Vidal 3849 · Saavedra, Buenos Aires',
     mediaAriaSuffix: 'descubrir Ceibo Vidal',
   },
   cta: {
-    cota: 'Buenos Aires',
-    title: 'Construimos espacios donde da placer vivir.',
-    text: 'Vamos a construir cada proyecto como si fuera para nosotros.',
-    link: { label: 'Conocé nuestros proyectos', href: routes.projects },
-    atmosphere: atmosphereImage,
+    title: '¿Hablamos de tu próximo hogar?',
+    link: { label: 'Contactanos', href: routes.contact },
   },
 } as const;

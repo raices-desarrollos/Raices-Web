@@ -61,6 +61,12 @@
   animation-delay: 900ms;
 }
 
+.pj-hero-explore {
+  margin-top: 8px;
+  margin-left: -2px;
+  animation: heroIn 700ms var(--ease-out) 1000ms both;
+}
+
 .pj-hero-foot {
   width: 100%;
   margin-top: auto;

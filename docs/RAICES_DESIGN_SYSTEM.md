@@ -499,3 +499,15 @@ El favicon es el isotipo de Raíces Developers, no el de Ceibo Vidal.
 - Regenerar desde el isotipo oficial. No sustituir por el logo de Ceibo ni por un icono de plantilla. No redibujar la geometría: solo escala y margen.
 - Caliza sobre Carbón en todos los tamaños. No usar invert puro a blanco.
 - Open Graph sigue aparte: `public/assets/brand/og-image.png`, logo completo en blanco sobre `#21201E`.
+
+## Actualización: refinamiento del hero, botones y favicon
+
+- **Hero (Home):** sin tarjeta de contacto, sin indicador Scroll ni isotipo inferior. Módulo editorial `.hero-contact` («Contacto / ¿Hablamos? / WhatsApp ↗ Email ↗»): abajo a la derecha desde 1024 px, en flujo bajo las acciones en tablet y mobile. Contraste por degradados localizados en `.cine-hero-scrim` (superior para navbar, inferior izquierdo para titular, inferior derecho para contacto). Lead a `rgba(231,224,213,.94)`.
+- **Navbar:** logo 41 px (38 px con scroll, 32 px bajo 420 px); enlaces a `rgba(231,224,213,.94)` con velo superior en la Home sin scroll.
+- **Botones:** primario `.button-fill` (caliza/carbón), secundario `.button` (contorno `--line-strong`, también `.button-download` con `DownloadIcon`), terciario `.text-link.text-link-arrow` (flecha y subrayado animado en hover/foco, 44 px de alto táctil).
+- **Favicon:** isotipo sin fondo en SVG (`public/icon-dark.svg` para pestañas claras, `public/icon-light.svg` para oscuras), trazo reforzado para 16/32 px; PNG/ICO en caliza transparente y `apple-touch-icon`/`icon-192/512` en caliza sobre Carbón. Versiones de marca: `public/assets/brand/raices_isotipo_negro.svg` y `raices_isotipo_caliza.svg`.
+- **Brochure:** `public/downloads/Ceibo-Vidal-Brochure.pdf`, copia optimizada de `docs/commercial/`; configurado en `ceiboVidalContent.brochure`.
+
+## Actualización: galería editorial de Ceibo Vidal en la Home
+
+`FeaturedProject` ya no es un capítulo con sticky: muestra logo, «Saavedra · Buenos Aires», la línea vigente del proyecto y «Explorar proyecto →», y debajo `ProjectCarousel` (scroll nativo con `scroll-snap`, flechas con animación de 560 ms, contador `01 / 03`, sin autoplay ni loop, instantáneo con `prefers-reduced-motion`). Las imágenes salen de `ceiboVidalContent.homeGallery` (`order`, `title`, `src`, `alt`); cada slide comparte altura (`--pc-h`) y conserva su proporción.

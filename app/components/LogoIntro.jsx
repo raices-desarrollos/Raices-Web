@@ -7,7 +7,7 @@ const STORAGE_KEY = 'raices-intro-seen';
 
 /*
  * Línea de tiempo de la intro (Plan M01). Toda la coreografía visual vive en cinematic.css con
- * estas mismas cifras; acá JS solo programa dos momentos y atiende "Saltar".
+ * estas mismas cifras; acá JS solo programa dos momentos y el cierre anticipado.
  *
  *   0–800      el logo completo se revela de arriba hacia abajo mientras asienta (REVEAL)
  *   800–2500   logo visible e inmóvil (HOLD)
@@ -133,15 +133,6 @@ export default function LogoIntro() {
           decoding="sync"
         />
       </div>
-      <button
-        type="button"
-        className="logo-intro-skip"
-        onClick={(event) => {
-          event.stopPropagation();
-          skip();
-        }}>
-        {ui.intro.skip}
-      </button>
       <button
         type="button"
         className="logo-intro-explore"

@@ -95,7 +95,6 @@ export const ui = {
     deliveryPrefixed: (year: string) => `Prevista para ${year}`,
     location: 'Ubicación',
     synthesis: 'Síntesis',
-    featuredStates: 'Imágenes del proyecto',
   },
   cta: {
     title: 'Hablemos.',
@@ -109,6 +108,13 @@ export const ui = {
     seoTitle: 'Página no encontrada',
     homeLabel: 'Ir al inicio',
     projectsLabel: 'Ver proyectos',
+  },
+  carousel: {
+    label: 'Adelanto visual de Ceibo Vidal',
+    previous: 'Imagen anterior',
+    next: 'Imagen siguiente',
+    slide: 'Imagen',
+    of: 'de',
   },
   gallery: {
     title: 'Galería',
@@ -133,12 +139,7 @@ export const ui = {
     tabsLabel: 'Tipologías',
   },
   intro: {
-    skip: 'Saltar',
     explore: 'Explorar ↓',
-  },
-  scroll: {
-    label: 'Scroll',
-    ariaLabel: 'Bajar al contenido',
   },
   partners: {
     label: 'Desarrollado en conjunto con',

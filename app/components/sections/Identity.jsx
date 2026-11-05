@@ -15,9 +15,16 @@ export default function Identity({ content = aboutContent.identity }) {
 
       <ol className="identity-list reveal-stagger">
         {content.points.map((point, index) => (
-          <li key={point}>
+          <li key={point.label || point}>
             <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            <p>{point}</p>
+            {point.label ? (
+              <div>
+                <h3 className="identity-point-label">{point.label}</h3>
+                <p>{point.text}</p>
+              </div>
+            ) : (
+              <p>{point}</p>
+            )}
           </li>
         ))}
       </ol>

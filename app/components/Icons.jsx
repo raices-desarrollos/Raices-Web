@@ -42,3 +42,43 @@ export function InstagramIcon({ size = 16 }) {
     </svg>
   );
 }
+
+export function DownloadIcon({ size = 14 }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width={size}
+      height={size}
+      aria-hidden="true"
+      focusable="false"
+      className="download-icon"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M12 4v11M7 11l5 5 5-5M5 20h14" />
+    </svg>
+  );
+}
+
+export function MailIcon({ size = 18 }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width={size}
+      height={size}
+      aria-hidden="true"
+      focusable="false"
+      xmlns="http://www.w3.org/2000/svg">
+      <rect x="3" y="5.5" width="18" height="13" rx="1" />
+      <path d="m3.5 7 8.5 6.5L20.5 7" />
+    </svg>
+  );
+}

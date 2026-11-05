@@ -45,6 +45,8 @@ const oneLine = (v, max) =>
     .trim()
     .slice(0, max);
 
+const secret = (env, key) => String(env?.[key] ?? "").trim();
+
 function json(data, status, origin) {
   return new Response(JSON.stringify(data), {
     status,
@@ -59,7 +61,7 @@ function json(data, status, origin) {
 
 const handler = {
   async fetch(request, env) {
-    const origin = env.ALLOWED_ORIGIN || "*";
+    const origin = secret(env, "ALLOWED_ORIGIN").replace(/\/+$/, "") || "*";
 
     if (request.method === "OPTIONS") {
       return new Response(null, {
@@ -112,11 +114,11 @@ const handler = {
       return json({ ok: false, error: "validation" }, 422, origin);
     }
 
-    if (
-      !env.RESEND_API_KEY ||
-      !env.CONTACT_TO_EMAIL ||
-      !env.CONTACT_FROM_EMAIL
-    ) {
+    const apiKey = secret(env, "RESEND_API_KEY");
+    const to = secret(env, "CONTACT_TO_EMAIL");
+    const from = secret(env, "CONTACT_FROM_EMAIL");
+
+    if (!apiKey || !to || !from || !EMAIL_PATTERN.test(to)) {
       return json({ ok: false, error: "unconfigured" }, 503, origin);
     }
 
@@ -133,12 +135,12 @@ const handler = {
       resend = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: {
-          Authorization: `Bearer ${env.RESEND_API_KEY}`,
+          Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: env.CONTACT_FROM_EMAIL,
-          to: [env.CONTACT_TO_EMAIL],
+          from,
+          to: [to],
           reply_to: email,
           subject: `Consulta Raíces · ${asunto}`,
           text,
