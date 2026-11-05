@@ -1,20 +1,21 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { contact } from '../content/site';
+import { contact, contactContent } from '@/content/contact';
 import { trackFormSubmit } from '../lib/analytics';
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const USES_ENDPOINT = Boolean(contact.formEndpoint);
 const MIN_FILL_MS = 3000; // un humano tarda más que esto en completar el formulario
+const form = contactContent.form;
 
 function validate(fields) {
   const errors = {};
-  if (!fields.nombre.trim()) errors.nombre = 'Escribí tu nombre.';
-  if (!fields.email.trim()) errors.email = 'Escribí tu email.';
-  else if (!EMAIL_PATTERN.test(fields.email.trim())) errors.email = 'Revisá el formato del email.';
-  if (!fields.mensaje.trim()) errors.mensaje = 'Contanos brevemente qué querés saber.';
-  if (!fields.consentimiento) errors.consentimiento = 'Necesitamos tu consentimiento para responderte.';
+  if (!fields.nombre.trim()) errors.nombre = form.name.required;
+  if (!fields.email.trim()) errors.email = form.email.required;
+  else if (!EMAIL_PATTERN.test(fields.email.trim())) errors.email = form.email.invalid;
+  if (!fields.mensaje.trim()) errors.mensaje = form.message.required;
+  if (!fields.consentimiento) errors.consentimiento = form.consent.required;
   return errors;
 }
 
@@ -100,19 +101,17 @@ export default function ContactForm({ defaultSubject }) {
     }
   }
 
-  const sentMessage = 'Recibimos tu mensaje. Te respondemos a la brevedad.';
-
   return (
     <form className="contact-form reveal" onSubmit={handleSubmit} noValidate>
       <div className="field-row">
         <div className={`field ${errors.nombre ? 'is-invalid' : ''}`}>
-          <label htmlFor="contact-nombre">Nombre</label>
+          <label htmlFor="contact-nombre">{form.name.label}</label>
           <input
             id="contact-nombre"
             name="nombre"
             type="text"
             autoComplete="name"
-            placeholder="Tu nombre"
+            placeholder={form.name.placeholder}
             value={fields.nombre}
             onChange={update}
             aria-invalid={errors.nombre ? 'true' : undefined}
@@ -127,14 +126,14 @@ export default function ContactForm({ defaultSubject }) {
         </div>
 
         <div className={`field ${errors.email ? 'is-invalid' : ''}`}>
-          <label htmlFor="contact-email">Correo electrónico</label>
+          <label htmlFor="contact-email">{form.email.label}</label>
           <input
             id="contact-email"
             name="email"
             type="email"
             autoComplete="email"
             inputMode="email"
-            placeholder="tu@email.com"
+            placeholder={form.email.placeholder}
             value={fields.email}
             onChange={update}
             aria-invalid={errors.email ? 'true' : undefined}
@@ -150,7 +149,7 @@ export default function ContactForm({ defaultSubject }) {
       </div>
 
       <div className="field">
-        <label htmlFor="contact-asunto">Motivo</label>
+        <label htmlFor="contact-asunto">{form.subject.label}</label>
         <select id="contact-asunto" name="asunto" value={fields.asunto} onChange={update}>
           {contact.subjects.map((subject) => (
             <option key={subject} value={subject}>
@@ -161,12 +160,12 @@ export default function ContactForm({ defaultSubject }) {
       </div>
 
       <div className={`field ${errors.mensaje ? 'is-invalid' : ''}`}>
-        <label htmlFor="contact-mensaje">Mensaje</label>
+        <label htmlFor="contact-mensaje">{form.message.label}</label>
         <textarea
           id="contact-mensaje"
           name="mensaje"
           rows="4"
-          placeholder="Quiero recibir información sobre las unidades disponibles."
+          placeholder={form.message.placeholder}
           value={fields.mensaje}
           onChange={update}
           aria-invalid={errors.mensaje ? 'true' : undefined}
@@ -182,7 +181,7 @@ export default function ContactForm({ defaultSubject }) {
 
       {/* Honeypot: oculto para personas, visible para bots. */}
       <div className="hp-field" aria-hidden="true">
-        <label htmlFor="contact-website">Sitio web</label>
+        <label htmlFor="contact-website">{form.honeypot.label}</label>
         <input
           id="contact-website"
           name="website"
@@ -206,7 +205,7 @@ export default function ContactForm({ defaultSubject }) {
             aria-describedby={errors.consentimiento ? 'error-consentimiento' : undefined}
             required
           />
-          <span>Acepto que Raíces Developers use estos datos para responder mi consulta.</span>
+          <span>{form.consent.label}</span>
         </label>
         {errors.consentimiento ? (
           <p className="field-error" id="error-consentimiento">
@@ -217,23 +216,15 @@ export default function ContactForm({ defaultSubject }) {
 
       <div className="form-actions">
         <button className="button button-fill" type="submit" disabled={status === 'sending'}>
-          {status === 'sending' ? 'Enviando…' : 'Enviar mensaje'}
+          {status === 'sending' ? form.sending : form.submit}
         </button>
-        <p className="form-hint">
-          {USES_ENDPOINT
-            ? 'Tu mensaje llega al equipo de Raíces por email.'
-            : 'El envío por email todavía no está activo. Mientras tanto, escribinos por WhatsApp.'}
-        </p>
+        <p className="form-hint">{USES_ENDPOINT ? form.hintConfigured : form.hintUnconfigured}</p>
       </div>
 
       <p className="form-status" role="status" aria-live="polite">
-        {status === 'sent' ? sentMessage : null}
-        {status === 'unconfigured'
-          ? 'El envío por email todavía no está configurado. Usá el botón de WhatsApp para escribirnos ahora.'
-          : null}
-        {status === 'error'
-          ? 'No pudimos enviar el mensaje. Probá de nuevo en unos minutos o escribinos por WhatsApp.'
-          : null}
+        {status === 'sent' ? form.statusSent : null}
+        {status === 'unconfigured' ? form.statusUnconfigured : null}
+        {status === 'error' ? form.statusError : null}
       </p>
     </form>
   );

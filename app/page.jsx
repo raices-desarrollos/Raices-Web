@@ -1,6 +1,8 @@
-import { home, projects } from './content/site';
-import LogoIntro from './components/LogoIntro';
+import { homeContent } from '@/content/home';
+import { featuredProject } from '@/content/projects';
+import { ui } from '@/content/shared';
 import CinematicHero from './components/CinematicHero';
+import Manifesto from './components/Manifesto';
 import AboutTeaser from './components/AboutTeaser';
 import FeaturedProject from './components/FeaturedProject';
 import CtaBand from './components/CtaBand';
@@ -8,16 +10,20 @@ import LegacyHashRedirect from './components/LegacyHashRedirect';
 
 /** Home institucional de Raíces. El detalle de cada desarrollo vive en /proyectos/[slug]. */
 export default function Home() {
-  const featured = projects[0];
-
   return (
     <>
-      <LogoIntro />
       <LegacyHashRedirect />
       <CinematicHero />
+      <Manifesto title={homeContent.cta.title} lead={homeContent.about.lead} />
       <AboutTeaser />
-      <FeaturedProject project={featured} />
-      <CtaBand title={home.cta.title} text={home.cta.text} link={home.cta.link} cota="Buenos Aires" />
+      <FeaturedProject project={featuredProject} />
+      <CtaBand
+        title={homeContent.cta.title}
+        text={homeContent.cta.text}
+        link={homeContent.cta.link}
+        cota={homeContent.cta.cota}
+        whatsapp={{ source: 'cta-band', label: ui.whatsapp.consultLabel }}
+      />
     </>
   );
 }

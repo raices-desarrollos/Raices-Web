@@ -60,9 +60,9 @@ Los eventos (clic en WhatsApp, envío del formulario) pasan por `app/lib/analyti
 
 ## Contenido
 
-Todos los datos (marca, contacto, redes, proyecto, tipologías, ubicación, socios) viven en `app/content/site.js`. Si falta un dato, se deja un `TODO:` ahí; no se inventa.
+Los textos y datos (marca, contacto, redes, proyectos, tipologías, ubicación, socios) viven en `app/content/`, separados por página. Cómo editarlos: `docs/CONTENT_GUIDE.md`. Si falta un dato, se deja un `TODO:` ahí; no se inventa.
 
-Pendientes marcados con `TODO:` en ese archivo:
+Pendientes marcados con `TODO:` en `app/content/contact.ts`:
 
 - URL de LinkedIn de Raíces Developers.
 - URL de Instagram de Raíces Developers.
@@ -83,7 +83,7 @@ Reglas (`scripts/optimize-images.mjs`):
 - `public/assets/images/`: WebP, máx. 2400 px de ancho para la fachada (hero) y 1600 px para el resto. Nunca agranda.
 - `public/assets/plans/`: WebP sin pérdida, a resolución original (nitidez de líneas y cotas).
 - `public/assets/brand/` y `public/assets/partners/`: logos, no se tocan.
-- Genera `public/favicon.ico`, `public/favicon-32x32.png` y `public/apple-touch-icon.png` a partir de `raices_logo_icono.png` (trazo Caliza `#D1C7BA` sobre Carbón `#101210`, sin redibujar la forma). `og-image.png` sigue en `public/assets/brand/`. Para regenerar solo esos archivos: `npm run optimize-images -- --favicons-only`.
+- Genera `public/favicon.ico` (16, 32, 48), `public/favicon-32x32.png`, `public/icon-192.png`, `public/icon-512.png` y `public/apple-touch-icon.png` a partir de `raices_logo_icono.png` (trazo Caliza `#D1C7BA` sobre Carbón `#101210`, ~78 % del cuadrado, sin redibujar la forma). `og-image.png` sigue en `public/assets/brand/`. Para regenerar solo los iconos: `npm run optimize-images -- --favicons-only`.
 
 Los logos de Raíces son PNG de trazo negro sobre transparente. Sobre fondo oscuro se usan con `filter: brightness(0) invert(1)` (clase `.logo-on-dark`), sin recolorear el archivo.
 
@@ -97,7 +97,7 @@ app/
   contacto/             — Formulario y canales
   cinematic.css         — Intro, hero, galería, transiciones
   globals.css           — Tokens y sistema de diseño
-  content/site.js       — Única fuente de datos (incluye `projects` para futuros desarrollos)
+  content/              — Textos y datos por página (home, about, projects, ceibo-vidal, contact, shared)
   components/           — Header, Footer, LogoIntro, CinematicHero, FeaturedProject,
                           ProjectGallery, ContactForm, WhatsAppButton, secciones de Ceibo
 

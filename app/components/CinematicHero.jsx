@@ -1,21 +1,28 @@
 import Link from 'next/link';
-import { brand, heroMedia, home } from '../content/site';
-import { Cota, Picture } from './Primitives';
+import { homeContent } from '@/content/home';
+import { featuredProject } from '@/content/projects';
+import { brand, routes, ui } from '@/content/shared';
+import { Picture } from './Primitives';
+import HeroContactCard from './HeroContactCard';
+import RevealLines from './RevealLines';
+import WhatsAppLink from './WhatsAppLink';
 
 /**
- * Hero institucional a pantalla completa. Sin video final, la imagen de referencia lleva un
- * movimiento de cámara lento (Ken Burns) y un velo oscuro para la lectura. Si existe
- * NEXT_PUBLIC_HERO_VIDEO, el video se reproduce silencioso en bucle sobre la misma imagen
- * (que queda como poster y como fallback con movimiento reducido).
+ * Hero institucional a pantalla: la foto ocupa el campo, el texto la enmarca (Plan M02).
+ * H1 en dos líneas explícitas (RevealLines static: sin medición, sin CLS), una sola acción
+ * editorial hacia Ceibo Vidal y, en tablet y mobile, WhatsApp como único botón relleno.
+ * En desktop (≥1100 px) la tarjeta de contacto lleva el único botón relleno; debajo, WhatsApp
+ * inline reemplaza a la tarjeta.
+ * Si existe NEXT_PUBLIC_HERO_VIDEO, el video corre silencioso sobre la misma imagen.
  */
 export default function CinematicHero() {
-  const { hero } = home;
+  const { hero } = homeContent;
 
   return (
     <section className="cine-hero" aria-labelledby="hero-title">
       <div className="cine-hero-media" aria-hidden="true">
-        <Picture image={heroMedia.image} className="cine-hero-image" priority />
-        {heroMedia.video ? (
+        <Picture image={hero.media.image} className="cine-hero-image" priority />
+        {hero.media.video ? (
           <video
             className="cine-hero-video"
             autoPlay
@@ -23,58 +30,58 @@ export default function CinematicHero() {
             loop
             playsInline
             preload="metadata"
-            poster={heroMedia.image.src}>
-            <source src={heroMedia.video} type="video/mp4" />
+            poster={hero.media.image.src}>
+            <source src={hero.media.video} type="video/mp4" />
           </video>
         ) : null}
-        <div className="cine-hero-scrim" />
       </div>
+      <div className="cine-hero-scrim" aria-hidden="true" />
 
       <div className="cine-hero-content">
-        <div className="hero-kicker-row hero-anim">
-          <img
-            className="hero-mark logo-on-dark"
-            src={brand.logos.icon.src}
-            width={brand.logos.icon.width}
-            height={brand.logos.icon.height}
-            alt=""
-          />
-          <p className="kicker">{hero.kicker}</p>
-        </div>
-        <h1 id="hero-title">
-          <span className="hero-line hero-line-soft">
-            <span>{hero.titleQuiet}</span>
-          </span>
-          <span className="hero-line hero-line-italic">
-            <span>{hero.titleEmphasis}</span>
-          </span>
-        </h1>
+        <RevealLines
+          as="h1"
+          id="hero-title"
+          className="hero-title"
+          lines={[hero.titleQuiet, hero.titleEmphasis]}
+          lineClassNames={['hero-line-quiet', 'hero-line-strong']}
+          delay={520}
+          immediate
+        />
         <p className="hero-lead hero-anim">{hero.lead}</p>
         <div className="hero-actions hero-anim">
-          <Link className="button button-fill" href={hero.primary.href}>
-            {hero.primary.label}
+          <Link className="button button-arrow" href={routes.project(featuredProject.slug)}>
+            {homeContent.featured.link.label}
+            <span className="button-arrow-icon" aria-hidden="true">
+              →
+            </span>
           </Link>
-          <Link className="button" href={hero.secondary.href}>
-            {hero.secondary.label}
-          </Link>
+          <WhatsAppLink source="hero-mobile" className="button button-fill hero-whatsapp">
+            {ui.whatsapp.consultLabel}
+          </WhatsAppLink>
         </div>
       </div>
 
-      <div className="cine-hero-foot hero-anim">
-        <Cota className="hero-cota">
-          {brand.name} · {brand.city}
-        </Cota>
-        <span className="hero-note label">{heroMedia.note}</span>
-      </div>
+      <HeroContactCard />
 
-      <p className="hero-rail hero-anim" aria-hidden="true">
+      <p className="hero-rail" aria-hidden="true">
         <span>01</span>
         <span>{brand.city}</span>
       </p>
 
-      <a className="scroll-cue hero-anim" href="#raices" aria-label="Bajar al contenido">
+      <div className="cine-hero-foot hero-anim">
+        <img
+          className="hero-foot-logo logo-on-dark"
+          src={brand.logos.full.src}
+          width={brand.logos.full.width}
+          height={brand.logos.full.height}
+          alt={brand.name}
+        />
+        <span className="hero-note label">{hero.media.note}</span>
+      </div>
+
+      <a className="scroll-cue" href="#manifiesto" aria-label={ui.scroll.ariaLabel}>
         <span className="scroll-cue-line" aria-hidden="true" />
-        <span className="scroll-cue-label">Scroll</span>
+        <span className="scroll-cue-label">{ui.scroll.label}</span>
       </a>
     </section>
   );

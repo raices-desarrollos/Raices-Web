@@ -1,21 +1,21 @@
 import Link from 'next/link';
-import { routes } from './content/site';
+import { routes, ui } from '@/content/shared';
 import { PageHeader } from './components/Primitives';
 
 export const metadata = {
-  title: 'Página no encontrada',
+  title: ui.notFound.seoTitle,
   robots: { index: false, follow: true },
 };
 
 export default function NotFound() {
   return (
-    <PageHeader kicker="Error 404" title="Esta página no existe." lead="El enlace puede haber cambiado con la nueva estructura del sitio.">
+    <PageHeader kicker={ui.notFound.kicker} title={ui.notFound.title} lead={ui.notFound.lead}>
       <div className="hero-actions hero-anim">
         <Link className="button button-fill" href={routes.home}>
-          Ir al inicio
+          {ui.notFound.homeLabel}
         </Link>
         <Link className="button" href={routes.projects}>
-          Ver proyectos
+          {ui.notFound.projectsLabel}
         </Link>
       </div>
     </PageHeader>

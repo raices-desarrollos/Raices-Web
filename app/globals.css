@@ -6,6 +6,8 @@
 :root {
   /* Paleta de marca */
   --tinta: #21201e;
+  --carbon: #101210;
+  --caliza: #d1c7ba;
   --blanco: #f8f7f4;
   --lino: #f0ede6;
   --arena: #c4a97d;
@@ -13,41 +15,77 @@
   --musgo: #536245;
   --ceibo: #b85c42;
   --niebla: #6e6f68;
+  /* Niebla para texto sobre Lino (#F0EDE6): 4,96:1. `--niebla` solo da 4,34:1 y no pasa AA a 11–13px. */
+  --niebla-ink: #65665f;
 
-  /* Tokens semánticos — dark architectural luxury, sobre la paleta oficial. */
-  --bg: #0a0d0b;
-  --bg-alt: #101812;
-  --surface: #161a17;
+  /* Tokens semánticos — dark architectural luxury, a partir de Carbón y Caliza. */
+  --bg: var(--carbon);
+  --bg-alt: #161714;
+  --surface: #1c1d1a;
   --surface-2: #19382c;
   --surface-light: var(--lino);
-  --text: #eae8df;
-  --text-soft: rgba(234, 232, 223, 0.78);
-  --muted: #a8a69c; /* Niebla aclarada para cumplir AA sobre el fondo nuevo */
+  --text: var(--caliza);
+  --text-soft: rgba(209, 199, 186, 0.78);
+  --muted: #a89e90;
   --accent: var(--arena);
   --bronze: #a58e68;
   --accent-green: var(--liquen);
   --green-deep: var(--musgo);
-  --line: rgba(234, 232, 223, 0.14);
-  --line-strong: rgba(234, 232, 223, 0.32);
+  --line: rgba(209, 199, 186, 0.16);
+  --line-strong: rgba(209, 199, 186, 0.34);
   --line-on-light: rgba(133, 96, 64, 0.22);
+  --veil: 16, 18, 16;
   --wa: #25d366;
 
   --radius: 8px;
   --radius-button: 2px;
   --line-width: 0.75px;
 
-  /* --font-fraunces y --font-montserrat las define next/font en <html>. */
-  --font-display: var(--font-fraunces, Fraunces), 'Iowan Old Style', Palatino, serif;
+  /* --font-mplus (M PLUS U, local) y --font-montserrat los define next/font en <html>. */
+  --font-display: var(--font-mplus), 'Helvetica Neue', Arial, sans-serif;
   --font-body: var(--font-montserrat, 'Montserrat'), 'Helvetica Neue', Arial, sans-serif;
 
+  /* Motion (Plan §7). --ease se conserva como alias histórico de --ease-out. */
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out: var(--ease); /* reveals de bloque, hover largo */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1); /* entradas largas: líneas, hero */
+  --ease-in-out: cubic-bezier(0.76, 0, 0.24, 1); /* cortinas */
+  --ease-std: cubic-bezier(0.4, 0, 0.2, 1); /* hover y UI */
   --dur: 600ms;
   --dur-fast: 320ms;
+  --dur-ui: 240ms;
+  --dur-reveal: 800ms;
+  --dur-image: 950ms;
+  --dur-curtain: 900ms;
+  --dur-page: 600ms;
+  --stagger: 90ms;
+  --rise: 28px;
 
+  /* Layout */
   --container: 1180px;
+  --container-wide: 1320px;
   --gutter: clamp(20px, 5vw, 64px);
+  --grid-gap: clamp(16px, 2vw, 32px);
   --header-height: 76px;
   --hero-progress: 0;
+
+  /* Espaciado vertical */
+  --space-section: clamp(96px, 12vw, 160px);
+  --space-block: clamp(48px, 6vw, 88px);
+  --space-stack: clamp(20px, 2.4vw, 32px);
+
+  /* Escala tipográfica única (Plan §6.4) */
+  --fs-hero: clamp(40px, 5.6vw, 88px);
+  --fs-display: clamp(36px, 5.2vw, 84px);
+  --fs-h1: clamp(36px, 4.6vw, 72px);
+  --fs-h2: clamp(32px, 3.8vw, 56px);
+  --fs-h3: clamp(22px, 2vw, 28px);
+  --fs-metric: clamp(28px, 3vw, 44px);
+  --fs-lead: clamp(16px, 1.3vw, 18px);
+  --fs-body: 15.5px;
+  --fs-small: 13px;
+  --fs-label: 11px;
+  --fs-kicker: 12px;
 
   color-scheme: dark;
 }
@@ -124,9 +162,9 @@ figure {
   outline-offset: 3px;
 }
 
-/* Logos de trazo negro sobre fondo oscuro → versión blanca (sin recolorear el archivo). */
+/* Logos de trazo negro sobre Carbón → Caliza (sin redibujar el archivo). */
 .logo-on-dark {
-  filter: brightness(0) invert(1);
+  filter: brightness(0) invert(87%) sepia(8%) saturate(280%) hue-rotate(346deg) brightness(92%) contrast(88%);
 }
 
 .skip-link {
@@ -158,28 +196,28 @@ h2,
 h3 {
   margin: 0;
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 300;
   color: var(--text);
 }
 
 h1 {
-  font-size: clamp(48px, 7.2vw, 108px);
-  font-weight: 400;
-  line-height: 0.96;
-  letter-spacing: -0.03em;
+  font-size: var(--fs-h1);
+  line-height: 1.04;
+  letter-spacing: -0.02em;
 }
 
 h2 {
   max-width: 18ch;
-  font-size: clamp(34px, 4.6vw, 64px);
-  line-height: 1.06;
-  letter-spacing: -0.018em;
+  font-size: var(--fs-h2);
+  line-height: 1.08;
+  letter-spacing: -0.012em;
 }
 
 h3 {
-  font-size: clamp(20px, 2vw, 26px);
+  font-size: var(--fs-h3);
+  font-weight: 400;
   line-height: 1.3;
-  letter-spacing: 0.005em;
+  letter-spacing: 0;
 }
 
 p {
@@ -191,7 +229,6 @@ p + p {
 }
 
 .text-stack p,
-.project-copy p,
 .feature-copy p,
 .identity-list p,
 .contact-copy p,
@@ -298,12 +335,15 @@ p + p {
    -------------------------------------------------------------------------- */
 
 .button {
+  position: relative;
+  z-index: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   min-height: 46px;
   padding: 13px 24px;
+  overflow: hidden;
   border: 1px solid var(--text);
   border-radius: var(--radius-button);
   background: transparent;
@@ -316,16 +356,29 @@ p + p {
   text-transform: uppercase;
   cursor: pointer;
   transition:
-    background var(--dur-fast) ease,
-    border-color var(--dur-fast) ease,
-    color var(--dur-fast) ease;
+    border-color var(--dur-fast) var(--ease-std),
+    color 200ms var(--ease-std) 120ms;
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--green-deep);
+  transform: translateY(101%);
+  transition: transform var(--dur-fast) var(--ease-std);
 }
 
 .button:hover,
 .button:focus-visible {
-  background: var(--green-deep);
   border-color: var(--green-deep);
-  color: var(--text);
+  color: var(--blanco);
+}
+
+.button:hover::before,
+.button:focus-visible::before {
+  transform: none;
 }
 
 .button-fill {
@@ -334,9 +387,12 @@ p + p {
   color: var(--bg);
 }
 
+.button-fill::before {
+  background: var(--accent);
+}
+
 .button-fill:hover,
 .button-fill:focus-visible {
-  background: var(--accent);
   border-color: var(--accent);
   color: var(--bg);
 }
@@ -405,14 +461,35 @@ p + p {
     border-color var(--dur-fast) ease;
 }
 
-.site-header.is-scrolled,
-.site-header.nav-active,
-.site-header:not(.is-home) {
-  background: var(--bg);
-  border-bottom-color: var(--line);
+.site-header::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: rgba(16, 18, 16, 0);
+  transition: background var(--dur-fast) var(--ease-std);
+}
+
+/* El blur vive en el pseudo y no en el header: un backdrop-filter en el ancestro haría que
+   el menú móvil (position: fixed) se midiera contra el header y no contra la ventana. */
+.site-header.is-scrolled::before,
+.site-header.nav-active::before,
+.site-header:not(.is-home)::before {
+  background: rgba(16, 18, 16, 0.78);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
 }
 
 .site-header.is-scrolled,
+.site-header.nav-active,
+.site-header:not(.is-home) {
+  border-bottom-color: var(--line);
+}
+
+.site-header.is-scrolled {
+  padding-block: 19px;
+}
+
 .site-header.nav-active {
   padding-block: 12px;
 }
@@ -430,7 +507,7 @@ p + p {
 }
 
 .site-header.is-scrolled .brand-logo {
-  height: 32px;
+  height: 34px;
 }
 
 .site-nav {
@@ -446,16 +523,7 @@ p + p {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--text-soft);
-  transition: color var(--dur-fast) ease;
-}
-
-.nav-index {
-  margin-right: 8px;
-  font-family: var(--font-display);
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  color: var(--accent);
+  transition: color var(--dur-fast) var(--ease);
 }
 
 .site-nav a:not(.button)::after {
@@ -485,6 +553,10 @@ p + p {
 
 .site-nav-cta {
   margin-left: 8px;
+}
+
+.site-nav .site-nav-mobile {
+  display: none;
 }
 
 .nav-toggle {
@@ -529,52 +601,6 @@ p + p {
   background: var(--bg);
 }
 
-.hero-media {
-  position: absolute;
-  inset: 0 0 0 auto;
-  width: min(50%, 780px);
-  overflow: hidden;
-}
-
-.hero-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 42%;
-  transform: scale(calc(1.02 + var(--hero-progress) * 0.04))
-    translateY(calc(var(--hero-progress) * 24px));
-  will-change: transform;
-}
-
-.hero-scrim {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(
-      90deg,
-      var(--bg) 0%,
-      rgba(33, 32, 30, 0.96) 12%,
-      rgba(33, 32, 30, 0.72) 34%,
-      rgba(33, 32, 30, 0.28) 62%,
-      rgba(33, 32, 30, 0.18) 100%
-    ),
-    linear-gradient(180deg, rgba(33, 32, 30, 0.45) 0%, rgba(33, 32, 30, 0) 30%, rgba(33, 32, 30, 0.2) 70%, var(--bg) 100%);
-}
-
-.hero-content {
-  position: relative;
-  z-index: 1;
-  width: min(100%, var(--container));
-  margin: 0 auto;
-}
-
-.hero-logo {
-  height: clamp(140px, 21vh, 230px);
-  width: auto;
-  margin: 0 0 clamp(28px, 4.5vh, 52px);
-  animation: heroRise 800ms var(--ease) both;
-}
-
 .hero h1 {
   max-width: 11ch;
   animation: heroRise 800ms var(--ease) both 120ms;
@@ -595,18 +621,6 @@ p + p {
   gap: 12px;
   margin-top: 40px;
   animation: heroRise 800ms var(--ease) both 360ms;
-}
-
-.hero-foot {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 28px;
-  left: var(--gutter);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 32px;
-  animation: heroRise 800ms var(--ease) both 520ms;
 }
 
 .hero-cota {
@@ -669,14 +683,12 @@ p + p {
 }
 
 .split-grid,
-.project-layout,
 .location-layout,
 .contact-inner,
 .green-intro,
 .feature-grid,
 .plans-intro,
 .plan-overview,
-.typology-grid,
 .spec-grid,
 .amenities {
   max-width: var(--container);
@@ -733,28 +745,6 @@ p + p {
    Proyecto · Ceibo Vidal
    -------------------------------------------------------------------------- */
 
-.project-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(300px, 440px);
-  gap: clamp(40px, 6vw, 88px);
-  align-items: center;
-}
-
-.project-logo {
-  height: 42px;
-  width: auto;
-  margin-bottom: 26px;
-  opacity: 0.92;
-}
-
-.project-copy h2 {
-  margin-bottom: 26px;
-}
-
-.project-copy p {
-  max-width: 540px;
-}
-
 .tag-row {
   display: flex;
   flex-wrap: wrap;
@@ -773,20 +763,6 @@ p + p {
   text-transform: uppercase;
 }
 
-.project-figure {
-  border-radius: var(--radius);
-  overflow: hidden;
-  border: var(--line-width) solid var(--line);
-  background: var(--surface);
-}
-
-.project-figure img {
-  width: 100%;
-  aspect-ratio: 2 / 3;
-  object-fit: cover;
-}
-
-.project-figure figcaption,
 .plan-overview figcaption,
 .feature-card figcaption,
 .typology-render figcaption {
@@ -797,16 +773,11 @@ p + p {
   text-transform: uppercase;
 }
 
-.project-figure figcaption {
-  padding: 12px 16px;
-  border-top: var(--line-width) solid var(--line);
-}
-
 .spec-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   border: var(--line-width) solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
   background: var(--surface);
 }
@@ -828,10 +799,10 @@ p + p {
 .spec-card strong {
   display: block;
   font-family: var(--font-display);
-  font-size: clamp(30px, 3vw, 44px);
+  font-size: var(--fs-metric);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   color: var(--text);
 }
 
@@ -872,6 +843,93 @@ p + p {
   color: var(--accent);
 }
 
+.characteristic-list {
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.characteristic-list li {
+  position: relative;
+  padding: 10px 0 10px 16px;
+  color: var(--text-soft);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.characteristic-list li::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+.amenities-described {
+  align-items: start;
+}
+
+.amenity-items {
+  display: grid;
+  flex: 1;
+  gap: 18px;
+  min-width: min(100%, 280px);
+}
+
+.amenity-items li {
+  display: grid;
+  gap: 4px;
+}
+
+.amenity-items li + li::before {
+  content: none;
+  margin: 0;
+}
+
+.amenity-items strong {
+  color: var(--text);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.amenity-items span {
+  color: var(--text-soft);
+  font-size: 14.5px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.5;
+  text-transform: none;
+}
+
+.location-lead {
+  max-width: 42ch;
+  margin-top: 22px;
+  color: var(--text-soft);
+}
+
+.typology-program {
+  margin-top: 16px;
+  color: var(--text-soft);
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+.statement-section h2 {
+  max-width: 16em;
+  font-size: clamp(32px, 4vw, 56px);
+  line-height: 1.12;
+}
+
+.statement-inner {
+  width: min(100%, var(--container));
+  margin: 0 auto;
+}
+
 /* --------------------------------------------------------------------------
    Tipologías y planos
    -------------------------------------------------------------------------- */
@@ -884,7 +942,7 @@ p + p {
 /* Lámina técnica: planos (líneas oscuras) sobre bloque Lino. */
 .plan-sheet {
   padding: clamp(14px, 2vw, 28px);
-  border-radius: var(--radius);
+  border-radius: 0;
   background: var(--surface-light);
 }
 
@@ -902,76 +960,7 @@ p + p {
   margin-top: 14px;
 }
 
-.typology-grid {
-  display: grid;
-  gap: 18px;
-  margin-top: clamp(28px, 4vw, 44px);
-}
-
-.typology-card {
-  display: grid;
-  grid-template-columns: minmax(240px, 0.34fr) minmax(0, 1fr);
-  border: var(--line-width) solid var(--line);
-  border-radius: var(--radius);
-  overflow: hidden;
-  background: var(--surface);
-}
-
-.typology-copy {
-  display: flex;
-  flex-direction: column;
-  padding: clamp(24px, 3.5vw, 40px);
-  border-right: var(--line-width) solid var(--line);
-}
-
-.typology-copy h3 {
-  margin: 14px 0 auto;
-}
-
-.typology-copy dl {
-  margin: 36px 0 0;
-  border-top: var(--line-width) solid var(--line);
-}
-
-.typology-copy dl div {
-  display: flex;
-  justify-content: space-between;
-  gap: 18px;
-  padding: 12px 0;
-  border-bottom: var(--line-width) solid var(--line);
-}
-
-.typology-copy dt,
-.typology-copy dd {
-  margin: 0;
-}
-
-.typology-copy dt {
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.typology-copy dd {
-  font-family: var(--font-display);
-  font-size: 16px;
-  font-weight: 400;
-  letter-spacing: -0.01em;
-  white-space: nowrap;
-  color: var(--text);
-}
-
 /* Lámina de la unidad: plano y render en un mismo bloque Lino. */
-.typology-sheet {
-  display: grid;
-  grid-template-columns: minmax(0, 1.3fr) minmax(0, 0.7fr);
-  gap: clamp(16px, 2vw, 28px);
-  align-items: center;
-  align-self: center;
-  margin: clamp(16px, 2vw, 24px);
-}
 
 .typology-render {
   padding-left: clamp(16px, 2vw, 28px);
@@ -986,7 +975,7 @@ p + p {
 
 .typology-render figcaption {
   margin-top: 10px;
-  color: var(--niebla);
+  color: var(--niebla-ink);
 }
 
 .feature-card figcaption {
@@ -1017,7 +1006,7 @@ p + p {
   display: grid;
   grid-template-rows: auto 1fr;
   border: var(--line-width) solid var(--line);
-  border-radius: var(--radius);
+  border-radius: 0;
   overflow: hidden;
   background: var(--surface);
 }
@@ -1316,10 +1305,11 @@ p + p {
 .contact-form {
   display: grid;
   gap: 24px;
-  padding: clamp(24px, 3.5vw, 40px);
-  border: var(--line-width) solid var(--line);
-  border-radius: var(--radius);
-  background: var(--surface);
+  padding: clamp(8px, 2vw, 16px) 0 0;
+  border: 0;
+  border-top: var(--line-width) solid var(--line);
+  border-radius: 0;
+  background: transparent;
 }
 
 .field {
@@ -1339,13 +1329,6 @@ p + p {
   letter-spacing: 0.1em;
   text-transform: uppercase;
   color: var(--muted);
-}
-
-.field-optional {
-  margin-left: 6px;
-  font-weight: 400;
-  letter-spacing: 0.06em;
-  opacity: 0.7;
 }
 
 .field input:not([type='checkbox']),
@@ -1446,7 +1429,7 @@ p + p {
 
 .site-footer-inner {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.7fr) minmax(0, 0.9fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: clamp(36px, 5vw, 72px);
   max-width: var(--container);
   margin: 0 auto;
@@ -1455,7 +1438,7 @@ p + p {
 }
 
 .site-footer-logo {
-  height: clamp(120px, 14vw, 160px);
+  height: 120px;
   width: auto;
 }
 
@@ -1523,8 +1506,11 @@ p + p {
   max-width: var(--container);
   margin: 0 auto;
   padding-top: 24px;
-  font-size: 11.5px;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
   line-height: 1.6;
+  text-transform: uppercase;
 }
 
 /* --------------------------------------------------------------------------
@@ -1542,31 +1528,50 @@ p + p {
   width: 52px;
   height: 52px;
   padding: 0;
-  border: 0;
+  border: var(--line-width) solid var(--line-strong);
   border-radius: 50%;
-  background: var(--wa);
-  color: #fff;
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
+  /* Carbón con trazo Caliza: el icono reconocible sin el verde de marca ajena. Contraste del
+     icono (Caliza sobre Carbón) ≈ 11:1; invertido en hover/foco (Carbón sobre Caliza). */
+  background: rgba(16, 18, 16, 0.9);
+  color: var(--caliza);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.4);
   opacity: 0;
+  visibility: hidden;
   transform: translateY(12px) scale(0.94);
   pointer-events: none;
   transition:
     opacity var(--dur) var(--ease),
     transform var(--dur) var(--ease),
-    filter var(--dur-fast) ease;
+    background-color var(--dur-ui) var(--ease-std),
+    color var(--dur-ui) var(--ease-std),
+    border-color var(--dur-ui) var(--ease-std),
+    visibility 0s linear var(--dur);
 }
 
-body.past-hero .whatsapp-float {
+/* En la página del proyecto el hero no es una portada: el contacto rápido está desde el inicio. */
+body.past-hero:not(.wa-covered) .whatsapp-float,
+body:has(.pj-hero):not(.wa-covered) .whatsapp-float {
   opacity: 1;
+  visibility: visible;
   transform: translateY(0) scale(1);
   pointer-events: auto;
+  transition-delay: 0s, 0s, 0s, 0s, 0s, 0s;
 }
 
 .whatsapp-float:hover,
 .whatsapp-float:focus-visible {
-  background: var(--wa);
-  filter: brightness(1.08);
-  transform: translateY(-2px) scale(1.04);
+  background: var(--caliza);
+  border-color: var(--caliza);
+  color: var(--carbon);
+}
+
+body.past-hero:not(.wa-covered) .whatsapp-float:hover,
+body.past-hero:not(.wa-covered) .whatsapp-float:focus-visible,
+body:has(.pj-hero):not(.wa-covered) .whatsapp-float:hover,
+body:has(.pj-hero):not(.wa-covered) .whatsapp-float:focus-visible {
+  transform: translateY(-2px);
 }
 
 /* --------------------------------------------------------------------------
@@ -1576,10 +1581,10 @@ body.past-hero .whatsapp-float {
 .reveal,
 .reveal-stagger > * {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(var(--rise));
   transition:
-    opacity var(--dur) var(--ease),
-    transform var(--dur) var(--ease);
+    opacity var(--dur-reveal) var(--ease-out),
+    transform var(--dur-reveal) var(--ease-out);
 }
 
 .reveal.is-visible,
@@ -1589,15 +1594,23 @@ body.past-hero .whatsapp-float {
 }
 
 .reveal-stagger > *:nth-child(2) {
-  transition-delay: 90ms;
+  transition-delay: calc(var(--stagger) * 1);
 }
 
 .reveal-stagger > *:nth-child(3) {
-  transition-delay: 180ms;
+  transition-delay: calc(var(--stagger) * 2);
 }
 
 .reveal-stagger > *:nth-child(4) {
-  transition-delay: 270ms;
+  transition-delay: calc(var(--stagger) * 3);
+}
+
+.reveal-stagger > *:nth-child(5) {
+  transition-delay: calc(var(--stagger) * 4);
+}
+
+.reveal-stagger > *:nth-child(6) {
+  transition-delay: calc(var(--stagger) * 5);
 }
 
 /* El hero entra ya legible (opacidad parcial, no 0): el contenido cuenta como
@@ -1617,15 +1630,14 @@ body.past-hero .whatsapp-float {
    Responsive
    -------------------------------------------------------------------------- */
 
-@media (max-width: 1100px) {
+@media (max-width: 1023px) {
   .site-nav {
     gap: 16px;
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1023px) {
   .split-grid,
-  .project-layout,
   .location-layout,
   .contact-inner,
   .identity-section,
@@ -1642,18 +1654,6 @@ body.past-hero .whatsapp-float {
 
   .intro-item:last-child {
     border-bottom: 0;
-  }
-
-  .project-layout {
-    align-items: start;
-  }
-
-  .project-figure {
-    max-width: 520px;
-  }
-
-  .project-figure img {
-    aspect-ratio: 4 / 5;
   }
 
   .spec-grid {
@@ -1678,23 +1678,6 @@ body.past-hero .whatsapp-float {
     aspect-ratio: 3 / 2;
   }
 
-  .typology-card {
-    grid-template-columns: 1fr;
-  }
-
-  .typology-copy {
-    border-right: 0;
-    border-bottom: var(--line-width) solid var(--line);
-  }
-
-  .typology-copy h3 {
-    margin-bottom: 0;
-  }
-
-  .typology-copy dl {
-    margin-top: 24px;
-  }
-
   .identity-copy {
     justify-self: start;
   }
@@ -1708,9 +1691,10 @@ body.past-hero .whatsapp-float {
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 759px) {
   :root {
     --header-height: 68px;
+    --rise: 20px;
   }
 
   .site-header {
@@ -1721,29 +1705,73 @@ body.past-hero .whatsapp-float {
     display: block;
   }
 
+  .brand,
+  .nav-toggle {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Menú overlay (M14): cortina que baja con clip-path, ítems escalonados, WhatsApp abajo. */
   .site-nav {
     position: fixed;
-    top: var(--header-height);
-    right: 0;
-    left: 0;
-    display: grid;
+    inset: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
     gap: 0;
-    padding: 8px var(--gutter) 24px;
-    border-bottom: var(--line-width) solid var(--line);
-    background: rgba(10, 13, 11, 0.98);
-    transform: translateY(-130%);
-    transition: transform var(--dur-fast) var(--ease);
+    padding: calc(var(--header-height) + 24px) var(--gutter) 32px;
+    background: var(--bg);
+    clip-path: inset(0 0 100% 0);
     visibility: hidden;
+    overflow-y: auto;
+    transition:
+      clip-path 420ms var(--ease-in-out),
+      visibility 0ms linear 420ms;
   }
 
   .site-header.nav-active .site-nav {
-    transform: translateY(0);
+    clip-path: inset(0);
     visibility: visible;
+    transition:
+      clip-path 520ms var(--ease-in-out),
+      visibility 0ms;
   }
 
+  .site-nav > a:not(.button),
+  .site-nav .site-nav-mobile {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 200ms var(--ease-out),
+      transform 200ms var(--ease-out);
+  }
+
+  .site-header.nav-active .site-nav > a:not(.button),
+  .site-header.nav-active .site-nav .site-nav-mobile {
+    opacity: 1;
+    transform: none;
+    transition:
+      opacity 480ms var(--ease-out) calc(160ms + var(--n, 0) * 70ms),
+      transform 480ms var(--ease-out) calc(160ms + var(--n, 0) * 70ms);
+  }
+
+  .site-nav > a:nth-child(1) { --n: 0; }
+  .site-nav > a:nth-child(2) { --n: 1; }
+  .site-nav > a:nth-child(3) { --n: 2; }
+  .site-nav .site-nav-mobile { --n: 3; }
+
   .site-nav a:not(.button) {
+    display: flex;
+    align-items: baseline;
     padding: 18px 0;
     border-bottom: var(--line-width) solid var(--line);
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    color: var(--text);
   }
 
   .site-nav a:not(.button)::after {
@@ -1751,8 +1779,14 @@ body.past-hero .whatsapp-float {
   }
 
   .site-nav-cta {
-    margin: 20px 0 0;
-    width: 100%;
+    display: none;
+  }
+
+  .site-nav .site-nav-mobile {
+    display: grid;
+    gap: 14px;
+    margin-top: auto;
+    padding-top: 32px;
   }
 
   .hero {
@@ -1760,33 +1794,10 @@ body.past-hero .whatsapp-float {
     padding-bottom: 132px;
   }
 
-  .hero-media {
-    inset: 0;
-    width: 100%;
-  }
-
-  .hero-image {
-    object-position: 50% 20%;
-  }
-
-  .hero-scrim {
-    background:
-      linear-gradient(180deg, rgba(33, 32, 30, 0.6) 0%, rgba(33, 32, 30, 0.62) 30%, rgba(33, 32, 30, 0.9) 65%, var(--bg) 100%);
-  }
-
-  .typology-sheet {
-    grid-template-columns: 1fr;
-  }
-
   .typology-render {
     padding: 16px 0 0;
     border-left: 0;
     border-top: var(--line-width) solid var(--line-on-light);
-  }
-
-  .hero-logo {
-    height: clamp(120px, 20vh, 170px);
-    margin-bottom: 28px;
   }
 
   .hero h1 {
@@ -1798,11 +1809,10 @@ body.past-hero .whatsapp-float {
     grid-template-columns: 1fr;
   }
 
-  .hero-foot {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-    bottom: 22px;
+  .hero-cota,
+  .hero-cota .cota-label,
+  .cota-line {
+    min-width: 0;
   }
 
   .hero-note {
@@ -1826,13 +1836,15 @@ body.past-hero .whatsapp-float {
     min-width: 52px;
     padding: 0 15px;
   }
+}
 
-  .whatsapp-float-label {
-    display: none;
+@media (max-width: 420px) {
+  :root {
+    --fs-hero: clamp(36px, 5.6vw, 88px);
   }
 }
 
-@media (max-width: 520px) {
+@media (max-width: 420px) {
   .brand-logo,
   .site-header.is-scrolled .brand-logo {
     height: 28px;
@@ -1875,17 +1887,13 @@ body.past-hero .whatsapp-float {
     scroll-behavior: auto;
   }
 
+  /* Sin animaciones (ni siquiera de 0,01 ms: las que quedan en fill-mode siguen contando). */
   *,
   *::before,
   *::after {
     transition-duration: 0.01ms !important;
-    animation-duration: 0.01ms !important;
-    animation-delay: 0ms !important;
-    animation-iteration-count: 1 !important;
-  }
-
-  .hero-image {
-    transform: none;
+    transition-delay: 0ms !important;
+    animation: none !important;
   }
 
   .reveal,
@@ -1895,19 +1903,24 @@ body.past-hero .whatsapp-float {
   }
 }
 
+/* Sin JavaScript no hay observador que dispare nada: todo se muestra en su estado final. */
 @media (scripting: none) {
   .reveal,
   .reveal-stagger > *,
-  .mask-reveal,
-  .rt-word > span,
-  .hero-line > span,
-  .gallery-trigger {
-    opacity: 1;
-    transform: none;
-    clip-path: none;
+  .img-curtain,
+  .img-curtain img,
+  .rl-line,
+  .cine-hero-media {
+    opacity: 1 !important;
+    transform: none !important;
+    clip-path: none !important;
   }
 
-  .media-shutter {
-    display: none;
+  .logo-intro {
+    display: none !important;
+  }
+
+  .reveal-lines[data-mode='split'] {
+    visibility: visible !important;
   }
 }

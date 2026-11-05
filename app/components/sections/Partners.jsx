@@ -1,11 +1,9 @@
-import { partners } from '../../content/site';
-
-export default function Partners() {
+export default function Partners({ items, label, ariaLabel }) {
   return (
-    <section className="partners-section section-alt reveal" aria-label="Socios del proyecto">
-      <p className="label">Desarrollado en conjunto con</p>
+    <section className="partners-section section-alt reveal" aria-label={ariaLabel}>
+      <p className="label">{label}</p>
       <ul className="partners-list">
-        {partners.map((partner) => (
+        {items.map((partner) => (
           <li key={partner.name}>
             <img
               src={partner.logo.src}

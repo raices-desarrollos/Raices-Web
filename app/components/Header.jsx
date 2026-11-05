@@ -3,7 +3,9 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { brand, navItems, routes } from '../content/site';
+import { contact } from '@/content/contact';
+import { brand, navItems, routes, ui } from '@/content/shared';
+import WhatsAppLink from './WhatsAppLink';
 
 const normalize = (path) => (path.length > 1 ? path.replace(/\/$/, '') : path);
 
@@ -19,10 +21,12 @@ export default function Header() {
     return () => window.removeEventListener('scroll', updateHeader);
   }, []);
 
-  // El menú móvil se cierra al navegar.
-  useEffect(() => {
+  // El menú móvil se cierra al navegar (estado derivado durante el render, sin efecto).
+  const [lastPath, setLastPath] = useState(pathname);
+  if (lastPath !== pathname) {
+    setLastPath(pathname);
     setNavOpen(false);
-  }, [pathname]);
+  }
 
   useEffect(() => {
     document.body.classList.toggle('nav-open', navOpen);
@@ -44,7 +48,7 @@ export default function Header() {
   return (
     <header
       className={`site-header ${current === '/' ? 'is-home' : ''} ${scrolled ? 'is-scrolled' : ''} ${navOpen ? 'nav-active' : ''}`}>
-      <Link className="brand" href={routes.home} aria-label={`${brand.name}, ir al inicio`} onClick={close}>
+      <Link className="brand" href={routes.home} aria-label={ui.header.brandHomeLabel} onClick={close}>
         <img
           src={brand.logos.text.src}
           width={brand.logos.text.width}
@@ -58,7 +62,7 @@ export default function Header() {
       <button
         className="nav-toggle"
         type="button"
-        aria-label={navOpen ? 'Cerrar menú' : 'Abrir menú'}
+        aria-label={navOpen ? ui.header.closeMenu : ui.header.openMenu}
         aria-expanded={navOpen}
         aria-controls="site-nav"
         onClick={() => setNavOpen((value) => !value)}>
@@ -66,23 +70,26 @@ export default function Header() {
         <span />
       </button>
 
-      <nav className="site-nav" id="site-nav" aria-label="Navegación principal">
-        {navItems.map((item, index) => (
+      <nav className="site-nav" id="site-nav" aria-label={ui.header.navLabel}>
+        {navItems.map((item) => (
           <Link
             key={item.href}
             href={item.href}
             onClick={close}
             className={isActive(item.href) ? 'is-active' : undefined}
             aria-current={isActive(item.href) ? 'page' : undefined}>
-            <span className="nav-index" aria-hidden="true">
-              {String(index + 1).padStart(2, '0')}
-            </span>
             {item.label}
           </Link>
         ))}
         <Link className="button button-small site-nav-cta" href={routes.contact} onClick={close}>
-          Consultar
+          {ui.header.consultCta}
         </Link>
+        <div className="site-nav-mobile">
+          <WhatsAppLink source="menu" className="button button-fill">
+            {ui.whatsapp.consultLabel}
+          </WhatsAppLink>
+          <span className="label">{contact.whatsappDisplay}</span>
+        </div>
       </nav>
     </header>
   );

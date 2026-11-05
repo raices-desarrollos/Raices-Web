@@ -1,80 +1,79 @@
 import Link from 'next/link';
-import { home, routes } from '../content/site';
-import { RevealText } from './Primitives';
+import { homeContent } from '@/content/home';
+import { routes, ui } from '@/content/shared';
+import FeaturedStage from './FeaturedStage';
+import ProjectMark from './ProjectMark';
+import WhatsAppLink from './WhatsAppLink';
 
 /**
- * Proyecto destacado en la Home: imagen de gran formato con revelado y zoom al pasar el
- * cursor, logo del proyecto y acceso a su página. No repite la ficha completa.
+ * Proyecto destacado en la Home como capítulo fijo (Plan 5.1.4 / M07). En desktop el bloque
+ * interior queda fijo mientras la columna de imagen recorre fachada, terraza y balcones; en
+ * tablet y mobile no hay sticky: una sola imagen y la ficha debajo. Las tres imágenes salen de
+ * `project.gallery.items`, el mismo material que la galería de Ceibo Vidal.
  */
 export default function FeaturedProject({ project }) {
   const href = routes.project(project.slug);
+  const panels = project.gallery.items;
 
   return (
-    <section className="featured" id="proyecto-destacado" aria-labelledby="featured-title">
-      <div className="featured-inner">
-        <Link className="featured-media reveal img-reveal" href={href} aria-label={`${project.name}: descubrir el proyecto`}>
-          <img
-            src={project.cover.src}
-            width={project.cover.width}
-            height={project.cover.height}
-            alt={project.cover.alt}
-            loading="lazy"
-            decoding="async"
-            sizes="(max-width: 980px) 100vw, 56vw"
-          />
-          <span className="featured-media-veil" aria-hidden="true" />
-          <span className="media-shutter" aria-hidden="true">
-            {Array.from({ length: 6 }, (_, index) => (
-              <span key={index} style={{ '--shutter': index }} />
-            ))}
-          </span>
-          <span className="featured-hover-meta">
-            <span className="label">Ubicación</span>
-            <span>{project.locationLong}</span>
-          </span>
-          <span className="featured-media-note label">{project.cover.note || 'Render de referencia'}</span>
-        </Link>
-
+    <section className="featured-chapter" id="proyecto-destacado" aria-labelledby="featured-title">
+      <div className="featured-sticky">
         <div className="featured-copy reveal">
-          <p className="kicker">
-            {home.featured.kicker} · {project.code}
-          </p>
-          <img
-            className="featured-logo"
-            src={project.logo.src}
-            width={project.logo.width}
-            height={project.logo.height}
-            alt=""
-            loading="lazy"
-            decoding="async"
+          <p className="kicker">{homeContent.featured.kicker}</p>
+          <ProjectMark
+            project={project}
+            as="h2"
+            id="featured-title"
+            className="featured-mark"
+            line={project.commercialLine}
           />
-          <h2 id="featured-title">
-            <RevealText text={project.name} />
-          </h2>
-          <p className="featured-location">{project.location}</p>
-          <p className="featured-summary">{project.summary}</p>
+
+          <div className="featured-states" role="group" aria-label={ui.labels.featuredStates}>
+            {project.featuredStates.map((state, index) => (
+              <div className="featured-state" key={state.label} style={{ '--i': index }}>
+                <p className="featured-state-label">
+                  <span className="featured-state-index">
+                    {String(index + 1).padStart(2, '0')} / {String(project.featuredStates.length).padStart(2, '0')}
+                  </span>
+                  <span className="featured-state-name">{state.label}</span>
+                </p>
+                <p className="featured-state-text">{state.text}</p>
+              </div>
+            ))}
+          </div>
 
           <dl className="featured-facts">
             <div>
-              <dt className="label">Programa</dt>
+              <dt className="label">{ui.labels.program}</dt>
               <dd>
                 {project.program}
                 <span className="fact-sub">{project.unitsLabel}</span>
               </dd>
             </div>
             <div>
-              <dt className="label">Entrega</dt>
-              <dd>Prevista {project.deliveryYear}</dd>
+              <dt className="label">{ui.labels.delivery}</dt>
+              <dd>{ui.labels.deliveryPrefixed(project.deliveryYear)}</dd>
             </div>
           </dl>
 
-          <Link className="button button-arrow" href={href}>
-            {home.featured.link.label}
-            <span className="button-arrow-icon" aria-hidden="true">
-              →
-            </span>
-          </Link>
+          <div className="featured-actions">
+            <Link className="button button-arrow" href={href}>
+              {homeContent.featured.link.label}
+              <span className="button-arrow-icon" aria-hidden="true">
+                →
+              </span>
+            </Link>
+            <WhatsAppLink source="featured" className="text-link featured-wa">
+              {ui.whatsapp.consultLabel}
+            </WhatsAppLink>
+          </div>
         </div>
+
+        <FeaturedStage
+          panels={panels}
+          href={href}
+          label={`${project.name}: ${homeContent.featured.mediaAriaSuffix}`}
+        />
       </div>
     </section>
   );

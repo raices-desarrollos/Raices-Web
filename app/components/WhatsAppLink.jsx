@@ -19,6 +19,7 @@ export default function WhatsAppLink({
       href={whatsappHref(message)}
       target="_blank"
       rel="noopener noreferrer"
+      data-wa-source={source}
       onClick={() => trackWhatsAppClick(source)}
       {...rest}>
       <WhatsAppIcon size={iconSize} />

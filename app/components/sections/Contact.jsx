@@ -1,8 +1,10 @@
-import { contact, social } from '../../content/site';
+import { contact, contactContent, social } from '@/content/contact';
+import { ui } from '@/content/shared';
 import { mailtoHref } from '../../lib/contact';
 import ContactForm from '../ContactForm';
 import { InstagramIcon, LinkedInIcon } from '../Icons';
 import { Cota } from '../Primitives';
+import RevealLines from '../RevealLines';
 import WhatsAppLink from '../WhatsAppLink';
 
 /**
@@ -11,44 +13,42 @@ import WhatsAppLink from '../WhatsAppLink';
  */
 export default function Contact({
   id = 'contacto',
-  kicker = 'Contacto',
-  title = 'Hablemos.',
-  text = 'Para compradores e inversores que quieran construir ciudad con más naturaleza. Te respondemos con información del proyecto, planos y unidades disponibles.',
-  cota = 'Ceibo Vidal · Entrega prevista 2029',
+  kicker = contactContent.defaults.kicker,
+  title = contactContent.defaults.title,
+  text = contactContent.defaults.text,
+  cota = contactContent.defaults.cota,
   defaultSubject,
   headingLevel = 'h2',
   whatsappSource = 'contact',
 }) {
   const Heading = headingLevel;
   const socialLinks = [
-    social.linkedin && { href: social.linkedin, label: 'LinkedIn', Icon: LinkedInIcon },
-    social.instagram && { href: social.instagram, label: 'Instagram', Icon: InstagramIcon },
+    social.linkedin && { href: social.linkedin, label: contactContent.channels.linkedinLabel, Icon: LinkedInIcon },
+    social.instagram && { href: social.instagram, label: contactContent.channels.instagramLabel, Icon: InstagramIcon },
   ].filter(Boolean);
 
   return (
     <section className="section contact-section" id={id} aria-labelledby={`${id}-title`}>
       <div className="contact-inner">
-        <div className="contact-copy reveal">
-          <p className="kicker">{kicker}</p>
-          <Heading id={`${id}-title`} className="title-stroke">
-            {title}
-          </Heading>
-          <p>{text}</p>
+        <div className="contact-copy">
+          <p className="kicker reveal">{kicker}</p>
+          <RevealLines as={Heading} id={`${id}-title`} className="contact-title" lines={[title]} />
+          <p className="reveal">{text}</p>
 
-          <div className="contact-actions">
+          <div className="contact-actions reveal">
             <WhatsAppLink source={whatsappSource} className="button button-large">
-              Consultar por WhatsApp
+              {ui.whatsapp.consultLabel}
             </WhatsAppLink>
             <a
               className="contact-line"
               href={`https://wa.me/${contact.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer">
-              <span className="label">WhatsApp</span>
+              <span className="label">{contactContent.channels.whatsappLabel}</span>
               <span>{contact.whatsappDisplay}</span>
             </a>
             <a className="contact-line" href={mailtoHref()}>
-              <span className="label">Email</span>
+              <span className="label">{contactContent.channels.emailLabel}</span>
               <span>{contact.email}</span>
             </a>
           </div>
@@ -62,7 +62,7 @@ export default function Contact({
                   href={href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  aria-label={`${label} de Raíces Developers`}>
+                  aria-label={`${label} ${contactContent.channels.socialAriaSuffix}`}>
                   <Icon />
                   {label}
                 </a>

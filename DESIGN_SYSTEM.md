@@ -467,3 +467,8 @@ El logo Raíces Developers está compuesto en Montserrat Medium. En el wordmark,
 - Precio en Medium (500). Anticipo y cuota en Regular (400), mismo tono, tamaño apenas menor.
 - Jerarquía limpia: un protagonista por página. Amenities y disponibles quedan por debajo de las tipologías. La forma de pago tiene su propia página antes del contacto.
 - Evitar saturación de cards, sombras, bordes pesados e iconografía de interfaz.
+
+## Reglas de marca vigentes (aplican también al sitio web)
+
+- Slogan vigente: «Espacios para habitar». «Espacios para echar raíces» está descartado definitivamente: no usarlo.
+- Cuando el logotipo oficial de CEIBO está a la vista, no repetir «Ceibo Vidal» como título justo debajo. Composición: logo oficial → «Vidal 3849» (Montserrat, mucho menor, espaciado) → «El balance perfecto entre ciudad y aire libre» si corresponde. El nombre completo sigue válido en navegación, SEO, pestañas y textos corridos. En el sitio la implementa `app/components/ProjectMark.jsx`; ver `docs/RAICES_DESIGN_SYSTEM.md` (decisiones 44 y 45).
