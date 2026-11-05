@@ -9,11 +9,11 @@
  *  - Logos (`public/assets/brand`, `public/assets/partners`): siguen siendo PNG
  *    con transparencia y resolución original, recomprimidos con paleta de 256
  *    colores (trazo plano + antialias). Pesan ~3 veces menos sin cambio visible.
- *  - Favicon de pestaña: reducción óptica a 16 px del isotipo
- *    `raices_logo_icono.png` (torre, vano, ala y tres raíces), en marfil
- *    `#EAE8DF` y fondo transparente. 32 y 48 px son esa grilla ×2 y ×3,
- *    sin reescalar el trazo fino. El apple-touch-icon sigue en Caliza
- *    `#D1C7BA` sobre Carbón `#101210`. Open Graph sale del logo completo.
+ *  - Favicon: el isotipo `raices_logo_icono.png`, sin redibujar la forma,
+ *    en Caliza `#D1C7BA` sobre Carbón `#101210`. Ocupa ~78 % del cuadrado.
+ *    Salen `favicon.ico` (16, 32, 48), `favicon-32x32.png`, `icon-192.png`,
+ *    `icon-512.png` y `apple-touch-icon.png` (180). No hay SVG de origen.
+ *    Open Graph sale del logo completo.
  *    `npm run optimize-images -- --favicons-only` regenera solo esos archivos.
  *
  * Los nombres de salida se normalizan a minúsculas con guiones. Por defecto el
@@ -34,9 +34,9 @@ const TINTA = { r: 0x21, g: 0x20, b: 0x1e, alpha: 1 };
 /** Carbón y Caliza del design system. El apple-touch-icon va en Caliza sobre Carbón. */
 const CARBON = { r: 0x10, g: 0x12, b: 0x10, alpha: 1 };
 const CALIZA = { r: 0xd1, g: 0xc7, b: 0xba, alpha: 1 };
-/** Marfil de la interfaz. El favicon de pestaña va en este color, sin placa. */
-const IVORY = { r: 0xea, g: 0xe8, b: 0xdf, alpha: 1 };
 const CLEAR = { r: 0, g: 0, b: 0, alpha: 0 };
+/** El isotipo ocupa ~78 % del lado. El resto es margen de Carbón. */
+const MARK_PADDING = 0.11;
 
 const PHOTO_RULES = {
   dir: path.join(PUBLIC, 'assets/images'),
@@ -148,17 +148,22 @@ const SOURCE_STROKE_PX = 18;
  * navegador la muestra como un hilo y el Carbón de la placa se funde con
  * la pestaña oscura.
  */
+async function trimmedIcon(iconSrc) {
+  return sharp(iconSrc).ensureAlpha().trim({ threshold: 1 }).png().toBuffer();
+}
+
 async function markOnCarbon(iconSrc, size, padding = 0.16, options = {}) {
   const { dilate = 0, color = CALIZA, background = CARBON } = options;
+  const source = await trimmedIcon(iconSrc);
   const inner = Math.max(1, Math.round(size * (1 - padding * 2)));
-  const meta = await sharp(iconSrc).metadata();
+  const meta = await sharp(source).metadata();
   const scale = inner / Math.max(meta.width || 1, meta.height || 1);
   const strokePx = SOURCE_STROKE_PX * scale;
 
   const mark =
     strokePx >= 1.25
-      ? await smoothMark(iconSrc, inner, color)
-      : await solidMark(iconSrc, inner, strokePx, { dilate, color });
+      ? await smoothMark(source, inner, color)
+      : await solidMark(source, inner, strokePx, { dilate, color });
 
   return sharp({ create: { width: size, height: size, channels: 4, background } })
     .composite([{ input: mark, gravity: 'centre' }])
@@ -243,54 +248,6 @@ async function solidMark(iconSrc, inner, strokePx, { dilate = 0, color = CALIZA 
   return paintColor(ink, width, height, color);
 }
 
-/**
- * Reducción óptica del isotipo para la pestaña. El trazo original mide ~18 px
- * en un PNG de 749×893: al bajarlo a 16 px se cierra y parece una mancha.
- * Esta grilla conserva la torre abierta, el ala derecha y tres raíces.
- * No reemplaza `raices_logo_icono.png`.
- */
-const TAB_MARK = [
-  '................',
-  '.......##.......',
-  '......#.#.......',
-  '.....#..#.......',
-  '.....#..##......',
-  '.....#..#.#.....',
-  '.....#..#.#.....',
-  '.....#..#.#.....',
-  '.....#..#.......',
-  '....##..##......',
-  '...#.#..#.#.....',
-  '..#..#..#..#....',
-  '.#...#..#...#...',
-  '#....#..#....#..',
-  '................',
-  '................',
-];
-
-async function tabIcon(scale) {
-  const master = 16;
-  const size = master * scale;
-  const rgba = Buffer.alloc(size * size * 4);
-  TAB_MARK.forEach((row, y) => {
-    [...row].forEach((cell, x) => {
-      if (cell !== '#') return;
-      for (let dy = 0; dy < scale; dy++) {
-        for (let dx = 0; dx < scale; dx++) {
-          const px = x * scale + dx;
-          const py = y * scale + dy;
-          const offset = (py * size + px) * 4;
-          rgba[offset] = IVORY.r;
-          rgba[offset + 1] = IVORY.g;
-          rgba[offset + 2] = IVORY.b;
-          rgba[offset + 3] = 255;
-        }
-      }
-    });
-  });
-  return sharp(rgba, { raw: { width: size, height: size, channels: 4 } }).png({ compressionLevel: 9 }).toBuffer();
-}
-
 /** ICO con PNG embebidos (16, 32 y 48). Lo leen pestañas modernas sin un favicon de plantilla. */
 function packIco(pngs) {
   const count = pngs.length;
@@ -348,21 +305,29 @@ async function generateBrandDerivatives() {
     }
   }
 
-  const favicon32 = await tabIcon(2);
-  const apple = await markOnCarbon(iconSrc, 180, 0.18);
+  const favicon32 = await markOnCarbon(iconSrc, 32, MARK_PADDING);
+  const apple = await markOnCarbon(iconSrc, 180, MARK_PADDING);
+  const icon192 = await markOnCarbon(iconSrc, 192, MARK_PADDING);
+  const icon512 = await markOnCarbon(iconSrc, 512, MARK_PADDING);
   await writeFile(path.join(PUBLIC, 'favicon-32x32.png'), favicon32);
   await writeFile(path.join(PUBLIC, 'apple-touch-icon.png'), apple);
+  await writeFile(path.join(PUBLIC, 'icon-192.png'), icon192);
+  await writeFile(path.join(PUBLIC, 'icon-512.png'), icon512);
   console.log('  public/favicon-32x32.png  32×32');
   console.log('  public/apple-touch-icon.png  180×180');
+  console.log('  public/icon-192.png  192×192');
+  console.log('  public/icon-512.png  512×512');
 
   const pngs = [];
-  for (const scale of [1, 2, 3]) {
-    pngs.push({ size: 16 * scale, buffer: await tabIcon(scale) });
+  for (const size of [16, 32, 48]) {
+    pngs.push({ size, buffer: await markOnCarbon(iconSrc, size, MARK_PADDING) });
   }
   await writeFile(path.join(PUBLIC, 'favicon.ico'), packIco(pngs));
   console.log(`  public/favicon.ico  ${pngs.map((item) => item.size).join(', ')}`);
 
-  await writeOgImage(fullSrc, path.join(brandDir, 'og-image.png'));
+  if (!process.argv.includes('--favicons-only')) {
+    await writeOgImage(fullSrc, path.join(brandDir, 'og-image.png'));
+  }
 }
 
 async function main() {

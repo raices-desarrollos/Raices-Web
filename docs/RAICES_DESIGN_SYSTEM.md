@@ -84,7 +84,7 @@ La interfaz parte de Carbón `#101210` y Caliza `#D1C7BA`. El resto de tokens se
 | `#F8F7F4` sobre `#536245` | 6.12 | Texto del botón ghost en hover (Blanco sobre Musgo). AA. |
 | `#101210` sobre `#D1C7BA` | 11.28 | Botón fill. AAA. |
 | `#101210` sobre `#C4A97D` | 8.35 | Hover del botón fill. AAA. |
-| `#EAE8DF` sobre transparente | — | Solo el favicon de pestaña, que sigue en marfil óptico a 16 px. |
+| `#D1C7BA` sobre `#101210` | 11.28 | Favicon e iconos de inicio (isotipo oficial, ~78 % del cuadrado). AAA. |
 
 ### Combinaciones permitidas
 
@@ -92,7 +92,7 @@ La interfaz parte de Carbón `#101210` y Caliza `#D1C7BA`. El resto de tokens se
 - Arena solo para textos cortos (kicker, cota, label de acento), nunca para párrafos.
 - Musgo como relleno de hover del botón ghost, con texto Blanco `#F8F7F4`.
 - Caliza `#D1C7BA` sobre Carbón `#101210` en interfaz, logos sobre oscuro y apple touch icon.
-- Marfil `#EAE8DF` con fondo transparente, únicamente en el favicon de pestaña.
+- Caliza `#D1C7BA` sobre Carbón `#101210` en el favicon y en los iconos de inicio.
 - Verde WhatsApp solo en el botón flotante.
 
 No poner liquen, ceibo o bronce como fondos nuevos sin revisar este archivo y el contraste.
@@ -419,7 +419,7 @@ Otras fichas vistas y no implementadas: Cinematic landing Hero (11494), Cinemati
 5. **Header sólido.** Se quitó el `backdrop-filter`. El vidrio no aporta y contradice la dirección.
 6. **Persiana solo en Ceibo Vidal de la home.** Es el momento que el brief pedía más cuidado. El resto entra con el reveal de 18px para no repetir el efecto.
 7. **Sin video de hero.** No hay un archivo de calidad en el repo. La imagen de balcones lleva deriva lenta. El video se activa con variable de entorno, no con stock.
-8. **Favicon de pestaña dibujado en una grilla de 16 px.** Reescalar el isotipo fino lo convierte en una mancha. La pestaña usa una reducción óptica del mismo signo: torre abierta, ala derecha y tres raíces, en marfil y sin placa. 32 y 48 px son esa grilla por 2 y por 3. El archivo `raices_logo_icono.png` no se reemplaza. El apple touch icon sigue en Caliza sobre Carbón. Ver la sección siguiente.
+8. **Favicon desde el isotipo oficial.** `raices_logo_icono.png` se escala, sin redibujar, en Caliza sobre Carbón y ocupa ~78 % del cuadrado. No hay SVG de origen. Ver la sección siguiente.
 9. **Formulario.** Sigue exigiendo endpoint real. Documentado como pendiente de entorno si `NEXT_PUBLIC_FORM_ENDPOINT` está vacío.
 10. **La Home institucional no puede ser solo texto.** La terraza de referencia ocupa la columna derecha. Sigue marcada como imagen de referencia.
 11. **Ceibo Vidal abre a pantalla completa.** El hero partido dejaba la fachada en una columna y se leía como ficha, no como proyecto.
@@ -482,23 +482,20 @@ El favicon es el isotipo de Raíces Developers, no el de Ceibo Vidal.
 
 **Original.** `public/assets/brand/raices_logo_icono.png`. PNG de paleta, 749×893, trazo negro (`#000000`) sobre transparencia. No es vectorial: no hay `favicon.svg`.
 
-**Generados** por `scripts/optimize-images.mjs` (`npm run optimize-images -- --favicons-only`). El script no redibuja la forma. Toma el alfa del PNG.
-
-El trazo del original mide unos 18 px sobre 749×893. A 180 px sigue ocupando más de un píxel y se escala con Lanczos, en Caliza sobre Carbón. A 16 px ese trazo no entra en la grilla: reescalarlo, aunque se le engorde un píxel, cierra el vano y la pestaña muestra una mancha.
-
-La pestaña no usa ese reescalado. `TAB_MARK` en `scripts/optimize-images.mjs` es una grilla de 16×16, marfil `#EAE8DF`, fondo transparente. Conserva la torre con el vano abierto, el ala de la derecha y tres raíces. 32 px y 48 px son esa misma grilla multiplicada por 2 y por 3, píxel a píxel, sin filtro.
+**Generados** por `scripts/optimize-images.mjs` (`npm run optimize-images -- --favicons-only`). El script no redibuja la forma. Toma el alfa del PNG y lo pinta en Caliza `#D1C7BA` sobre Carbón `#101210`. El símbolo ocupa ~78 % del lado (`MARK_PADDING` 0,11) y queda centrado. A 16 y 32 px el trazo se cuantiza a tinta sólida porque el original mide ~18 px sobre 893.
 
 | Archivo | Tamaño | Notas |
 | --- | --- | --- |
-| `public/favicon.ico` | 16, 32 y 48 | PNG embebidos. `metadata.icons` lo pide con `?v=5` para saltar la caché del navegador. |
-| `public/favicon-32x32.png` | 32×32 | La grilla de 16 ×2. |
-| `public/apple-touch-icon.png` | 180×180 | Isotipo oficial, Caliza sobre Carbón, padding 18 %. |
+| `public/favicon.ico` | 16, 32 y 48 | PNG embebidos. `metadata.icons` lo pide con `?v=6`. |
+| `public/favicon-32x32.png` | 32×32 | Misma placa. |
+| `public/icon-192.png` | 192×192 | Misma placa. |
+| `public/icon-512.png` | 512×512 | Misma placa. |
+| `public/apple-touch-icon.png` | 180×180 | Misma placa. |
 
-**Configuración.** `metadata.icons` en `app/layout.jsx` apunta a esos tres archivos, con `BASE` para respetar `basePath`. El layout raíz cubre Home, Proyectos, Ceibo Vidal, Nosotros y Contacto. No hay `app/favicon.ico` ni iconos de Vercel, Next.js u otra plantilla.
+**Configuración.** `metadata.icons` en `app/layout.jsx` apunta a esos archivos, con `BASE` para respetar `basePath`. No hay manifest ni `favicon.svg`. El layout raíz cubre Home, Proyectos, Ceibo Vidal, Nosotros y Contacto. No hay `app/favicon.ico` ni iconos de Vercel, Next.js u otra plantilla.
 
 **Reglas**
 
-- Regenerar desde el isotipo oficial. No sustituir por el logo de Ceibo ni por un icono de plantilla.
-- El trazo de la pestaña es marfil y el fondo es transparente. Caliza sobre Carbón queda en el apple touch icon y, por filtro, en header, footer e intro. No usar invert puro a blanco.
-- No volver a generar la pestaña reescalando `raices_logo_icono.png`. Si cambia el isotipo oficial, se redibuja `TAB_MARK` a 16 px.
+- Regenerar desde el isotipo oficial. No sustituir por el logo de Ceibo ni por un icono de plantilla. No redibujar la geometría: solo escala y margen.
+- Caliza sobre Carbón en todos los tamaños. No usar invert puro a blanco.
 - Open Graph sigue aparte: `public/assets/brand/og-image.png`, logo completo en blanco sobre `#21201E`.

@@ -134,6 +134,7 @@ export const ui = {
   },
   intro: {
     skip: 'Saltar',
+    explore: 'Explorar ↓',
   },
   scroll: {
     label: 'Scroll',

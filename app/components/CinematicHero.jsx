@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { homeContent } from '@/content/home';
 import { featuredProject } from '@/content/projects';
 import { brand, routes, ui } from '@/content/shared';
-import { Cota, Picture } from './Primitives';
+import { Picture } from './Primitives';
 import HeroContactCard from './HeroContactCard';
 import RevealLines from './RevealLines';
 import WhatsAppLink from './WhatsAppLink';
@@ -38,7 +38,6 @@ export default function CinematicHero() {
       <div className="cine-hero-scrim" aria-hidden="true" />
 
       <div className="cine-hero-content">
-        <p className="kicker hero-anim">{hero.kicker}</p>
         <RevealLines
           as="h1"
           id="hero-title"
@@ -70,7 +69,13 @@ export default function CinematicHero() {
       </p>
 
       <div className="cine-hero-foot hero-anim">
-        <Cota className="hero-cota">{hero.cota}</Cota>
+        <img
+          className="hero-foot-logo logo-on-dark"
+          src={brand.logos.full.src}
+          width={brand.logos.full.width}
+          height={brand.logos.full.height}
+          alt={brand.name}
+        />
         <span className="hero-note label">{hero.media.note}</span>
       </div>
 

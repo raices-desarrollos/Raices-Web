@@ -9,20 +9,19 @@ const STORAGE_KEY = 'raices-intro-seen';
  * Línea de tiempo de la intro (Plan M01). Toda la coreografía visual vive en cinematic.css con
  * estas mismas cifras; acá JS solo programa dos momentos y atiende "Saltar".
  *
- *   0–200      Carbón pleno
- *   200–850    el logo completo se revela de arriba hacia abajo mientras asienta (REVEAL)
- *   850–1150   reposo, sin movimiento (HOLD)
- *   1150–1750  la cortina se levanta y arrastra al logo (CURTAIN)
- *   1350       data-intro = done → el hero empieza a revelarse debajo de la cortina
- *   1750       la intro sale del flujo y se guarda la sesión
+ *   0–800      el logo completo se revela de arriba hacia abajo mientras asienta (REVEAL)
+ *   800–2500   logo visible e inmóvil (HOLD)
+ *   2500–3200  la cortina se levanta y arrastra al logo (CURTAIN)
+ *   2700       data-intro = done → el hero empieza a revelarse debajo de la cortina
+ *   3200       la intro sale del flujo y se guarda la sesión
  */
-const REVEAL_DELAY_MS = 200;
-const REVEAL_MS = 650;
-const HOLD_MS = 300;
-const CURTAIN_MS = 600;
-const CURTAIN_START_MS = REVEAL_DELAY_MS + REVEAL_MS + HOLD_MS; // 1150
-const HERO_RELEASE_MS = 1350;
-const TOTAL_MS = CURTAIN_START_MS + CURTAIN_MS; // 1750
+const REVEAL_DELAY_MS = 0;
+const REVEAL_MS = 800;
+const HOLD_MS = 1700;
+const CURTAIN_MS = 700;
+const CURTAIN_START_MS = REVEAL_DELAY_MS + REVEAL_MS + HOLD_MS; // 2500
+const HERO_RELEASE_MS = CURTAIN_START_MS + 200;
+const TOTAL_MS = CURTAIN_START_MS + CURTAIN_MS; // 3200
 /** Al saltar, el hero se libera cuando la cortina va por un tercio, igual que en la secuencia normal. */
 const SKIP_RELEASE_MS = HERO_RELEASE_MS - CURTAIN_START_MS; // 200
 
@@ -92,13 +91,27 @@ export default function LogoIntro() {
     timers.current.push(setTimeout(finish, TOTAL_MS));
 
     const onKey = (event) => {
-      if (['Escape', 'Enter', ' '].includes(event.key)) skip();
+      if (['Escape', 'Enter', ' ', 'ArrowDown', 'PageDown'].includes(event.key)) {
+        event.preventDefault();
+        skip();
+      }
+    };
+    // El gesto de scroll que cierra la intro se consume: no desplaza la página.
+    const onWheel = (event) => {
+      if (document.documentElement.dataset.intro === 'playing' || performance.now() - startedAt.current < TOTAL_MS) {
+        event.preventDefault();
+        skip();
+      }
     };
     window.addEventListener('keydown', onKey);
+    window.addEventListener('wheel', onWheel, { passive: false });
+    window.addEventListener('touchmove', onWheel, { passive: false });
 
     return () => {
       clearTimers();
       window.removeEventListener('keydown', onKey);
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('touchmove', onWheel);
     };
   }, [finish, release, skip]);
 
@@ -128,6 +141,15 @@ export default function LogoIntro() {
           skip();
         }}>
         {ui.intro.skip}
+      </button>
+      <button
+        type="button"
+        className="logo-intro-explore"
+        onClick={(event) => {
+          event.stopPropagation();
+          skip();
+        }}>
+        {ui.intro.explore}
       </button>
     </div>
   );

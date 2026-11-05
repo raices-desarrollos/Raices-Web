@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { projects, projectsContent } from '@/content/projects';
 import { routes, ui } from '@/content/shared';
 import { PageHeader } from '../components/Primitives';
-import RevealLines from '../components/RevealLines';
+import ProjectMark from '../components/ProjectMark';
 import CtaBand from '../components/CtaBand';
 
 export const metadata = {
@@ -45,8 +45,10 @@ export default function ProjectsPage() {
                 <p className="kicker">
                   {entry.code} · {entry.status}
                 </p>
-                <RevealLines as="h2" className="project-card-title" lines={[entry.name]} />
-                <p className="project-card-location">{entry.locationLong}</p>
+                <ProjectMark project={entry} as="h2" className="project-card-title" logoWidth={180} />
+                <p className="project-card-location">
+                  {entry.neighborhood} · {entry.city}
+                </p>
                 <p className="project-card-summary">{entry.summary}</p>
                 <dl className="featured-facts">
                   <div>

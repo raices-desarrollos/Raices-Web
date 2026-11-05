@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { contact, contactContent } from '@/content/contact';
+import { contactContent } from '@/content/contact';
 import { routes, ui } from '@/content/shared';
 import WhatsAppLink from './WhatsAppLink';
 
@@ -19,10 +19,9 @@ export default function HeroContactCard({ source = 'hero-card' }) {
         </WhatsAppLink>
         <div className="hero-card-foot">
           <Link className="text-link text-link-arrow" href={`${routes.contact}#formulario`}>
-            {ui.contact.writeUs}
+            O mandanos un email
             <span aria-hidden="true"> →</span>
           </Link>
-          <span className="label hero-card-phone">{contact.whatsappDisplay}</span>
         </div>
       </div>
     </aside>

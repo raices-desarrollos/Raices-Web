@@ -6,17 +6,17 @@
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
-   Intro de marca · M01 "Logo monumental y cortina" (1750 ms)
+   Intro de marca · M01 "Logo monumental y cortina" (3200 ms)
    Cifras sincronizadas con las constantes de LogoIntro.jsx:
-   200–850 revelado · 850–1150 reposo · 1150–1750 cortina · hero desde 1350.
+   0–800 revelado · 800–2500 reposo · 2500–3200 cortina · hero desde 2700.
    -------------------------------------------------------------------------- */
 
-/* Se queda en el DOM durante `done` (1350–1750 ms): la cortina todavía está subiendo. */
+/* Se queda en el DOM durante `done` (2700–3200 ms): la cortina todavía está subiendo. */
 html:not([data-intro='playing']):not([data-intro='done']) .logo-intro {
   display: none;
 }
 
-/* Scroll bloqueado solo mientras suena la intro; `done` (1350 ms) lo libera. */
+/* Scroll bloqueado solo mientras suena la intro; `done` (2700 ms) lo libera. */
 html[data-intro='playing'] {
   overflow: hidden;
 }
@@ -63,16 +63,16 @@ html[data-intro='done'] .logo-intro {
 
 .logo-intro.is-running .logo-intro-mark,
 .logo-intro.is-leaving .logo-intro-mark {
-  animation: introMark 650ms var(--ease-out-expo) 200ms forwards;
+  animation: introMark 800ms var(--ease-out-expo) 0ms forwards;
 }
 
 .logo-intro.is-running {
-  animation: introCurtain 600ms var(--ease-in-out) 1150ms forwards;
+  animation: introCurtain 700ms var(--ease-in-out) 2500ms forwards;
 }
 
 /* Saltar antes de 1150 ms: la cortina arranca ya, con otro nombre para reiniciar la animación. */
 .logo-intro.is-leaving {
-  animation: introCurtainNow 600ms var(--ease-in-out) 0ms forwards;
+  animation: introCurtainNow 700ms var(--ease-in-out) 0ms forwards;
 }
 
 .logo-intro-skip {
@@ -94,6 +94,28 @@ html[data-intro='done'] .logo-intro {
 
 .logo-intro-skip:hover,
 .logo-intro-skip:focus-visible {
+  color: var(--text);
+}
+
+.logo-intro-explore {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 0;
+  border: 0;
+  background: none;
+  color: rgba(209, 199, 186, 0.7);
+  font-family: var(--font-body);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.logo-intro-explore:hover,
+.logo-intro-explore:focus-visible {
   color: var(--text);
 }
 
@@ -253,7 +275,7 @@ html[data-intro='playing'] .reveal-lines[data-immediate] .rl-line {
 
 /* --------------------------------------------------------------------------
    Hero institucional · M02
-   t = 0 es `data-intro` = done (1350 ms de la intro) o `seen` (carga sin intro). Con intro,
+   t = 0 es `data-intro` = done (2700 ms de la intro) o `seen` (carga sin intro). Con intro,
    las animaciones esperan en pausa y los primeros 400 ms ocurren bajo la cortina que sube.
    -------------------------------------------------------------------------- */
 
@@ -478,9 +500,16 @@ html[data-intro='playing'] .cine-hero-media {
   gap: 24px;
 }
 
-.cine-hero-foot .hero-cota {
-  flex: 1;
-  justify-content: flex-start;
+.cine-hero-foot .hero-foot-logo {
+  display: block;
+  width: auto;
+  height: clamp(34px, 3.4vw, 52px);
+  max-width: 50vw;
+  object-fit: contain;
+}
+
+.cine-hero-foot {
+  justify-content: space-between;
 }
 
 .hero-rail {

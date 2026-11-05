@@ -54,11 +54,13 @@ export const metadata = {
   },
   icons: {
     icon: [
-      { url: `${BASE}/favicon.ico?v=5`, sizes: 'any' },
-      { url: `${BASE}/favicon-32x32.png?v=5`, sizes: '32x32', type: 'image/png' },
+      { url: `${BASE}/favicon.ico?v=6`, sizes: 'any' },
+      { url: `${BASE}/favicon-32x32.png?v=6`, sizes: '32x32', type: 'image/png' },
+      { url: `${BASE}/icon-192.png?v=6`, sizes: '192x192', type: 'image/png' },
+      { url: `${BASE}/icon-512.png?v=6`, sizes: '512x512', type: 'image/png' },
     ],
-    apple: [{ url: `${BASE}/apple-touch-icon.png`, sizes: '180x180', type: 'image/png' }],
-    shortcut: `${BASE}/favicon.ico?v=5`,
+    apple: [{ url: `${BASE}/apple-touch-icon.png?v=6`, sizes: '180x180', type: 'image/png' }],
+    shortcut: `${BASE}/favicon.ico?v=6`,
   },
   robots: { index: true, follow: true },
 };
