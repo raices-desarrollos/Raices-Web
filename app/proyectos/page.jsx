@@ -32,6 +32,7 @@ export default function ProjectsPage() {
                 aria-label={`${entry.name}: ${projectsContent.card.ariaSuffix}`}>
                 <img
                   src={entry.cover.src}
+                  srcSet={entry.cover.srcSet}
                   width={entry.cover.width}
                   height={entry.cover.height}
                   alt={entry.cover.alt}

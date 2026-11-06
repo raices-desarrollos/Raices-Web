@@ -105,6 +105,8 @@ export default function ProjectCarousel({ items }) {
             style={{ '--ratio': `${item.width} / ${item.height}` }}>
             <img
               src={item.src}
+              srcSet={item.srcSet}
+              sizes="(max-width: 759px) 80vw, 46vw"
               width={item.width}
               height={item.height}
               alt={item.alt}

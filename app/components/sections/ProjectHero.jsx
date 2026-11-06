@@ -4,7 +4,6 @@ import { Cota, Picture } from '../Primitives';
 import ProjectMark from '../ProjectMark';
 import RevealLines from '../RevealLines';
 import { DownloadIcon } from '../Icons';
-import WhatsAppLink from '../WhatsAppLink';
 
 /**
  * Hero de la página del proyecto (Plan 5.2.1): dos paneles de ancho igual. A la izquierda la
@@ -22,12 +21,12 @@ export default function ProjectHero({ entry }) {
         <span className="pj-hero-rule hero-anim" aria-hidden="true" />
         <p className="pj-hero-lead hero-anim">{entry.hero.lead || entry.summary}</p>
         <div className="hero-actions pj-hero-actions hero-anim">
-          <WhatsAppLink source="project-hero" showIcon={false} className="button button-fill">
+          <Link className="button button-fill" href={entry.hero.secondaryCta.href}>
             {entry.hero.secondaryCta.label || ui.whatsapp.consultLabel}
             <span className="button-arrow-icon" aria-hidden="true">
               →
             </span>
-          </WhatsAppLink>
+          </Link>
           {entry.brochure ? (
             <a
               className="button button-download"

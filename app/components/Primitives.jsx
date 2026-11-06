@@ -38,6 +38,7 @@ export function Picture({ image, className, priority = false, sizes, curtain = f
       loading={priority ? 'eager' : 'lazy'}
       fetchPriority={priority ? 'high' : undefined}
       decoding={priority ? 'sync' : 'async'}
+      style={image.position ? { objectPosition: image.position } : undefined}
       srcSet={image.srcSet}
       sizes={image.srcSet ? (sizes ?? image.sizes) : sizes}
     />

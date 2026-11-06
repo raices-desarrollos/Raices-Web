@@ -1014,17 +1014,9 @@ p + p {
   margin-top: 14px;
 }
 
-/* Lámina de la unidad: plano y render en un mismo bloque Lino. */
-
-.typology-render {
-  padding-left: clamp(16px, 2vw, 28px);
-  border-left: var(--line-width) solid var(--line-on-light);
-}
-
 .typology-render img {
   width: 100%;
   height: auto;
-  mix-blend-mode: multiply;
 }
 
 .typology-render figcaption {
@@ -1295,6 +1287,11 @@ p + p {
   border-top: var(--line-width) solid var(--line);
 }
 
+main > .contact-section:first-child {
+  padding-top: calc(var(--header-height) + 80px);
+  border-top: 0;
+}
+
 .contact-inner {
   display: grid;
   grid-template-columns: minmax(280px, 0.85fr) minmax(340px, 0.75fr);
@@ -1302,6 +1299,7 @@ p + p {
   align-items: start;
 }
 
+.contact-copy h1,
 .contact-copy h2 {
   margin-bottom: 24px;
 }

@@ -4,8 +4,6 @@ import Link from 'next/link';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { ui } from '@/content/shared';
 import { Picture } from './Primitives';
-import WhatsAppLink from './WhatsAppLink';
-
 /**
  * Selector de tipologías (Plan 5.2.6 / M12). Las tres fichas están en el HTML (SEO y sin JS); el
  * selector solo alterna cuál se ve (`hidden`) y mueve el subrayado de la pestaña activa.
@@ -16,7 +14,7 @@ import WhatsAppLink from './WhatsAppLink';
  *   montar, al cambiar y al redimensionar; no hay lecturas por scroll.
  * - Mobile: la barra se desplaza en horizontal y centra la pestaña activa.
  */
-export default function TypologySelector({ units, renderNote, whatsappSource = 'typology', formHref = '#consultas' }) {
+export default function TypologySelector({ units, renderNote, formHref = '#consultas' }) {
   const [active, setActive] = useState(0);
   const tabRefs = useRef([]);
   const listRef = useRef(null);
@@ -103,17 +101,13 @@ export default function TypologySelector({ units, renderNote, whatsappSource = '
 
       {units.map((unit, index) => (
         <div
-          className="typology-panel sheet"
+          className="typology-panel"
           key={unit.id}
           id={`tipologia-${unit.id}`}
           role="tabpanel"
           aria-labelledby={`tab-${unit.id}`}
           hidden={index !== active}>
-          <div className="typology-plan">
-            <Picture image={unit.plan} sizes="(max-width: 1023px) 100vw, 58vw" />
-          </div>
-
-          <div className="typology-ficha">
+          <div className="typology-copy">
             <span className="label">{unit.department}</span>
             <h3>{unit.title}</h3>
             {unit.program ? <p className="typology-program">{unit.program}</p> : null}
@@ -131,21 +125,21 @@ export default function TypologySelector({ units, renderNote, whatsappSource = '
                 );
               })}
             </dl>
-            <figure className="typology-render">
-              <Picture image={unit.render} sizes="(max-width: 1023px) 100vw, 36vw" />
-              <figcaption>{renderNote}</figcaption>
-            </figure>
-            <div className="typology-actions">
-              <WhatsAppLink
-                source={`${whatsappSource}-${unit.code.toLowerCase()}`}
-                message={unit.inquiry}
-                className="button button-ink">
-                {ui.contact.typologyInquiry}
-              </WhatsAppLink>
-              <Link className="text-link typology-form-link" href={formHref}>
-                {ui.contact.writeUs} <span aria-hidden="true">→</span>
-              </Link>
-            </div>
+          </div>
+
+          <div className="typology-plan">
+            <Picture image={unit.plan} sizes="(max-width: 1023px) 100vw, 55vw" />
+          </div>
+
+          <figure className="typology-render is-photo">
+            <Picture image={unit.render} sizes="(max-width: 1023px) 100vw, 40vw" />
+            <figcaption>{renderNote}</figcaption>
+          </figure>
+
+          <div className="typology-actions">
+            <Link className="text-link typology-form-link" href={formHref}>
+              {ui.contact.writeUs} <span aria-hidden="true">→</span>
+            </Link>
           </div>
         </div>
       ))}
