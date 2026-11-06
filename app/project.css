@@ -605,9 +605,11 @@
 
 .typology-panel {
   display: grid;
-  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
-  gap: clamp(28px, 4vw, 64px);
-  padding: clamp(20px, 3.4vw, 56px);
+  grid-template-columns: minmax(0, 55fr) minmax(0, 45fr);
+  column-gap: clamp(32px, 4vw, 72px);
+  row-gap: clamp(20px, 2.4vw, 32px);
+  align-items: start;
+  padding: clamp(36px, 4vw, 64px) 0 clamp(12px, 2vw, 24px);
   animation: panelIn 420ms var(--ease-out) 120ms both;
 }
 
@@ -627,7 +629,11 @@
 }
 
 .typology-plan {
-  align-self: center;
+  grid-column: 1;
+  grid-row: 1 / span 3;
+  align-self: start;
+  padding: clamp(16px, 2vw, 28px);
+  background: var(--surface-light);
 }
 
 .typology-plan img {
@@ -636,43 +642,50 @@
   height: auto;
 }
 
-.typology-ficha {
-  display: flex;
-  flex-direction: column;
+.typology-copy,
+.typology-render,
+.typology-actions {
+  grid-column: 2;
   min-width: 0;
 }
 
-.typology-ficha .label,
+.typology-copy .label,
 .typology-render figcaption {
-  color: var(--niebla-ink);
+  color: var(--text-soft);
 }
 
-.typology-ficha h3 {
-  margin: 10px 0 0;
+.typology-copy h3 {
+  margin: 12px 0 0;
   font-size: var(--fs-h2);
   font-weight: 300;
   line-height: 1.08;
-  color: var(--carbon);
+  color: var(--blanco);
 }
 
-.sheet .typology-program {
-  max-width: 40ch;
-  margin-top: 16px;
-  color: #3d3c37;
+.typology-program {
+  max-width: 38ch;
+  margin: 18px 0 0;
+  color: var(--text-soft);
 }
 
 .typology-areas {
-  margin: 28px 0 0;
-  border-top: var(--line-width) solid var(--line-on-light);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 32px 0 0;
+  border-top: var(--line-width) solid var(--line);
 }
 
 .typology-areas div {
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 12px 0;
-  border-bottom: var(--line-width) solid var(--line-on-light);
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  padding: 16px 18px 0 0;
+}
+
+.typology-areas div + div {
+  padding-left: 18px;
+  border-left: var(--line-width) solid var(--line);
 }
 
 .typology-areas dt {
@@ -681,18 +694,22 @@
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--niebla-ink);
+  color: var(--text-soft);
 }
 
 .typology-areas dd {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 400;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  font-size: clamp(26px, 2.4vw, 36px);
+  font-weight: 300;
+  line-height: 1;
+  letter-spacing: -0.02em;
   white-space: nowrap;
-  color: var(--carbon);
+  color: var(--caliza);
+}
+
+.typology-areas div:last-child dd {
+  color: var(--blanco);
 }
 
 .area-unit {
@@ -703,22 +720,22 @@
 }
 
 .typology-render {
-  margin: 28px 0 0;
+  margin: 8px 0 0;
 }
 
 .typology-render img {
   display: block;
   width: 100%;
   height: auto;
+  border-radius: 4px;
 }
 
-/* Los renders fotográficos no son láminas de línea: multiply los lavaba sobre el Lino. */
 .typology-render.is-photo img {
   mix-blend-mode: normal;
 }
 
 .typology-render figcaption {
-  margin-top: 10px;
+  margin-top: 12px;
   font-size: 10.5px;
   font-weight: 500;
   letter-spacing: 0.1em;
@@ -729,17 +746,17 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 16px 24px;
-  margin-top: 28px;
+  gap: 16px 28px;
+  margin-top: 4px;
 }
 
-.sheet .typology-form-link {
-  color: #3d3c37;
+.typology-form-link {
+  color: var(--caliza);
 }
 
-.sheet .typology-form-link:hover,
-.sheet .typology-form-link:focus-visible {
-  color: var(--carbon);
+.typology-form-link:hover,
+.typology-form-link:focus-visible {
+  color: var(--blanco);
 }
 
 /* Botón oscuro para láminas claras: Carbón relleno, Caliza al texto; el relleno de hover sube en Musgo. */
@@ -766,6 +783,21 @@
 @media (max-width: 1023px) {
   .typology-panel {
     grid-template-columns: minmax(0, 1fr);
+    row-gap: 28px;
+    padding-top: 32px;
+  }
+
+  .typology-copy { order: 1; }
+  .typology-areas { order: 2; }
+  .typology-plan { order: 3; grid-row: auto; }
+  .typology-render { order: 4; }
+  .typology-actions { order: 5; }
+
+  .typology-copy,
+  .typology-plan,
+  .typology-render,
+  .typology-actions {
+    grid-column: 1;
   }
 
   .tabs {
@@ -779,7 +811,34 @@
   }
 
   .typology-areas dd {
-    font-size: 24px;
+    font-size: 26px;
+  }
+}
+
+@media (max-width: 759px) {
+  .typology-areas div {
+    padding-right: 10px;
+  }
+
+  .typology-areas div + div {
+    padding-left: 10px;
+  }
+
+  .typology-areas dd {
+    font-size: 22px;
+  }
+
+  .typology-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .typology-cta {
+    width: 100%;
+  }
+
+  .typology-form-link {
+    align-self: flex-start;
   }
 }
 

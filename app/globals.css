@@ -1014,21 +1014,9 @@ p + p {
   margin-top: 14px;
 }
 
-/* Lámina de la unidad: plano y render en un mismo bloque Lino. */
-
-.typology-render {
-  padding-left: clamp(16px, 2vw, 28px);
-  border-left: var(--line-width) solid var(--line-on-light);
-}
-
 .typology-render img {
   width: 100%;
   height: auto;
-  mix-blend-mode: multiply;
-}
-
-.typology-render.is-photo img {
-  mix-blend-mode: normal;
 }
 
 .typology-render figcaption {

@@ -227,10 +227,10 @@ export const ceiboVidalContent = {
     areaNote: 'Superficies aproximadas, sujetas a planos finales.',
     lead: 'Tres unidades por piso, todas con balcón, alrededor de un palier central.',
     floorPlan: {
-      src: asset('/assets/plans/ceibo-planta-tipo.webp'),
-      width: 2382,
-      height: 1474,
-      alt: 'Planta tipo de Ceibo Vidal con los departamentos A de tres ambientes, B monoambiente y C de dos ambientes alrededor del núcleo de circulación',
+      src: asset('/assets/plans/plano_tipo_v1.webp'),
+      width: 1560,
+      height: 1008,
+      alt: 'Planta tipo de Ceibo Vidal sobre Vidal, con la unidad A de tres ambientes, la B monoambiente y la C de dos ambientes',
     },
     floorPlanCaption: 'Planta tipo · Unidad A 3 ambientes · B monoambiente · C 2 ambientes',
     units: [
@@ -242,17 +242,17 @@ export const ceiboVidalContent = {
         title: '3 ambientes',
         program: 'Living comedor al frente con balcón corrido, dormitorio en suite, segundo dormitorio y dos baños completos.',
         plan: {
-          src: asset('/assets/plans/ceibo-tipologia-3-ambientes.webp'),
-          width: 2382,
-          height: 1474,
-          alt: 'Plano del departamento A de tres ambientes, con dos dormitorios, dos baños, estar-comedor con cocina integrada y balcón',
+          src: asset('/assets/plans/tipologia-a.webp'),
+          width: 1200,
+          height: 893,
+          alt: 'Planta amoblada de la unidad A de tres ambientes, con estar-comedor, dos dormitorios, dos baños y balcón',
         },
         render: {
           ...ceiboShot(
-            'imagen_3amb_v0',
+            'imagen_3amb_v1',
             1600,
-            1600,
-            'Render del estar-comedor del tres ambientes, con mesa, living y salida al balcón',
+            544,
+            'Render del estar-comedor del tres ambientes, con living, mesa y salida al balcón',
           ),
         },
         areas: [
@@ -269,10 +269,10 @@ export const ceiboVidalContent = {
         title: 'Monoambiente',
         program: 'Ambiente integrado con cocina completa, baño completo, espacio de guardado y balcón propio.',
         plan: {
-          src: asset('/assets/plans/ceibo-tipologia-monoambiente.webp'),
-          width: 2382,
-          height: 1474,
-          alt: 'Plano del monoambiente, departamento B, con baño, cocina integrada, estar-dormitorio y balcón',
+          src: asset('/assets/plans/tipologia-b.webp'),
+          width: 1200,
+          height: 485,
+          alt: 'Planta amoblada del monoambiente, unidad B, con estar, dormitorio, cocina, baño y balcón',
         },
         render: {
           ...ceiboShot(
@@ -296,10 +296,10 @@ export const ceiboVidalContent = {
         title: '2 ambientes',
         program: 'Living-comedor con cocina, dormitorio en suite, toilette, baño completo y balcón corrido.',
         plan: {
-          src: asset('/assets/plans/ceibo-tipologia-2-ambientes.webp'),
-          width: 2382,
-          height: 1474,
-          alt: 'Plano del departamento C de dos ambientes, con dormitorio, baño, estar-comedor con cocina integrada y balcón',
+          src: asset('/assets/plans/tipologia-c.webp'),
+          width: 1200,
+          height: 767,
+          alt: 'Planta amoblada de la unidad C de dos ambientes, con estar-comedor, dormitorio, baño y balcón',
         },
         render: {
           ...ceiboShot(
