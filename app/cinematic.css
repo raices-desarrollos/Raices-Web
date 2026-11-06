@@ -309,7 +309,7 @@ html[data-intro='playing'] .cine-hero-media {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 40%;
+  object-position: 46% 62%;
 }
 
 /* Parallax de salida: solo transform, derivado del scroll (sin transición). */
@@ -427,15 +427,6 @@ html[data-intro='playing'] .cine-hero-media {
   color: var(--text-soft);
 }
 
-.hero-card-title {
-  margin: 0 0 8px;
-  font-family: var(--font-display);
-  font-size: 28px;
-  font-weight: 300;
-  line-height: 1.1;
-  color: var(--blanco);
-}
-
 .hero-card-link {
   display: flex;
   align-items: center;
@@ -452,13 +443,6 @@ html[data-intro='playing'] .cine-hero-media {
   color: var(--caliza);
 }
 
-.hero-card-arrow {
-  display: inline-block;
-  margin-left: auto;
-  color: var(--accent);
-  transition: transform 200ms var(--ease-std);
-}
-
 .hero-card-link:hover,
 .hero-card-link:focus-visible {
   color: var(--blanco);
@@ -469,20 +453,9 @@ html[data-intro='playing'] .cine-hero-media {
   outline-offset: -1px;
 }
 
-.hero-card-link:hover .hero-card-arrow,
-.hero-card-link:focus-visible .hero-card-arrow {
-  transform: translate(3px, -3px);
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .hero-card-link,
-  .hero-card-arrow {
+  .hero-card-link {
     transition: none;
-  }
-
-  .hero-card-link:hover .hero-card-arrow,
-  .hero-card-link:focus-visible .hero-card-arrow {
-    transform: none;
   }
 }
 
@@ -1179,7 +1152,7 @@ html[data-intro='playing'] .cine-hero .hero-anim {
 
   .cine-hero-image,
   .cine-hero-video {
-    object-position: 42% 38%;
+    object-position: 42% 58%;
   }
 
 }

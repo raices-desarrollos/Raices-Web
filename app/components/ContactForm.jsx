@@ -41,6 +41,15 @@ export default function ContactForm({ defaultSubject }) {
 
   useEffect(() => {
     startedAt.current = Date.now();
+    const params = new URLSearchParams(window.location.search);
+    const asunto = params.get('asunto');
+    const mensaje = params.get('mensaje');
+    if (!asunto && !mensaje) return;
+    setFields((current) => ({
+      ...current,
+      asunto: asunto && contact.subjects.includes(asunto) ? asunto : current.asunto,
+      mensaje: mensaje ? mensaje.trim().slice(0, 400) : current.mensaje,
+    }));
   }, []);
 
   const update = (event) => {
@@ -218,7 +227,7 @@ export default function ContactForm({ defaultSubject }) {
         <button className="button button-fill" type="submit" disabled={status === 'sending'}>
           {status === 'sending' ? form.sending : form.submit}
         </button>
-        <p className="form-hint">{USES_ENDPOINT ? form.hintConfigured : form.hintUnconfigured}</p>
+        {USES_ENDPOINT ? <p className="form-hint">{form.hintConfigured}</p> : null}
       </div>
 
       <p className="form-status" role="status" aria-live="polite">

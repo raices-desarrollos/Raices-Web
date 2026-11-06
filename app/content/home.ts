@@ -7,11 +7,11 @@ import { asset, brand, routes } from './shared';
  * (H.264, sin audio, ideal ≤ 6 MB). El poster sigue siendo la imagen de abajo.
  */
 const heroImage = {
-  src: asset('/assets/images/balcones-tensores.webp'),
-  width: 1536,
-  height: 1024,
+  src: asset('/assets/images/imagen_fachada_cerca_v0.webp'),
+  width: 1312,
+  height: 1199,
   alt: '',
-  srcSet: `${asset('/assets/images/balcones-tensores-828.webp')} 828w, ${asset('/assets/images/balcones-tensores.webp')} 1536w`,
+  srcSet: `${asset('/assets/images/imagen_fachada_cerca_v0-828.webp')} 828w, ${asset('/assets/images/imagen_fachada_cerca_v0.webp')} 1312w`,
   sizes: '100vw',
 } as const;
 

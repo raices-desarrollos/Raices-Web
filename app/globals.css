@@ -1027,6 +1027,10 @@ p + p {
   mix-blend-mode: multiply;
 }
 
+.typology-render.is-photo img {
+  mix-blend-mode: normal;
+}
+
 .typology-render figcaption {
   margin-top: 10px;
   color: var(--niebla-ink);
@@ -1295,6 +1299,11 @@ p + p {
   border-top: var(--line-width) solid var(--line);
 }
 
+main > .contact-section:first-child {
+  padding-top: calc(var(--header-height) + 80px);
+  border-top: 0;
+}
+
 .contact-inner {
   display: grid;
   grid-template-columns: minmax(280px, 0.85fr) minmax(340px, 0.75fr);
@@ -1302,6 +1311,7 @@ p + p {
   align-items: start;
 }
 
+.contact-copy h1,
 .contact-copy h2 {
   margin-bottom: 24px;
 }

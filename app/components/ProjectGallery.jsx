@@ -135,6 +135,7 @@ export default function ProjectGallery({ items, title = ui.gallery.title, id = '
                   imageRefs.current[itemIndex] = node;
                 }}
                 src={item.src}
+                srcSet={item.srcSet}
                 width={item.width}
                 height={item.height}
                 alt={itemIndex === index ? item.alt : ''}
@@ -177,7 +178,7 @@ export default function ProjectGallery({ items, title = ui.gallery.title, id = '
                   aria-current={itemIndex === index ? 'true' : undefined}
                   aria-label={`${pad(itemIndex)} ${ui.gallery.of} ${String(count).padStart(2, '0')}: ${item.caption}`}
                   onClick={() => go(itemIndex)}>
-                  <img src={item.src} alt="" width={item.width} height={item.height} loading="lazy" decoding="async" />
+                  <img src={item.src.replace(/\.webp$/, '-800.webp')} alt="" width={item.width} height={item.height} loading="lazy" decoding="async" />
                 </button>
               </li>
             ))}

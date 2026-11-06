@@ -10,9 +10,11 @@ export default function PhotoBand({ image }) {
         <span className="photo-band-shift">
           <img
             src={image.src}
+            srcSet={image.srcSet}
             width={image.width}
             height={image.height}
             alt={image.alt}
+            style={image.position ? { objectPosition: image.position } : undefined}
             loading="lazy"
             decoding="async"
             sizes="100vw"

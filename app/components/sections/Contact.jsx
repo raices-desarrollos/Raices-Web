@@ -32,7 +32,7 @@ export default function Contact({
       <div className="contact-inner">
         <div className="contact-copy">
           <p className="kicker reveal">{kicker}</p>
-          <RevealLines as={Heading} id={`${id}-title`} className="contact-title" lines={[title]} />
+          <RevealLines as={Heading} id={`${id}-title`} className="contact-title title-stroke" lines={[title]} />
           <p className="reveal">{text}</p>
 
           <div className="contact-actions reveal">
@@ -44,7 +44,7 @@ export default function Contact({
               href={`https://wa.me/${contact.whatsappNumber}`}
               target="_blank"
               rel="noopener noreferrer">
-              <span className="label">{contactContent.channels.whatsappLabel}</span>
+              <span className="label">{contactContent.channels.phoneLabel}</span>
               <span>{contact.whatsappDisplay}</span>
             </a>
             <a className="contact-line" href={mailtoHref()}>

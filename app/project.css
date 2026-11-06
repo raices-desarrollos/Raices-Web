@@ -712,6 +712,11 @@
   height: auto;
 }
 
+/* Los renders fotográficos no son láminas de línea: multiply los lavaba sobre el Lino. */
+.typology-render.is-photo img {
+  mix-blend-mode: normal;
+}
+
 .typology-render figcaption {
   margin-top: 10px;
   font-size: 10.5px;

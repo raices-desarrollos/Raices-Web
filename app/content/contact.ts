@@ -46,6 +46,7 @@ export const contactContent = {
   },
   channels: {
     whatsappLabel: 'WhatsApp',
+    phoneLabel: 'Teléfono',
     emailLabel: 'Email',
     linkedinLabel: 'LinkedIn',
     instagramLabel: 'Instagram',

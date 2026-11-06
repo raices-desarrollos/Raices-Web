@@ -3,26 +3,79 @@ import { asset, partners, routes } from './shared';
 const renderNote = 'Material comercial. Renders de referencia.';
 const referenceNote = 'Imagen de referencia';
 
+/** WebP derivado de `docs/assets/ceibo-vidal`, con el mismo nombre de versión. */
+function ceiboShot(file: string, width: number, height: number, alt: string) {
+  const src = asset(`/assets/images/${file}.webp`);
+  return {
+    src,
+    width,
+    height,
+    alt,
+    srcSet: `${asset(`/assets/images/${file}-800.webp`)} 800w, ${src} ${width}w`,
+  } as const;
+}
+
 const facade = {
-  src: asset('/assets/images/ceibo-vidal-fachada.webp'),
-  width: 682,
-  height: 1024,
-  alt: 'Render de la fachada de Ceibo Vidal: edificio de planta baja y cuatro pisos con balcones corridos y vegetación colgante en cada nivel',
+  ...ceiboShot(
+    'imagen_fachada_perfil_v1',
+    1600,
+    2133,
+    'Render de la fachada de Ceibo Vidal desde la vereda: planta baja y cuatro pisos con balcones de hormigón y vegetación colgante',
+  ),
   note: renderNote,
 } as const;
 
-const terrace = {
-  src: asset('/assets/images/terraza-verde.webp'),
-  width: 1536,
-  height: 1024,
-  alt: 'Terraza con jacuzzi, canteros con vegetación densa, árboles y reposeras, con la ciudad de fondo',
+const facadeClose = {
+  ...ceiboShot(
+    'imagen_fachada_cerca_v0',
+    1312,
+    1199,
+    'Acceso de Ceibo Vidal, con el nombre en la fachada, la madera del hall y el balcón del primer piso',
+  ),
+  note: renderNote,
+  position: '50% 58%',
 } as const;
 
-const balconies = {
-  src: asset('/assets/images/balcones-tensores.webp'),
-  width: 1536,
-  height: 1024,
-  alt: 'Balcones con plantas trepadoras guiadas por tensores verticales de acero',
+const facadeZoom = {
+  ...ceiboShot(
+    'imagen_fachada_zoom_v0',
+    1024,
+    1536,
+    'Vista cercana de la fachada de Ceibo Vidal, con balcones corridos, barandas negras y plantas colgantes',
+  ),
+  note: referenceNote,
+} as const;
+
+const terrace = {
+  ...ceiboShot(
+    'imagen_terraza_noche_v0',
+    1142,
+    1600,
+    'Terraza común de noche, con mesa, parrilla encendida, solárium y jacuzzi entre canteros',
+  ),
+  note: referenceNote,
+  /** En la ficha ancha el cielo ocupa la mitad superior; este punto deja mesa, parrilla y jacuzzi. */
+  position: '50% 72%',
+} as const;
+
+const sum = {
+  ...ceiboShot(
+    'imagen_sum_v0',
+    1600,
+    1309,
+    'SUM de Ceibo Vidal: cocina integrada, mesa de madera y abertura al patio exterior',
+  ),
+  note: renderNote,
+} as const;
+
+const hall = {
+  ...ceiboShot(
+    'imagen_hall_v0',
+    1600,
+    1600,
+    'Hall de acceso de Ceibo Vidal, con revestimiento de madera, sillones y jardín interior junto a la escalera',
+  ),
+  note: renderNote,
 } as const;
 
 /**
@@ -66,8 +119,10 @@ export const ceiboVidalContent = {
   hero: {
     lead: 'En un barrio en crecimiento, conectado y con identidad, decidimos dejar nuestras propias raíces.',
     primaryCta: { label: 'Explorar tipologías', href: '#tipologias' },
-    /** Abre WhatsApp con el mensaje predefinido del sitio (`contact.whatsappMessage`). */
-    secondaryCta: { label: 'Solicitar información' },
+    secondaryCta: {
+      label: 'Solicitar información',
+      href: `${routes.contact}?asunto=${encodeURIComponent('Ceibo Vidal')}&mensaje=${encodeURIComponent('Quiero recibir información sobre el proyecto Ceibo Vidal')}#formulario`,
+    },
   },
   /**
    * Carpeta comercial descargable (copia optimizada para web de docs/commercial/). Al actualizar
@@ -94,7 +149,7 @@ export const ceiboVidalContent = {
       'En un barrio en crecimiento, conectado y con identidad, decidimos dejar nuestras propias raíces.',
       'Ceibo Vidal es un edificio que se propone lograr el balance perfecto entre ciudad y aire libre.',
     ],
-    band: { ...balconies, note: referenceNote },
+    band: facadeClose,
     characteristics: [
       'Planta baja con SUM interior–exterior y estacionamiento para seis vehículos.',
       'Cuatro pisos de tres unidades, cada una con balcón.',
@@ -134,7 +189,7 @@ export const ceiboVidalContent = {
     items: [
       { ...facade, caption: 'Fachada sobre Vidal', note: renderNote },
       { ...terrace, caption: 'Terraza común', note: referenceNote },
-      { ...balconies, caption: 'Balcones con tensores', note: referenceNote },
+      { ...sum, caption: 'SUM', note: renderNote },
     ],
   },
   /**
@@ -145,13 +200,15 @@ export const ceiboVidalContent = {
    */
   homeGallery: [
     { order: 1, title: 'Fachada', ...facade },
-    { order: 2, title: 'Balcones', ...balconies },
+    { order: 2, title: 'SUM', ...sum },
     { order: 3, title: 'Terraza', ...terrace },
+    { order: 4, title: 'Hall', ...hall },
+    { order: 5, title: 'Balcones', ...facadeZoom },
   ],
   green: {
     sectionLabel: 'Aire libre',
     kicker: 'Ceibo Vidal',
-    title: 'Terraza común y balcones.',
+    title: 'Terraza común.',
     features: [
       {
         id: 'terrace',
@@ -161,23 +218,6 @@ export const ceiboVidalContent = {
         text: 'Terraza común de 76 m² con jacuzzi, solárium y parrilla.',
         image: terrace,
         note: referenceNote,
-      },
-      {
-        id: 'balconies',
-        wide: false,
-        label: 'Balcones',
-        title: 'Una por unidad.',
-        text: 'Cuatro pisos de tres unidades, cada una con balcón.',
-        image: balconies,
-        note: referenceNote,
-      },
-      {
-        id: 'private',
-        wide: false,
-        system: true,
-        label: 'Terrazas privadas',
-        title: 'Tres terrazas privadas.',
-        text: 'Una terraza común con jacuzzi, solárium y parrilla, más tres terrazas privadas disponibles.',
       },
     ],
   },
@@ -208,10 +248,12 @@ export const ceiboVidalContent = {
           alt: 'Plano del departamento A de tres ambientes, con dos dormitorios, dos baños, estar-comedor con cocina integrada y balcón',
         },
         render: {
-          src: asset('/assets/images/unidad-a-3amb.webp'),
-          width: 1024,
-          height: 1024,
-          alt: 'Render en planta del tres ambientes amoblado, con dos dormitorios, dos baños, estar-comedor y balcón corrido con plantas',
+          ...ceiboShot(
+            'imagen_3amb_v0',
+            1600,
+            1600,
+            'Render del estar-comedor del tres ambientes, con mesa, living y salida al balcón',
+          ),
         },
         areas: [
           { label: 'Cubierto', value: '71 m²' },
@@ -233,10 +275,12 @@ export const ceiboVidalContent = {
           alt: 'Plano del monoambiente, departamento B, con baño, cocina integrada, estar-dormitorio y balcón',
         },
         render: {
-          src: asset('/assets/images/unidad-b-mono.webp'),
-          width: 1024,
-          height: 682,
-          alt: 'Render en planta del monoambiente amoblado, con cocina, estar, cama y balcón con plantas',
+          ...ceiboShot(
+            'imagen_mono_v1',
+            1448,
+            1086,
+            'Render del monoambiente, con estar, cama y salida al balcón al fondo',
+          ),
         },
         areas: [
           { label: 'Cubierto', value: '34 m²' },
@@ -258,10 +302,12 @@ export const ceiboVidalContent = {
           alt: 'Plano del departamento C de dos ambientes, con dormitorio, baño, estar-comedor con cocina integrada y balcón',
         },
         render: {
-          src: asset('/assets/images/unidad-c-2amb.webp'),
-          width: 1024,
-          height: 768,
-          alt: 'Render en planta del dos ambientes amoblado, con dormitorio, estar-comedor y balcón',
+          ...ceiboShot(
+            'imagen_2amb_v0',
+            1600,
+            600,
+            'Render del estar-comedor del dos ambientes, con living, mesa, cocina integrada y balcón',
+          ),
         },
         areas: [
           { label: 'Cubierto', value: '48 m²' },

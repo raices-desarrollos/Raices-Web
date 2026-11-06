@@ -131,7 +131,7 @@ export default function TypologySelector({ units, renderNote, whatsappSource = '
                 );
               })}
             </dl>
-            <figure className="typology-render">
+            <figure className="typology-render is-photo">
               <Picture image={unit.render} sizes="(max-width: 1023px) 100vw, 36vw" />
               <figcaption>{renderNote}</figcaption>
             </figure>
