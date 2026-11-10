@@ -118,17 +118,19 @@ Tokens `--fs-*` en `:root` de `app/globals.css`. Todos los titulares usan peso 3
 
 | Token | Valor | Uso |
 | --- | --- | --- |
-| `--fs-hero` | `clamp(40px, 5.6vw, 88px)`; mínimo 36px bajo 420px | h1 del hero (80,6px a 1440, 43px a 768, 36px a 390) |
-| `--fs-display` | `clamp(36px, 5.2vw, 84px)` | h2 del cierre (`.cta-band`) |
-| `--fs-h1` | `clamp(36px, 4.6vw, 72px)` | h1 de página, h1 de proyecto, nombre del destacado |
-| `--fs-h2` | `clamp(32px, 3.8vw, 56px)` | h2 de sección |
-| `--fs-h3` | `clamp(22px, 2vw, 28px)` | h3 |
+| `--fs-hero` | `clamp(46px, min(4.5vw, 7.6vh), 80px)`; ≤1023px `clamp(44px, 5.8vw, 56px)`; ≤759px `clamp(29px, 8.8vw, 40px)` | h1 del hero (64,8px a 1440×900, 54,7px a 1280×720, 44,5px a 768, 34,3px a 390, 29px a 320) |
+| `--fs-display` | `clamp(36px, 5.2vw, 84px)`; ≤759px `clamp(30px, 8.6vw, 36px)` | manifiesto |
+| `--fs-h1` | `clamp(36px, 4.6vw, 72px)`; ≤759px `clamp(30px, 8.2vw, 34px)` | h1 de página, h1 de proyecto |
+| `--fs-h2` | `clamp(32px, 3.8vw, 56px)`; ≤759px `clamp(26px, 7vw, 30px)` | h2 de sección |
+| `--fs-h3` | `clamp(22px, 2vw, 28px)`; ≤759px `20px` | h3 |
 | `--fs-metric` | `clamp(28px, 3vw, 44px)` | cifras de las fichas (`.spec-card strong`) |
 | `--fs-lead` | `clamp(16px, 1.3vw, 18px)` | lead |
 | `--fs-body` | 15.5px | cuerpo |
 | `--fs-small` / `--fs-label` / `--fs-kicker` | 13px / 11px / 12px | apoyo, labels, kickers |
 
-Alto de línea: h1 1,04 (hero 1,02), h2 1,08, cierre 1,04. Cuerpo Montserrat 1,7. Cita `.quote` en M PLUS U 300.
+Alto de línea: h1 1,04 (hero 1,1 en mobile, 1,06 en tablet, 1,05 en desktop), h2 1,08, cierre 1 (frase larga 1,06). Cuerpo Montserrat 1,7. Cita `.quote` en M PLUS U 300.
+
+**Escala mobile (≤759px).** No es la de desktop reducida: cada nivel baja un paso (hero 34 → h1 32 → h2 27 → h3 20 → lead 16 → cuerpo 15,5, medidos a 390px) para que un título largo entre en dos o tres líneas y la jerarquía se lea. El menú móvil usa 34px. No volver a fijar `font-size` sueltos de título en mobile: se cambia el token.
 
 Los titulares no van en negrita ni en itálica. Mayúsculas solo en kickers, labels, cotas, botones y el nombre de ubicación del proyecto.
 
@@ -147,7 +149,7 @@ Los titulares no van en negrita ni en itálica. Mayúsculas solo en kickers, lab
 
 **Grilla.** Home institucional: dos columnas (`1.05fr / 0.82fr`) en la presentación. El proyecto destacado es una lámina a `100svh` (`1.28fr / 0.72fr`). Portfolio: una ficha a ancho completo, imagen y texto en dos columnas (`1.15fr / 0.85fr`). No hay grilla de cards de tres columnas.
 
-**Breakpoints (F4, consolidados):** `max-width: 1023px` (tablet: las grillas de dos columnas pasan a una), `max-width: 759px` (mobile), `max-width: 420px` (mobile chico) y `min-width: 1024px` (desktop, tarjeta de contacto del hero). Rango de diseño: 1280 / 1024 / 760 / 420. No hay más puntos de corte: no reintroducir 1100, 980, 899 ni 520.
+**Breakpoints (F4, consolidados):** `max-width: 1023px` (tablet: las grillas de dos columnas pasan a una), `max-width: 759px` (mobile), `max-width: 420px` (mobile chico) y `min-width: 1024px` (desktop). Rango de diseño: 1280 / 1024 / 760 / 420. No hay más puntos de corte: no reintroducir 1100, 980, 899 ni 520. El hero suma dos consultas por alto, propias de una pieza a pantalla completa: `(max-width: 759px) and (max-height: 620px)` (teléfono bajo: se compactan los márgenes) y `(min-width: 1024px) and (max-height: 760px)` (notebook baja: el fundido inferior sube un paso).
 
 **Header.** Fijo, altura visual ~76px, padding 20px que baja a 12px al hacer scroll. `scroll-padding-top` igual a `--header-height`.
 
@@ -162,20 +164,24 @@ Los titulares no van en negrita ni en itálica. Mayúsculas solo en kickers, lab
 - Logo: `raices_logo_texto.png`, clase `logo-on-dark` (Caliza sobre Carbón).
 - Links: Proyectos, Nosotros, Contacto. Cada uno lleva un índice `01`–`03` (`.nav-index`, M PLUS U 10px, color `--accent`, `aria-hidden`). Estado activo con `aria-current="page"` y subrayado arena.
 - CTA “Consultar” usa `.button.button-small` y va a `/contacto`.
-- **Menú móvil (≤ 760px), M14:** overlay a pantalla completa. Se abre con una cortina `clip-path` (520ms `--ease-in-out`), los tres ítems suben escalonados (480ms, 70ms entre uno y otro, desde 160ms) en M PLUS U 300 40px con el índice, y abajo `WhatsAppLink source="menu"` relleno más `contact.whatsappDisplay`. Cierra con Escape o al navegar (420ms) y bloquea el scroll del body (`.nav-open`). Cerrado queda `visibility: hidden`.
+- **Menú móvil (≤ 759px), M14:** overlay a pantalla completa. Se abre con una cortina `clip-path` (520ms `--ease-in-out`), los tres ítems suben escalonados (480ms, 70ms entre uno y otro, desde 160ms) en M PLUS U 300 34px (interlínea 1,2; el ítem activo en Blanco) con el índice, y abajo `WhatsAppLink source="menu"` relleno más `contact.whatsappDisplay`. Cierra con Escape, al navegar (420ms) o si la ventana pasa a 760px o más. Abierto bloquea el scroll del body (`.nav-open`) y deja `inert` `#contenido`, `.site-footer` y `.whatsapp-float-region`: ni el foco del teclado ni un toque caen detrás del overlay. Cerrado queda `visibility: hidden`.
 - Botones (M11): el relleno sube con `translateY(101%) → 0` en 320ms `--ease-std`; el color del texto cambia a los 120ms.
 
 ### Hero (`.cine-hero`)
 
-- `min-height: 100svh`. Imagen `imagen_fachada_cerca_v0.webp` a cover, recorte `46% 62%` (mobile `42% 58%`). La imagen asienta una vez (`heroMediaSettle`, escala 1,06 → 1, 1400ms `--ease-out-expo`; 1,03 en mobile) y su velo sube con `heroMediaFade` (600ms). El parallax sigue atado a `--hero-progress`.
+Idea de composición: **el texto apoyado sobre el plano de la vereda.** El edificio ocupa la parte alta y el texto descansa en la franja más uniforme del render (la vereda, 78–100 % del alto de la imagen), nunca sobre barandas, ventanas ni vegetación. La legibilidad sale del encuadre y de fundidos progresivos a Carbón, no de una placa detrás del título.
+
+- Grilla de tres filas sobre `min-height: 100svh`: aire para el edificio (`minmax(clamp(200px, 34svh, 340px), 1fr)`; en desktop `1fr`) · texto (`.cine-hero-content`) · base (`.hero-base`). El texto se ancla abajo: en un teléfono bajo (375×553, 320×568) entra completo con la acción visible; en uno alto el edificio gana altura.
+- **Imagen** `imagen_fachada_cerca_v0.webp` (1312×1199) a cover. Mobile y tablet: la caja de la imagen cubre la fila 1 más un 28 % (`height: 128%`) para que el fundido termine detrás del título; `object-position: 56% 62%`, `--hero-zoom: 1.1` con origen `56% 78%` (la línea de vereda). Desktop: a pantalla completa, `object-position: 50% 100%` (anclada abajo: la vereda queda bajo el texto), sin zoom. Asienta una vez (`heroMediaSettle`, 1,03 → 1; 1,06 → 1 en desktop; 1400ms `--ease-out-expo`) y, sin intro, entra con `heroMediaFade` (600ms). El parallax suma `--hero-progress × 0.06` a la escala.
 - Si existe `NEXT_PUBLIC_HERO_VIDEO`, un `<video>` mudo, en loop, con esa imagen de poster. Hoy no hay video.
-- Velos lineales hacia Carbón más un grano SVG al 12 %. El velo usa `--veil`, no un negro inventado (valores en `.cine-hero-scrim`).
-- **h1 con `RevealLines`** (modo static, `immediate`; los valores de delay y stagger están en `RevealLines` y `.cine-hero`): “Hacemos edificios” (`.hero-line-quiet`, peso 300, Caliza) y “donde nosotros mismos viviríamos.” (`.hero-line-strong`, peso 400, Blanco). Ancho máximo `12.5em`: a 1440 queda en tres líneas (decisión aprobada: no se fuerza una composición de dos líneas).
-- Secuencia (t = 0 es `data-intro="done"`, 1350ms de la intro, o la carga sin intro): imagen y velo desde 0, kicker 450ms, h1 tras el kicker, lead 900ms, acciones y tarjeta 1000ms, pie y cue 1350ms. Todo en `heroIn` (700–800ms; pie 600ms). Con `data-intro="playing"` las animaciones esperan en pausa.
-- **Tarjeta de contacto (`HeroContactCard`, desde 1024px).** Abajo a la derecha, ancho `min(340px, 26vw)`, fondo `rgba(16,18,16,.62)` con blur 14px (sin soporte: `--surface`), borde `--line-strong`, padding 24px, sin radio. Contiene el label “Contacto” y dos enlaces, WhatsApp y email, sin título ni flechas. Sin campos: el envío real vive en `/contacto`. Al scrollear sale con más recorrido que el resto (M15): `translateY(progress × -80px)` y opacidad 1 → 0 entre 0,1 y 0,4, y recibe `inert` junto con el contenido. Entre 760 y 1023px (el h1 chocaría con la tarjeta) y en mobile, WhatsApp va como segundo botón de `.hero-actions` (`.hero-whatsapp`, relleno). La tarjeta empieza en 1100px y no en 1024px por esa colisión.
-- Al hacer scroll: `--hero-out` (progreso 0,15 → 0,45) desvanece el contenido y lo sube 40px; con progreso > 0,6 el contenido y la tarjeta reciben `inert`.
-- Acción editorial: `Descubrir Ceibo Vidal` (`.button-arrow`). En ≤420px las acciones van en una columna.
-- Pie: cota `Raíces Developers · Buenos Aires` y “Imagen de referencia”. Indicador `.scroll-cue` hacia `#manifiesto`, centrado, se oculta bajo 1024px. Riel `.hero-rail` decorativo, oculto bajo 1024px.
+- **Velos (`.cine-hero-scrim`, siempre con `--veil`).** Superior, medido en px porque el header no depende del alto de pantalla: `.72` a 0 → `.48` a 56px → `.18` a 116px → 0 a 196px. Inferior en mobile y tablet: 0 a 46 % → `.2` a 58 % → `.52` a 69 % → `.78` a 79 % → `.93` a 89 % → Carbón a 100 %. Inferior en desktop (desde abajo): Carbón → `.94` a 10 % → `.86` a 20 % → `.74` a 30 % → `.56` a 39 % → `.32` a 47 % → `.12` a 55 % → 0 a 64 %, más dos radiales direccionales: abajo a la izquierda (`58% 64%`, `.5` → 0, bajo el titular) y arriba a la izquierda (`30% 26%`, `.46` → 0, bajo el logo). En notebook baja el inferior sube un paso (ver `cinematic.css`). Grano SVG al 10 %, con máscara que lo apaga hacia abajo.
+- **h1 con `RevealLines`** (modo static, `immediate`): “Hacemos edificios” (`.hero-line-quiet`, Caliza, peso 350 en mobile y 300 desde 760px) y “donde nosotros mismos viviríamos.” (`.hero-line-strong`, peso 400, Blanco, `text-wrap: balance`). Mobile y tablet: `max-width: 10.4em`, tres líneas («Hacemos edificios / donde nosotros / mismos viviríamos.»), interlínea 1,1 (1,06 en tablet), tracking `-0.015em` (`-0.02em` desde 760px). Desktop: sin ancho máximo, dos líneas (una por tramo), interlínea 1,05 y un halo de Carbón (`text-shadow: 0 0 34px rgba(veil,.62), 0 0 6px rgba(veil,.3)`) que sigue a las letras donde la primera línea roza el zócalo iluminado.
+- **Lead** `rgba(231,224,213,.9)`, 15,5px/1,6 en mobile, `--fs-lead` desde 760px, 46ch (50ch en desktop). **Acción** única: `Descubrir Ceibo Vidal` (`.button.button-arrow`, contorno, 48px de alto, ancho según contenido). En desktop el lead va a la izquierda y la acción a la derecha, en la misma fila bajo el título.
+- **Base (`HeroBase.jsx`, `.hero-base`).** Reemplaza la tarjeta de contacto y el pie. Una línea fina (`--line-strong`) como línea de tierra, con la nota del render («Imagen de referencia», 10px `--muted`) y el contacto directo: WhatsApp y Email, cada uno con su ícono de 18px, el nombre (Montserrat 13,5px/500) y una flecha `ArrowUpRightIcon`. Sin fondo, sin borde, sin tarjeta. Mobile: nota a la derecha de la línea y, debajo, los dos accesos en dos mitades iguales con 56px de alto táctil. Desde 760px: una sola fila (nota · línea · etiqueta «Contacto» · WhatsApp · Email), 72px de alto (80px en desktop), accesos de 44px. Mismos destinos que antes: `whatsappHref()` con el mensaje oficial (`data-wa-source="hero-contact"`) y `mailtoHref()`. Sin campos: el envío real vive en `/contacto`.
+- Jerarquía resultante: 1) arquitectura y título, 2) lead, 3) acción hacia el proyecto, 4) contacto.
+- Secuencia (t = 0 es `data-intro="done"` o la carga sin intro): imagen desde 0, líneas del h1 desde 520ms (+90ms por línea), lead 900ms, acción 1000ms, base 1200ms. Todo en `heroIn` (700ms). Con `data-intro="playing"` las animaciones esperan en pausa.
+- Al hacer scroll, solo en desktop: `--hero-out` (progreso 0,25 → 0,7) desvanece contenido y base y sube el contenido 32px; con progreso > 0,7 reciben `inert` (`ScrollEffects`). En mobile y tablet el hero es más alto que la foto y el texto se lee mientras se desplaza: no se desvanece ni queda inerte.
+- Contraste medido sobre la foto real (texto oculto, percentil 95 del fondo): peor caso entre 15 ventanas de 320×568 a 1920×1080: título blanco 9,6:1, línea Caliza 4,3:1 (texto grande, mínimo AA 3:1), lead 9,7:1, acción 8,1:1, contacto 10,7:1, nota 7:1, menú 6,3:1. Script de medición: `tmp-qa/fable/contrast.mjs` (carpeta ignorada por git).
 
 ### Hero de proyecto (`.pj-hero`)
 
@@ -206,7 +212,7 @@ Los titulares no van en negrita ni en itálica. Mayúsculas solo en kickers, lab
 
 ### Manifiesto (`.manifesto`, `#manifiesto`)
 
-- Una frase a gran escala: `homeContent.cta.title` (“Construimos espacios donde da placer vivir.”) con `RevealLines` en modo split, `--fs-display`, `max-width: 14em`, empieza en la columna 2 de 12. Trazo arena de 28 × 2px encima. Debajo, a la derecha (columnas 8–12), `homeContent.about.lead` en Montserrat 17px. Fondo `--bg-alt`, padding vertical `clamp(120px, 16vw, 200px)`. No crea texto: reubica el existente (P07).
+- Una frase a gran escala: `homeContent.cta.title` (“Construimos espacios donde da placer vivir.”) con `RevealLines` en modo split, `--fs-display`, `max-width: 14em`, empieza en la columna 2 de 12. Trazo arena de 28 × 2px encima. Debajo, a la derecha (columnas 8–12), `homeContent.about.lead` en Montserrat 17px. Fondo `--bg-alt`, padding vertical `clamp(88px, 13vw, 184px)`. No crea texto: reubica el existente (P07).
 
 ### Filosofía en la Home (`.about-teaser`, `#raices`)
 
@@ -280,9 +286,9 @@ Los titulares no van en negrita ni en itálica. Mayúsculas solo en kickers, lab
 ### Cierre (`.cta-band`)
 
 - Fondo Carbón puro (`--bg`), un escalón por debajo del footer (`--bg-alt`): el cierre y el pie ya no se funden. Sin fotografía ni degradados.
-- Composición: cota arriba (la línea con la etiqueta “Buenos Aires”), título monumental `homeContent.cta.title` («Construimos espacios donde da placer vivir.», `clamp(40px, 6.8vw, 108px)`, peso 300, interlínea 1,02, ancho máximo 12em, dos líneas en 1440), un espacio de `clamp(48px, 7vw, 96px)` y, debajo, una línea Arena que se traza de izquierda a derecha (1100ms `--ease-in-out`, 200ms de espera) al revelarse. Bajo la línea, la frase a la izquierda (34ch, `--text-soft`) y las acciones a la derecha. Padding `clamp(112px, 17vw, 232px)` arriba y `clamp(96px, 13vw, 176px)` abajo.
-- Acciones: `WhatsAppLink source="cta-band"` relleno y “Conocé nuestros proyectos” en contorno. Sin la prop `whatsapp` (otras páginas), `link` es el único botón. Entra con `RevealLines` (split). Los títulos de más de 28 caracteres (`.cta-band-long`) se quedan en `--fs-display`.
-- Bajo 900px la frase y las acciones se apilan, alineadas a la izquierda.
+- Composición: cota arriba (opcional), título monumental (`clamp(44px, 7.2vw, 112px)`, peso 300, interlínea 1, ancho máximo 9,5em), un espacio de `clamp(48px, 7vw, 96px)` y, debajo, una línea Arena que se traza de izquierda a derecha (1100ms `--ease-in-out`, 200ms de espera) al revelarse. Bajo la línea, la frase a la izquierda (34ch, `--text-soft`) y las acciones a la derecha; sin frase, la acción ocupa todo el pie y cierra contra el final de la línea (`.cta-actions:only-child`). Padding `clamp(88px, 14vw, 200px)` arriba y `clamp(80px, 11vw, 160px)` abajo.
+- Acciones: con la prop `whatsapp`, `WhatsAppLink` relleno y `link` en contorno; sin ella, `link` es el único botón. Entra con `RevealLines` (split). Los títulos de más de 28 caracteres (`.cta-band-long`, hoy «¿Hablamos de tu próximo hogar?») bajan a `clamp(32px, 5.6vw, 88px)`, interlínea 1,06, 12em y `text-wrap: balance`: el cierre no compite con el hero.
+- Bajo 1024px la frase y las acciones se apilan, alineadas a la izquierda.
 - La atmósfera fotográfica (`has-atmosphere`) ya no se usa: queda el soporte en el componente.
 - La cota de la Home es “Buenos Aires”.
 
@@ -319,7 +325,7 @@ GSAP (`^3.15.0`) se usa únicamente para el corte por líneas de `RevealLines` e
 | `--stagger` | 90ms |
 | `--rise` | 28px (20px bajo 760px) |
 
-**Intro (M01).** Línea de tiempo en ms, desde que el componente arranca: 0–200 espera, 200–850 el logo se revela desde la base (`introMark`, clip-path + escala .94 → 1), 850–1150 reposo, 1150–1750 la cortina sube (`introCurtain`, 600ms `--ease-in-out`, clip-path hacia arriba). A 1350ms `data-intro` pasa a `done` y el hero arranca mientras la cortina aún se levanta (400ms de superposición). A 1750ms el overlay se desmonta y se guarda `raices-intro-seen`. Constantes en `app/components/LogoIntro.jsx`. El script inline de `app/layout.jsx` fija `data-intro` = `playing | seen` antes del primer pintado (`playing` solo en la home, sin sesión previa y sin reduced motion).
+**Intro (M01).** Línea de tiempo en ms, desde que el componente arranca: 0–800 el logo completo se revela de arriba hacia abajo mientras asienta (`introMark`), 800–2500 reposo, 2500–3200 la cortina sube (`introCurtain`, 700ms `--ease-in-out`). A 2700ms `data-intro` pasa a `done` y el hero arranca mientras la cortina aún se levanta. A 3200ms el overlay se desmonta y se guarda `raices-intro-seen` (una vez por sesión, solo en la Home, nunca con reduced motion). Se salta con clic, tecla, rueda o gesto. Constantes en `app/components/LogoIntro.jsx`, espejadas en `cinematic.css`. El script inline de `app/layout.jsx` fija `data-intro` = `playing | seen` antes del primer pintado.
 
 **`RevealLines` (M04).** Componente cliente que revela titulares línea por línea. Cada línea vive en `.rl-line-mask`, que recorta con `clip-path: inset(-.2em -.08em -.22em -.08em)` y `overflow: visible` (no con `overflow`): así no se cortan los acentos de una capital (Í) ni los descendentes (g, p, y) y no hace falta un contenedor flex (SplitText mide líneas sobre hijos en flujo normal). Por eso la línea oculta parte de `translateY(150%)`, no de 105 %. Dos modos:
 - *static* (`lines=[…]`): líneas explícitas, sin JS de GSAP. Transición CSS al recibir `.is-visible` (lo marca `ScrollEffects`), o keyframe `rlRise` si lleva `immediate` (hero, `PageHeader`).
@@ -334,7 +340,7 @@ Usado en: hero, `PageHeader` (h1), `Manifesto`, `AboutTeaser`, `FeaturedProject`
 
 **Capítulo sticky (M07).** Ver Componentes › Capítulo destacado. `FeaturedStage` solo escribe `data-active` cuando cambia de estado; el fundido es CSS.
 
-**Tarjeta del hero (M15).** Sale con `--hero-progress` (opacidad 1 → 0 entre 0,1 y 0,4; `translateY` hasta −80px), por encima del recorrido del contenido (0,15 → 0,45; −40px).
+**Base del hero.** No tiene recorrido propio: en desktop se desvanece con `--hero-out` junto con el contenido; en mobile y tablet queda fija en su lugar.
 
 **Entradas.** `.reveal` y `.reveal-stagger` suben `--rise` y aparecen en 800ms; el stagger es `--stagger` por posición (1 a 5). Las fotos de la galería se descubren con clip-path (1100ms, 0 / 120 / 240ms). `.page-enter` (`app/template.jsx`) funde cada navegación en 600ms desde opacidad 0 y 12px.
 
@@ -471,6 +477,14 @@ Otras fichas vistas y no implementadas: Cinematic landing Hero (11494), Cinemati
 56. **F5: accesibilidad puntual, sin rediseño.** El panel de tipología es un `div role="tabpanel"` (un `article` no admite ese rol). El manifiesto no lleva `aria-labelledby` porque su título repite el del cierre. El WhatsApp flotante vive en un `aside` con nombre. En mobile, `.text-link` y los enlaces del footer tienen `min-height: 28px`. El `select` de Motivo usa la misma línea inferior que el resto del formulario. `RevealLines` en modo split publica `aria-label` con el texto oficial, porque SplitText puede vaciar el nombre accesible mientras anima.
 57. **F5: el WhatsApp del footer usa `whatsappHref()`.** Antes era `https://wa.me/<número>` sin mensaje. El resto de los CTA ya llevaba el texto oficial.
 58. **F5: laboratorio, no usuarios reales.** Medido con Chromium, CPU ×4 y red ~1,6 Mbps / 150 ms de latencia (Slow 4G de laboratorio), mediana de 3 corridas, intro salteada. CLS 0 en las 5 rutas. En mobile el LCP de la Home es la foto del hero (~5 s, 285 KB, prioridad alta) y el de Ceibo es la fachada (~2,4 s). No hay datos de campo (INP, CrUX). No se desactivó el prefetch de Next.
+59. **Refinamiento final: el hero se compone, no se tapa.** El título dejó de flotar sobre la losa clara. El edificio va arriba y el texto se apoya en la vereda, con la foto fundiéndose en Carbón. Sin placa detrás del título. Tres líneas en mobile y tablet, dos en desktop. `--fs-hero` bajó (80,6 → 64,8px a 1440; 36 → 34,3px a 390) y en desktop depende también del alto (`7.6vh`) para no invadir la fachada en notebooks bajas.
+60. **Refinamiento final: la tarjeta de contacto del hero se eliminó** (`HeroContactCard`, `.hero-card`, `.cine-hero-foot`). La reemplaza `HeroBase`: una línea de tierra con la nota del render y WhatsApp + Email como accesos livianos, en todos los cortes. Mismos destinos, cero pasos nuevos. No volver a una tarjeta con fondo en el hero.
+61. **Refinamiento final: el hero no se desvanece al scrollear en mobile ni tablet.** Ahí el contenido se sigue leyendo mientras sube; el fundido y el `inert` quedan solo desde 1024px.
+62. **Refinamiento final: escala tipográfica propia de mobile** (tokens bajo 759px, ver Tipografía). «Declaración» y el hero de proyecto siguen al token. El cierre largo baja un paso.
+63. **Refinamiento final: `ProjectMark` no hereda el `max-width` de los títulos.** La dirección de la Home («Vidal 3849 · Saavedra, Buenos Aires») se partía en tres líneas dentro de una caja de 185px. Ahora va en una línea; en mobile, 11px con `letter-spacing: .18em` y `text-wrap: balance`.
+64. **Refinamiento final: la banda fotográfica de Ceibo pedía un archivo inexistente** (`imagen_fachada_cerca_v0-800.webp`; el derivado real es `-828`). En mobile se veía el texto alternativo en lugar de la foto. `facadeClose` declara su `srcSet`.
+65. **Refinamiento final: los slides del carrusel no superan el ancho útil** (`max-width: calc(100vw - var(--gutter) * 2 - 24px)`, alto mínimo 320px): en mobile una imagen apaisada se recorta apenas a los lados en vez de salirse de la pantalla.
+66. **Refinamiento final: la intro no se tocó.** Dura 3,2 s con 1,7 s de reposo. Es larga para una primera lectura, pero es una decisión de marca posterior a F1 (antes 1,75 s) y se muestra una vez por sesión. Si se quiere acortar, alcanza con `HOLD_MS` en `LogoIntro.jsx` y el delay de `introCurtain` en `cinematic.css`.
 
 - **Marca de proyecto (`ProjectMark.jsx`).** Debajo del logo oficial de CEIBO va únicamente «Vidal 3849» (Montserrat 12px/500, mayúscula, `letter-spacing: .32em`, `--text-soft`, 22px bajo el logo) y, cuando corresponde, la línea comercial oficial `project.commercialLine` («El balance perfecto entre ciudad y aire libre», M PLUS U 300 `clamp(18px,1.5vw,22px)`, 28px bajo la dirección). El nombre «Ceibo Vidal» NO se repite como título visible bajo el logo: vive en el `alt` del logo (que es el nombre accesible del encabezado), en SEO, navegación y textos corridos.
 
@@ -502,7 +516,7 @@ El favicon es el isotipo de Raíces Developers, no el de Ceibo Vidal.
 
 ## Actualización: refinamiento del hero, botones y favicon
 
-- **Hero (Home):** sin tarjeta de contacto, sin indicador Scroll ni isotipo inferior. Módulo editorial `.hero-contact` («Contacto / ¿Hablamos? / WhatsApp ↗ Email ↗»): abajo a la derecha desde 1024 px, en flujo bajo las acciones en tablet y mobile. Contraste por degradados localizados en `.cine-hero-scrim` (superior para navbar, inferior izquierdo para titular, inferior derecho para contacto). Lead a `rgba(231,224,213,.94)`.
+- **Hero (Home):** sustituido por el refinamiento final (ver «Hero (`.cine-hero`)» y decisiones 59–61): sin tarjeta, sin indicador Scroll ni isotipo inferior; contacto en `HeroBase`.
 - **Navbar:** logo 41 px (38 px con scroll, 32 px bajo 420 px); enlaces a `rgba(231,224,213,.94)` con velo superior en la Home sin scroll.
 - **Botones:** primario `.button-fill` (caliza/carbón), secundario `.button` (contorno `--line-strong`, también `.button-download` con `DownloadIcon`), terciario `.text-link.text-link-arrow` (flecha y subrayado animado en hover/foco, 44 px de alto táctil).
 - **Favicon:** isotipo sin fondo en SVG (`public/icon-dark.svg` para pestañas claras, `public/icon-light.svg` para oscuras), trazo reforzado para 16/32 px; PNG/ICO en caliza transparente y `apple-touch-icon`/`icon-192/512` en caliza sobre Carbón. Versiones de marca: `public/assets/brand/raices_isotipo_negro.svg` y `raices_isotipo_caliza.svg`.

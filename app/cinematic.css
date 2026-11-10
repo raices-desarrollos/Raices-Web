@@ -253,24 +253,42 @@ html[data-intro='playing'] .reveal-lines[data-immediate] .rl-line {
 
 /* --------------------------------------------------------------------------
    Hero institucional · M02
-   t = 0 es `data-intro` = done (2700 ms de la intro) o `seen` (carga sin intro). Con intro,
-   las animaciones esperan en pausa y los primeros 400 ms ocurren bajo la cortina que sube.
+   t = 0 es `data-intro` = done (liberación de la intro) o `seen` (carga sin intro). Con intro,
+   las animaciones esperan en pausa y los primeros ms ocurren bajo la cortina que sube.
+
+   Composición: el edificio arriba y el texto apoyado sobre el plano de la vereda, la zona más
+   uniforme del render. La fotografía se funde en Carbón de forma progresiva; el texto nunca
+   queda sobre barandas, ventanas ni vegetación. Tres filas: aire para el edificio · texto ·
+   base (nota del render y contacto).
+   · Tablet y mobile: la imagen ocupa la fila 1 y se extiende un 28 % por detrás del título
+     (la vereda es el 22 % inferior del render), así el edificio entero queda por encima del texto.
+   · Desktop (≥ 1024 px): imagen a sangre, velo direccional desde abajo a la izquierda.
    -------------------------------------------------------------------------- */
 
 .cine-hero {
-  --hero-out: clamp(0, calc((var(--hero-progress) - 0.15) / 0.3), 1);
+  --hero-out: 0;
   position: relative;
   display: grid;
-  align-items: end;
+  grid-template-rows: minmax(clamp(200px, 34svh, 340px), 1fr) auto auto;
+  min-height: 100vh;
   min-height: 100svh;
-  padding: calc(var(--header-height) + 40px) var(--gutter) 128px;
+  padding: 0 var(--gutter);
   overflow: hidden;
   background: var(--bg);
 }
 
-.cine-hero-media {
+/* Absolutos dentro de la grilla: con `grid-row` su bloque contenedor es la fila 1. */
+.cine-hero-media,
+.cine-hero-scrim {
   position: absolute;
-  inset: 0;
+  grid-row: 1 / 2;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 128%;
+}
+
+.cine-hero-media {
   overflow: hidden;
   animation: heroMediaSettle 1400ms var(--ease-out-expo) both;
 }
@@ -288,7 +306,7 @@ html[data-intro='playing'] .cine-hero-media {
 
 @keyframes heroMediaSettle {
   from {
-    transform: scale(1.06);
+    transform: scale(1.03);
   }
   to {
     transform: none;
@@ -309,12 +327,16 @@ html[data-intro='playing'] .cine-hero-media {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 46% 62%;
+  object-position: 56% 62%;
 }
 
-/* Parallax de salida: solo transform, derivado del scroll (sin transición). */
+/* `--hero-zoom` acerca el encuadre con origen en la línea de vereda (78 % del render): el suelo
+   no se mueve y el edificio gana presencia. El parallax de salida suma escala con el scroll
+   (solo transform, sin transición). */
 .cine-hero-image {
-  transform: scale(calc(1 + var(--hero-progress) * 0.06)) translate3d(0, calc(var(--hero-progress) * 2%), 0);
+  --hero-zoom: 1.1;
+  transform-origin: 56% 78%;
+  transform: scale(calc(var(--hero-zoom) + var(--hero-progress) * 0.06));
   will-change: transform;
 }
 
@@ -323,183 +345,376 @@ html[data-intro='playing'] .cine-hero-media {
   inset: 0;
 }
 
+/* Velo: arriba sostiene logo y menú; abajo oscurece solo la vereda y la calle hasta fundirse en
+   Carbón. Entre el 27 % y el 46 % la fachada queda sin velo. Usa `--veil`, no un negro nuevo. */
+/* Dos velos, ninguno es un bloque: arriba, uno medido en px (la altura del header no depende
+   del alto de la pantalla) que sostiene logo y menú; abajo, el fundido progresivo a Carbón. */
 .cine-hero-scrim {
-  position: absolute;
-  inset: 0;
-  /* Degradados localizados: arriba para el navbar, abajo a la izquierda para el titular y
-     abajo a la derecha para el contacto. El centro de la imagen queda sin velo. */
   background:
-    radial-gradient(ellipse 82% 74% at 12% 80%, rgba(var(--veil), 0.74) 0%, rgba(var(--veil), 0.46) 50%, transparent 80%),
-    radial-gradient(ellipse 34% 36% at 90% 86%, rgba(var(--veil), 0.58) 0%, transparent 74%),
     linear-gradient(
       180deg,
-      rgba(var(--veil), 0.5) 0%,
-      rgba(var(--veil), 0.08) 16%,
-      rgba(var(--veil), 0) 44%,
-      rgba(var(--veil), 0.3) 76%,
+      rgba(var(--veil), 0.72) 0,
+      rgba(var(--veil), 0.48) 56px,
+      rgba(var(--veil), 0.18) 116px,
+      rgba(var(--veil), 0) 196px
+    ),
+    linear-gradient(
+      180deg,
+      rgba(var(--veil), 0) 46%,
+      rgba(var(--veil), 0.2) 58%,
+      rgba(var(--veil), 0.52) 69%,
+      rgba(var(--veil), 0.78) 79%,
+      rgba(var(--veil), 0.93) 89%,
       var(--bg) 100%
     );
 }
 
+/* Grano: se apaga hacia abajo junto con la fotografía, para que no marque el borde de la imagen. */
 .cine-hero-scrim::after {
   content: '';
   position: absolute;
   inset: 0;
-  opacity: 0.12;
+  opacity: 0.1;
   pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, #000 52%, transparent 92%);
+  mask-image: linear-gradient(180deg, #000 52%, transparent 92%);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
 }
 
-/* El contenido se desvanece y sube al scrollear la primera pantalla (0,15 → 0,45). */
 .cine-hero-content {
   position: relative;
   z-index: 1;
+  grid-row: 2;
   width: min(100%, 1080px);
-  opacity: calc(1 - var(--hero-out));
-  transform: translateY(calc(var(--hero-out) * -40px));
+  padding-bottom: 28px;
 }
 
+/* 10,4em fija la composición en tres líneas en todos los cortes:
+   «Hacemos edificios / donde nosotros / mismos viviríamos.» */
 .cine-hero h1 {
-  max-width: 12.5em;
+  max-width: 10.4em;
   font-size: var(--fs-hero);
   font-weight: 300;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
 }
 
-/* Énfasis por peso y color, nunca cursiva: M PLUS U no tiene itálica. */
+/* Énfasis por peso y color, nunca cursiva: M PLUS U no tiene itálica. En mobile la línea
+   tranquila sube a 350 para que el trazo no se pierda a 33 px. */
 .hero-line-quiet {
-  font-weight: 300;
+  font-weight: 350;
   color: var(--text);
-  text-shadow: 0 2px 28px rgba(var(--veil), 0.45);
 }
 
 .hero-line-strong {
   font-weight: 400;
   color: var(--blanco);
-}
-
-.cine-hero .kicker {
-  --hero-from: 12px;
-  margin-bottom: 22px;
+  text-wrap: balance;
 }
 
 .cine-hero .hero-lead {
-  max-width: 52ch;
-  margin-top: 28px;
-  font-size: var(--fs-lead);
+  max-width: 46ch;
+  margin-top: 18px;
+  font-size: 15.5px;
   line-height: 1.6;
-  color: rgba(231, 224, 213, 0.94);
-  text-shadow: 0 1px 18px rgba(var(--veil), 0.55);
+  color: rgba(231, 224, 213, 0.9);
 }
 
 .cine-hero .hero-actions {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 40px;
+  margin-top: 26px;
 }
 
-@media (min-width: 1024px) {
-  .cine-hero-content {
-    width: min(calc(100% - 400px), 1080px);
-  }
+.cine-hero .hero-actions .button {
+  min-height: 48px;
 }
 
-/* Tarjeta de contacto: en flujo bajo el contenido (< 1024 px); anclada abajo a la derecha desde
-   1024 px, con el mismo margen inferior que el padding del hero para alinearse con el CTA. */
-.hero-card {
+/* Base del hero: línea de suelo, nota del render y contacto. Sin fondo ni caja. */
+.hero-base {
   position: relative;
   z-index: 1;
-  width: min(100%, 340px);
-  margin-top: 32px;
+  grid-row: 3;
 }
 
-.hero-card-inner {
-  padding: 20px 24px 8px;
-  background: rgba(16, 18, 16, 0.91);
-  border: var(--line-width) solid var(--line);
-  border-radius: 2px;
-}
-
-.hero-card-label {
-  margin: 0 0 6px;
-  color: var(--text-soft);
-}
-
-.hero-card-link {
-  display: flex;
+.hero-base-row {
+  --hero-from: 0px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 12px;
-  min-height: 40px;
+  column-gap: 14px;
+  padding-bottom: 8px;
+}
+
+.hero-base-line {
+  grid-area: 1 / 1;
+  height: var(--line-width);
+  background: var(--line-strong);
+}
+
+.hero-base-note {
+  grid-area: 1 / 2;
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.hero-contact {
+  grid-area: 2 / 1 / 3 / -1;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.hero-contact-label {
+  display: none;
+  color: var(--muted);
+}
+
+.hero-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
   color: var(--text);
-  font-size: 14.5px;
-  letter-spacing: 0.02em;
-  transition: color 200ms var(--ease-std);
+  font-size: 13.5px;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  transition: color var(--dur-ui) var(--ease-std);
 }
 
-.hero-card-link svg {
+.hero-contact-link svg {
   flex: none;
-  color: var(--caliza);
 }
 
-.hero-card-link:hover,
-.hero-card-link:focus-visible {
+.hero-contact-arrow {
+  flex: none;
+  color: var(--muted);
+  transition:
+    transform var(--dur-fast) var(--ease),
+    color var(--dur-ui) var(--ease-std);
+}
+
+.hero-contact-link:hover,
+.hero-contact-link:focus-visible {
   color: var(--blanco);
 }
 
-.hero-card-link:focus-visible {
-  outline: 1px solid var(--caliza);
-  outline-offset: -1px;
+.hero-contact-link:hover .hero-contact-arrow,
+.hero-contact-link:focus-visible .hero-contact-arrow {
+  color: var(--accent);
+  transform: translate(2px, -2px);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .hero-card-link {
-    transition: none;
+/* Tablet: más aire y la base en una sola fila (nota · línea · contacto). */
+@media (min-width: 760px) {
+  .cine-hero-content {
+    padding-bottom: 36px;
   }
-}
 
-@media (max-width: 1023px) {
-  .hero-card-link {
+  .cine-hero h1 {
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-line-quiet {
+    font-weight: 300;
+  }
+
+  .cine-hero .hero-lead {
+    margin-top: 24px;
+    font-size: var(--fs-lead);
+  }
+
+  .cine-hero .hero-actions {
+    margin-top: 32px;
+  }
+
+  .hero-base-row {
+    display: flex;
+    gap: 20px;
+    min-height: 72px;
+    padding-bottom: 0;
+  }
+
+  .hero-base-line {
+    flex: 1;
+  }
+
+  .hero-contact {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+  }
+
+  .hero-contact-label {
+    display: block;
+  }
+
+  .hero-contact-link {
     min-height: 44px;
   }
 }
 
+/* Desktop: imagen a sangre, anclada abajo. El título pasa a dos líneas anchas, una por idea
+   («Hacemos edificios» / «donde nosotros mismos viviríamos.»), apoyadas sobre la vereda; debajo,
+   la descripción a la izquierda y el CTA a la derecha. El velo nace en la base y se refuerza
+   abajo a la izquierda: la fachada completa queda limpia por encima del texto. */
 @media (min-width: 1024px) {
-  .hero-card {
-    position: absolute;
-    right: var(--gutter);
-    bottom: 128px;
-    margin: 0;
-    width: 340px;
-    /* Sale con más recorrido que el resto del hero. */
-    opacity: clamp(0, calc(1 - (var(--hero-progress) - 0.1) / 0.3), 1);
-    transform: translateY(calc(var(--hero-progress) * -80px));
+  .cine-hero {
+    /* El contenido se desvanece y sube al scrollear la primera pantalla (0,25 → 0,7). */
+    --hero-out: clamp(0, calc((var(--hero-progress) - 0.25) / 0.45), 1);
+    grid-template-rows: 1fr auto auto;
+    padding-top: calc(var(--header-height) + 40px);
+  }
+
+  .cine-hero-media,
+  .cine-hero-scrim {
+    grid-row: auto;
+    height: 100%;
+  }
+
+  .cine-hero-image,
+  .cine-hero-video {
+    object-position: 50% 100%;
+  }
+
+  .cine-hero-image {
+    --hero-zoom: 1;
+    transform-origin: 50% 100%;
+  }
+
+  .cine-hero-scrim {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(var(--veil), 0.72) 0,
+        rgba(var(--veil), 0.48) 56px,
+        rgba(var(--veil), 0.18) 116px,
+        rgba(var(--veil), 0) 196px
+      ),
+      radial-gradient(ellipse 30% 26% at 0% 0%, rgba(var(--veil), 0.46) 0%, rgba(var(--veil), 0) 100%),
+      radial-gradient(ellipse 58% 64% at 0% 100%, rgba(var(--veil), 0.5) 0%, rgba(var(--veil), 0.3) 45%, rgba(var(--veil), 0) 100%),
+      linear-gradient(
+        0deg,
+        var(--bg) 0%,
+        rgba(var(--veil), 0.94) 10%,
+        rgba(var(--veil), 0.86) 20%,
+        rgba(var(--veil), 0.74) 30%,
+        rgba(var(--veil), 0.56) 39%,
+        rgba(var(--veil), 0.32) 47%,
+        rgba(var(--veil), 0.12) 55%,
+        rgba(var(--veil), 0) 64%
+      );
+  }
+
+  .cine-hero-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'title title'
+      'lead actions';
+    align-items: end;
+    column-gap: clamp(32px, 5vw, 80px);
+    width: 100%;
+    padding-bottom: clamp(28px, 4.4vh, 48px);
+    opacity: calc(1 - var(--hero-out));
+    transform: translateY(calc(var(--hero-out) * -32px));
+  }
+
+  /* Oscurecimiento selectivo: un halo amplio de Carbón que sigue a las letras donde la primera
+     línea roza el zócalo iluminado. Sin borde visible; no es una placa. */
+  .cine-hero h1 {
+    text-shadow: 0 0 34px rgba(var(--veil), 0.62), 0 0 6px rgba(var(--veil), 0.3);
+    grid-area: title;
+    max-width: none;
+    line-height: 1.05;
+  }
+
+  .cine-hero .hero-lead {
+    grid-area: lead;
+    max-width: 50ch;
+    margin-top: 24px;
+  }
+
+  .cine-hero .hero-actions {
+    grid-area: actions;
+    margin-top: 0;
+  }
+
+  .hero-base {
+    opacity: calc(1 - var(--hero-out));
+  }
+
+  .hero-base-row {
+    min-height: 80px;
+  }
+
+  @keyframes heroMediaSettle {
+    from {
+      transform: scale(1.06);
+    }
+    to {
+      transform: none;
+    }
   }
 }
 
-.cine-hero .hero-card-inner.hero-anim {
-  animation-duration: 700ms;
-  animation-delay: 1000ms;
+/* Pantallas bajas (teléfonos chicos con las barras del navegador): se compacta el texto para
+   que el edificio conserve su lugar y el CTA quede dentro del primer pantallazo. */
+/* Notebook apaisada y baja: el encuadre se cierra sobre el acceso y la primera línea del
+   título sube hasta el zócalo iluminado. El fundido inferior gana un paso de altura. */
+@media (min-width: 1024px) and (max-height: 760px) {
+  .cine-hero-scrim {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(var(--veil), 0.72) 0,
+        rgba(var(--veil), 0.48) 56px,
+        rgba(var(--veil), 0.18) 116px,
+        rgba(var(--veil), 0) 196px
+      ),
+      radial-gradient(ellipse 30% 26% at 0% 0%, rgba(var(--veil), 0.46) 0%, rgba(var(--veil), 0) 100%),
+      radial-gradient(ellipse 62% 78% at 0% 100%, rgba(var(--veil), 0.56) 0%, rgba(var(--veil), 0.36) 48%, rgba(var(--veil), 0) 100%),
+      linear-gradient(
+        0deg,
+        var(--bg) 0%,
+        rgba(var(--veil), 0.94) 10%,
+        rgba(var(--veil), 0.88) 20%,
+        rgba(var(--veil), 0.78) 30%,
+        rgba(var(--veil), 0.64) 39%,
+        rgba(var(--veil), 0.44) 48%,
+        rgba(var(--veil), 0.2) 57%,
+        rgba(var(--veil), 0) 68%
+      );
+  }
+
+  .cine-hero-content {
+    padding-bottom: 20px;
+  }
+
+  .hero-base-row {
+    min-height: 68px;
+  }
 }
 
-.cine-hero-foot {
-  position: absolute;
-  right: var(--gutter);
-  bottom: 28px;
-  left: var(--gutter);
-  z-index: 1;
-  display: flex;
-  align-items: center;
-  gap: 24px;
+@media (max-width: 759px) and (max-height: 620px) {
+  .cine-hero-content {
+    padding-bottom: 20px;
+  }
+
+  .cine-hero .hero-lead {
+    margin-top: 14px;
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  .cine-hero .hero-actions {
+    margin-top: 20px;
+  }
 }
 
-.cine-hero-foot {
-  justify-content: flex-end;
-}
-
-/* Secuencia del hero (delays desde t = 0): kicker 450 · líneas 520 + 90/línea (en RevealLines) ·
-   lead 900 · acciones 1000 · pie y cue 1350. Entradas verticales de 12 a 28 px, sin blur. */
+/* Secuencia del hero (delays desde t = 0): líneas 520 + 90/línea (en RevealLines) · lead 900 ·
+   acciones 1000 · base 1200. Entradas verticales de 0 a 28 px, sin blur. */
 .hero-anim {
   animation: heroIn 800ms var(--ease-out) both;
 }
@@ -515,11 +730,6 @@ html[data-intro='playing'] .cine-hero-media {
   }
 }
 
-.cine-hero .kicker.hero-anim {
-  animation-duration: 600ms;
-  animation-delay: 450ms;
-}
-
 .cine-hero .hero-lead.hero-anim {
   animation-duration: 700ms;
   animation-delay: 900ms;
@@ -530,9 +740,9 @@ html[data-intro='playing'] .cine-hero-media {
   animation-delay: 1000ms;
 }
 
-.cine-hero .cine-hero-foot.hero-anim {
-  --hero-from: 0px;
-  animation: heroIn 600ms var(--ease-out) 1350ms both;
+.cine-hero .hero-base-row.hero-anim {
+  animation-duration: 700ms;
+  animation-delay: 1200ms;
 }
 
 html[data-intro='playing'] .cine-hero .hero-anim {
@@ -620,7 +830,7 @@ html[data-intro='playing'] .cine-hero .hero-anim {
    -------------------------------------------------------------------------- */
 
 .manifesto {
-  padding: clamp(120px, 16vw, 200px) var(--gutter);
+  padding: clamp(88px, 13vw, 184px) var(--gutter);
   background: var(--bg-alt);
   border-top: var(--line-width) solid var(--line);
 }
@@ -720,7 +930,7 @@ html[data-intro='playing'] .cine-hero .hero-anim {
 
 /* Galería editorial horizontal: sin tarjetas, sombras ni marcos. */
 .pc-track {
-  --pc-h: clamp(300px, 46vw, 660px);
+  --pc-h: clamp(320px, 46vw, 660px);
   display: flex;
   gap: clamp(16px, 2vw, 28px);
   margin: 0;
@@ -747,10 +957,13 @@ html[data-intro='playing'] .cine-hero .hero-anim {
   outline-offset: 6px;
 }
 
+/* Ningún slide supera el ancho útil de la ventana: en mobile las imágenes apaisadas se
+   recortan apenas a los lados en lugar de salirse de la pantalla. */
 .pc-slide {
   position: relative;
   flex: 0 0 auto;
   height: var(--pc-h);
+  max-width: calc(100vw - var(--gutter) * 2 - 24px);
   aspect-ratio: var(--ratio);
   scroll-snap-align: start;
 }
@@ -868,7 +1081,7 @@ html[data-intro='playing'] .cine-hero .hero-anim {
 .cta-band {
   position: relative;
   overflow: hidden;
-  padding: clamp(112px, 17vw, 232px) var(--gutter) clamp(96px, 13vw, 176px);
+  padding: clamp(88px, 14vw, 200px) var(--gutter) clamp(80px, 11vw, 160px);
   border-top: var(--line-width) solid var(--line);
   /* Carbón puro, un escalón por debajo del footer (--bg-alt): el cierre y el pie no se funden. */
   background: var(--bg);
@@ -907,9 +1120,11 @@ html[data-intro='playing'] .cine-hero .hero-anim {
   margin-bottom: clamp(36px, 6vw, 80px);
 }
 
+/* El cierre es tipográfico, pero no grita más que el hero: una palabra («Hablemos.») admite
+   escala monumental; una frase larga baja un paso y se equilibra en dos líneas. */
 .cta-band h2 {
   max-width: 9.5em;
-  font-size: clamp(44px, 8.4vw, 136px);
+  font-size: clamp(44px, 7.2vw, 112px);
   font-weight: 300;
   line-height: 1;
   letter-spacing: -0.02em;
@@ -917,8 +1132,9 @@ html[data-intro='playing'] .cine-hero .hero-anim {
 
 .cta-band-long h2 {
   max-width: 12em;
-  font-size: clamp(40px, 6.8vw, 108px);
-  line-height: 1.02;
+  font-size: clamp(32px, 5.6vw, 88px);
+  line-height: 1.06;
+  text-wrap: balance;
 }
 
 /* Pie del cierre: la línea se traza de izquierda a derecha al revelarse y separa el título de
@@ -962,6 +1178,11 @@ html[data-intro='playing'] .cine-hero .hero-anim {
   flex-wrap: wrap;
   justify-content: flex-end;
   gap: 12px;
+}
+
+/* Sin frase a la izquierda, la acción ocupa todo el pie y cierra contra el final de la línea. */
+.cta-actions:only-child {
+  grid-column: 1 / -1;
 }
 
 @media (max-width: 1023px) {
@@ -1145,16 +1366,6 @@ html[data-intro='playing'] .cine-hero .hero-anim {
     aspect-ratio: 4 / 5;
   }
 
-  .cine-hero {
-    align-items: end;
-    padding-bottom: 128px;
-  }
-
-  .cine-hero-image,
-  .cine-hero-video {
-    object-position: 42% 58%;
-  }
-
 }
 
 @media (max-width: 759px) {
@@ -1163,33 +1374,13 @@ html[data-intro='playing'] .cine-hero .hero-anim {
     padding-top: calc(var(--header-height) + 48px);
   }
 
-  .cine-hero {
-    padding-bottom: 72px;
-  }
-
-  .cine-hero-foot {
-    bottom: 22px;
-    justify-content: flex-start;
-  }
-
-
   .featured-facts {
     grid-template-columns: 1fr;
-  }
-
-  /* Mobile: sin escala de entrada marcada en la imagen (Plan M02). */
-  @keyframes heroMediaSettle {
-    from {
-      transform: scale(1.03);
-    }
-    to {
-      transform: none;
-    }
+    row-gap: 18px;
   }
 }
 
 @media (max-width: 420px) {
-  .cine-hero .hero-actions,
   .page-header .hero-actions {
     display: grid;
     grid-template-columns: 1fr;
@@ -1231,7 +1422,6 @@ html[data-intro='playing'] .cine-hero .hero-anim {
   .cine-hero-content {
     transform: none;
   }
-
 }
 
 /* Mobile: la intro avanza sola (3,2 s); no hay botón de elección. */

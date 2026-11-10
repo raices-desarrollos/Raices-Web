@@ -32,6 +32,8 @@ const facadeClose = {
     1199,
     'Acceso de Ceibo Vidal, con el nombre en la fachada, la madera del hall y el balcón del primer piso',
   ),
+  /** Este render tiene su derivado en 828 px, no en 800: sin esto la banda pedía un archivo inexistente. */
+  srcSet: `${asset('/assets/images/imagen_fachada_cerca_v0-828.webp')} 828w, ${asset('/assets/images/imagen_fachada_cerca_v0.webp')} 1312w`,
   note: renderNote,
   position: '50% 58%',
 } as const;

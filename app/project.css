@@ -918,6 +918,7 @@
 
 .project-mark-heading {
   display: block;
+  max-width: none;
   margin: 0;
   font: inherit;
   letter-spacing: normal;
@@ -957,9 +958,21 @@
 }
 
 @media (max-width: 759px) {
+  .pj-hero-title {
+    font-size: var(--fs-h1);
+  }
+
   .project-mark-address {
     margin-top: 18px;
     letter-spacing: 0.28em;
+  }
+
+  /* La dirección larga de la Home («Vidal 3849 · Saavedra, Buenos Aires») entra en una línea;
+     si no entra, se parte en dos mitades parejas y no deja una palabra suelta. */
+  .featured-mark .project-mark-address {
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-wrap: balance;
   }
 
   .project-mark-line {

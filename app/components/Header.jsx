@@ -28,14 +28,38 @@ export default function Header() {
     setNavOpen(false);
   }
 
+  // Con el menú abierto el scroll se bloquea y el contenido de fondo queda inerte: ni el foco
+  // del teclado ni un toque pueden caer detrás del overlay.
   useEffect(() => {
     document.body.classList.toggle('nav-open', navOpen);
-    return () => document.body.classList.remove('nav-open');
+    const background = document.querySelectorAll('#contenido, .site-footer, .whatsapp-float-region');
+    background.forEach((node) => {
+      node.inert = navOpen;
+    });
+    return () => {
+      document.body.classList.remove('nav-open');
+      background.forEach((node) => {
+        node.inert = false;
+      });
+    };
   }, [navOpen]);
+
+  // Si la ventana pasa a desktop con el menú abierto, se cierra: no queda el fondo bloqueado.
+  useEffect(() => {
+    const desktop = window.matchMedia('(min-width: 760px)');
+    const closeOnDesktop = (event) => {
+      if (event.matches) setNavOpen(false);
+    };
+    desktop.addEventListener('change', closeOnDesktop);
+    return () => desktop.removeEventListener('change', closeOnDesktop);
+  }, []);
 
   useEffect(() => {
     const closeOnEscape = (event) => {
-      if (event.key === 'Escape') setNavOpen(false);
+      if (event.key !== 'Escape') return;
+      setNavOpen(false);
+      // Cerrar con el teclado devuelve el foco al botón que abrió el menú.
+      if (document.activeElement?.closest('.site-nav')) document.querySelector('.nav-toggle')?.focus();
     };
     document.addEventListener('keydown', closeOnEscape);
     return () => document.removeEventListener('keydown', closeOnEscape);

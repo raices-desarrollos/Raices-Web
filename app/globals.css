@@ -75,7 +75,7 @@
   --space-stack: clamp(20px, 2.4vw, 32px);
 
   /* Escala tipográfica única (Plan §6.4) */
-  --fs-hero: clamp(40px, 5.6vw, 88px);
+  --fs-hero: clamp(46px, min(4.5vw, 7.6vh), 80px);
   --fs-display: clamp(36px, 5.2vw, 84px);
   --fs-h1: clamp(36px, 4.6vw, 72px);
   --fs-h2: clamp(32px, 3.8vw, 56px);
@@ -616,8 +616,8 @@ p + p {
 
 .nav-toggle {
   display: none;
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius-button);
   background: transparent;
@@ -975,7 +975,7 @@ p + p {
 
 .statement-section h2 {
   max-width: 16em;
-  font-size: clamp(32px, 4vw, 56px);
+  font-size: max(var(--fs-h2), min(4vw, 56px));
   line-height: 1.12;
 }
 
@@ -1683,6 +1683,10 @@ body:has(.pj-hero):not(.wa-covered) .whatsapp-float:focus-visible {
    -------------------------------------------------------------------------- */
 
 @media (max-width: 1023px) {
+  :root {
+    --fs-hero: clamp(44px, 5.8vw, 56px);
+  }
+
   .site-nav {
     gap: 16px;
   }
@@ -1747,6 +1751,13 @@ body:has(.pj-hero):not(.wa-covered) .whatsapp-float:focus-visible {
   :root {
     --header-height: 68px;
     --rise: 20px;
+    /* Escala tipográfica propia de mobile: no es la de desktop reducida. Cada nivel baja un
+       paso para que los títulos largos entren en dos o tres líneas y la jerarquía se lea. */
+    --fs-hero: clamp(29px, 8.8vw, 40px);
+    --fs-display: clamp(30px, 8.6vw, 36px);
+    --fs-h1: clamp(30px, 8.2vw, 34px);
+    --fs-h2: clamp(26px, 7vw, 30px);
+    --fs-h3: 20px;
   }
 
   .site-header {
@@ -1819,11 +1830,16 @@ body:has(.pj-hero):not(.wa-covered) .whatsapp-float:focus-visible {
     padding: 18px 0;
     border-bottom: var(--line-width) solid var(--line);
     font-family: var(--font-display);
-    font-size: 40px;
+    font-size: 34px;
     font-weight: 300;
+    line-height: 1.2;
     letter-spacing: -0.01em;
     text-transform: none;
     color: var(--text);
+  }
+
+  .site-nav a.is-active {
+    color: var(--blanco);
   }
 
   .site-nav a:not(.button)::after {
@@ -1887,12 +1903,6 @@ body:has(.pj-hero):not(.wa-covered) .whatsapp-float:focus-visible {
   .whatsapp-float {
     min-width: 52px;
     padding: 0 15px;
-  }
-}
-
-@media (max-width: 420px) {
-  :root {
-    --fs-hero: clamp(36px, 5.6vw, 88px);
   }
 }
 

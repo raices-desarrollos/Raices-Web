@@ -94,7 +94,9 @@ export default function ScrollEffects() {
 
   useEffect(() => {
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const heroPieces = Array.from(document.querySelectorAll('.cine-hero-content, .hero-card'));
+    const heroPieces = Array.from(document.querySelectorAll('.cine-hero-content, .hero-base'));
+    // El fundido de salida del hero solo existe en desktop (ver `--hero-out` en cinematic.css).
+    const heroFades = window.matchMedia('(min-width: 1024px)');
     const curtainElements = Array.from(document.querySelectorAll('.img-curtain:not(.is-visible)'));
 
     if (reduceMotion.matches) {
@@ -115,8 +117,9 @@ export default function ScrollEffects() {
       );
       document.body.classList.toggle('is-scrolled', window.scrollY > 24);
       document.body.classList.toggle('past-hero', progress > 0.62);
-      // Con el hero ya desvanecido, su contenido deja de ser enfocable (Azimute: inert < 0,08 de opacidad).
-      const hidden = !reduceMotion.matches && progress > 0.6;
+      // Con el hero ya desvanecido (desktop), su contenido deja de ser enfocable. En tablet y
+      // mobile el contenido no se desvanece: sigue visible y operable hasta salir de pantalla.
+      const hidden = !reduceMotion.matches && heroFades.matches && progress > 0.7;
       heroPieces.forEach((piece) => {
         if (piece.inert !== hidden) piece.inert = hidden;
       });
