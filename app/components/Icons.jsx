@@ -82,3 +82,24 @@ export function MailIcon({ size = 18 }) {
     </svg>
   );
 }
+
+/** Flecha diagonal de salida (enlace externo o acción directa). Trazo fino, sin depender de un glifo. */
+export function ArrowUpRightIcon({ size = 11, className }) {
+  return (
+    <svg
+      viewBox="0 0 12 12"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      width={size}
+      height={size}
+      aria-hidden="true"
+      focusable="false"
+      className={className}
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 9 9 3M4.2 3H9v4.8" />
+    </svg>
+  );
+}

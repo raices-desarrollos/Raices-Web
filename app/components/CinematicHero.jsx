@@ -3,13 +3,14 @@ import { homeContent } from '@/content/home';
 import { featuredProject } from '@/content/projects';
 import { routes } from '@/content/shared';
 import { Picture } from './Primitives';
-import HeroContactCard from './HeroContactCard';
+import HeroBase from './HeroBase';
 import RevealLines from './RevealLines';
 
 /**
- * Hero institucional a pantalla: la foto ocupa el campo, el texto la enmarca (Plan M02).
- * H1 en dos líneas explícitas (RevealLines static: sin medición, sin CLS), una sola acción
- * editorial hacia Ceibo Vidal. El contacto vive en `HeroContactCard`.
+ * Hero institucional a pantalla: el edificio arriba, el texto apoyado sobre el plano de la vereda,
+ * donde la fotografía ya se funde en Carbón (Plan M02). H1 en dos líneas explícitas (RevealLines
+ * static: sin medición, sin CLS) y una sola acción editorial hacia Ceibo Vidal. La nota del
+ * render y el contacto viven en `HeroBase`, la línea de suelo de la primera pantalla.
  * Si existe NEXT_PUBLIC_HERO_VIDEO, el video corre silencioso sobre la misma imagen.
  */
 export default function CinematicHero() {
@@ -55,11 +56,7 @@ export default function CinematicHero() {
         </div>
       </div>
 
-      <HeroContactCard />
-
-      <div className="cine-hero-foot hero-anim">
-        <span className="hero-note label">{hero.media.note}</span>
-      </div>
+      <HeroBase note={hero.media.note} />
     </section>
   );
 }
