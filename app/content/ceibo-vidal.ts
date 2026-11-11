@@ -1,6 +1,6 @@
 import { asset, partners, routes } from './shared';
 
-const renderNote = 'Material comercial. Renders de referencia.';
+const renderNote = '';
 const referenceNote = 'Imagen de referencia';
 
 /** WebP derivado de `docs/assets/ceibo-vidal`, con el mismo nombre de versión. */
@@ -70,12 +70,22 @@ const sum = {
   note: renderNote,
 } as const;
 
-const hall = {
+const hallGarden = {
   ...ceiboShot(
-    'imagen_hall_v0',
+    'imagen_hall_v1',
     1600,
     1600,
-    'Hall de acceso de Ceibo Vidal, con revestimiento de madera, sillones y jardín interior junto a la escalera',
+    'Hall de Ceibo Vidal con jardín interior, sillón y escalera al fondo',
+  ),
+  note: renderNote,
+} as const;
+
+const hallEntrance = {
+  ...ceiboShot(
+    'imagen_hall_back_v1',
+    1448,
+    1086,
+    'Hall de Ceibo Vidal visto hacia el acceso, con la columna y el patio exterior',
   ),
   note: renderNote,
 } as const;
@@ -192,6 +202,8 @@ export const ceiboVidalContent = {
       { ...facade, caption: 'Fachada sobre Vidal', note: renderNote },
       { ...terrace, caption: 'Terraza común', note: referenceNote },
       { ...sum, caption: 'SUM', note: renderNote },
+      { ...hallGarden, caption: 'Hall', note: renderNote },
+      { ...hallEntrance, caption: 'Acceso', note: renderNote },
     ],
   },
   /**
@@ -204,8 +216,9 @@ export const ceiboVidalContent = {
     { order: 1, title: 'Fachada', ...facade },
     { order: 2, title: 'SUM', ...sum },
     { order: 3, title: 'Terraza', ...terrace },
-    { order: 4, title: 'Hall', ...hall },
-    { order: 5, title: 'Balcones', ...facadeZoom },
+    { order: 4, title: 'Hall', ...hallGarden },
+    { order: 5, title: 'Acceso', ...hallEntrance },
+    { order: 6, title: 'Balcones', ...facadeZoom },
   ],
   green: {
     sectionLabel: 'Aire libre',

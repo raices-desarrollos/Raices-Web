@@ -31,7 +31,7 @@ export default function ContactForm({ defaultSubject }) {
     email: '',
     asunto: defaultSubject || contact.subjects[0],
     mensaje: '',
-    consentimiento: false,
+    consentimiento: true,
   };
   const [fields, setFields] = useState(initialFields);
   const [errors, setErrors] = useState({});

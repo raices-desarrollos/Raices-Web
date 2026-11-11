@@ -14,7 +14,7 @@ La interfaz parte de Carbón `#101210` y Caliza `#D1C7BA`. El resto de tokens se
 
 **Personalidad visual:** dark architectural luxury. Editorial, cinematográfica y sobria. Arquitectura contemporánea, atención al detalle, confianza sin lenguaje de inmobiliaria genérica.
 
-**Conceptos:** hacemos edificios donde nosotros mismos viviríamos; criterio, simplicidad y soluciones duraderas. El slogan vigente es «Espacios para habitar» (no hace falta repetirlo en cada página). **«Espacios para echar raíces» está descartado definitivamente: no reintroducirlo en UI, contenido, SEO ni documentos.** La vegetación integrada sigue en la identidad arquitectónica y no reemplaza ese mensaje.
+**Conceptos:** hacemos edificios donde nosotros mismos viviríamos; criterio, simplicidad y soluciones duraderas. El footer usa la frase de la Home, «Hacemos edificios / donde nosotros mismos viviríamos.» (`brand.slogan`). «Espacios para habitar» ya no se muestra. **«Espacios para echar raíces» está descartado definitivamente: no reintroducirlo en UI, contenido, SEO ni documentos.** La vegetación integrada sigue en la identidad arquitectónica y no reemplaza ese mensaje.
 
 **Principios**
 
@@ -280,7 +280,7 @@ Idea de composición: **el texto apoyado sobre el plano de la vereda.** El edifi
 
 ### Footer (`.site-footer`)
 
-- Logo completo en Caliza (`logo-on-dark`) a 120px de alto, slogan «Espacios para habitar» (`brand.slogan`), navegación, email, WhatsApp, dirección de Ceibo Vidal. Tres columnas iguales (4 / 4 / 4).
+- Logo completo en Caliza (`logo-on-dark`) a 120px de alto, la frase «Hacemos edificios / donde nosotros mismos viviríamos.» (`brand.slogan`), navegación, email, WhatsApp, dirección de Ceibo Vidal. El pie ya no lleva la leyenda de renders. Tres columnas iguales (4 / 4 / 4).
 - Línea legal en Montserrat 500 11px mayúscula (`0.06em`); “Volver arriba ↑”.
 
 ### Cierre (`.cta-band`)
@@ -524,4 +524,4 @@ El favicon es el isotipo de Raíces Developers, no el de Ceibo Vidal.
 
 ## Actualización: galería editorial de Ceibo Vidal en la Home
 
-`FeaturedProject` ya no es un capítulo con sticky: muestra logo, «Saavedra · Buenos Aires», la línea vigente del proyecto y «Explorar proyecto →», y debajo `ProjectCarousel` (scroll nativo con `scroll-snap`, flechas con animación de 560 ms, contador `01 / 05`, sin autoplay ni loop, instantáneo con `prefers-reduced-motion`). Las imágenes salen de `ceiboVidalContent.homeGallery` (`order`, `title`, `src`, `alt`); cada slide comparte altura (`--pc-h`) y conserva su proporción. Hoy, en este orden: `imagen_fachada_perfil_v1`, `imagen_sum_v0`, `imagen_terraza_noche_v0`, `imagen_hall_v0` e `imagen_fachada_zoom_v0`.
+`FeaturedProject` ya no es un capítulo con sticky: muestra logo, «Saavedra · Buenos Aires», la línea vigente del proyecto y «Explorar proyecto →», y debajo `ProjectCarousel` (scroll nativo con `scroll-snap`, flechas con animación de 560 ms, contador `01 / 06`, sin autoplay ni loop, instantáneo con `prefers-reduced-motion`. Con hover y movimiento permitido, la foto del slide escala a 1.15 dentro de `.pc-frame` (900 ms)). Las imágenes salen de `ceiboVidalContent.homeGallery` (`order`, `title`, `src`, `alt`); cada slide comparte altura (`--pc-h`) y conserva su proporción. Hoy, en este orden: `imagen_fachada_perfil_v1`, `imagen_sum_v0`, `imagen_terraza_noche_v0`, `imagen_hall_v1`, `imagen_hall_back_v1` e `imagen_fachada_zoom_v0`. `imagen_hall_v1` e `imagen_hall_back_v1` también están en la galería de `/proyectos/ceibo-vidal`.

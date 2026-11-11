@@ -59,7 +59,13 @@ export function PageHeader({ kicker, title, lead, children, aside, id = 'page-ti
         <div className="page-header-main">
           {kicker ? <p className="kicker hero-anim">{kicker}</p> : null}
           <RevealLines as="h1" id={id} className="title-stroke" text={title} immediate />
-          {lead ? <p className="page-lead hero-anim">{lead}</p> : null}
+          {lead
+            ? (Array.isArray(lead) ? lead : [lead]).map((paragraph) => (
+                <p className="page-lead hero-anim" key={paragraph}>
+                  {paragraph}
+                </p>
+              ))
+            : null}
           {children}
         </div>
         {aside ? <div className="page-header-aside hero-anim">{aside}</div> : null}

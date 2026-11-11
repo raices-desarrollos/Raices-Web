@@ -25,7 +25,7 @@ export const brand = {
    * Slogan vigente. No hace falta repetirlo en cada página. «Espacios para echar raíces» fue
    * DESCARTADO definitivamente: no escribirlo en ningún componente, contenido, SEO ni documento.
    */
-  slogan: 'Espacios para habitar',
+  slogan: 'Hacemos edificios\ndonde nosotros mismos viviríamos.',
   city: 'Buenos Aires',
   logos: {
     full: { src: asset('/assets/brand/raices_logo_completo.png'), width: 789, height: 856 },
@@ -86,7 +86,6 @@ export const ui = {
     sectionsLabel: 'Secciones del sitio',
     homeLink: 'Inicio',
     contactLabel: 'Contacto',
-    disclaimer: 'Renders de referencia. Las imágenes son ilustrativas y pueden variar en obra.',
     backToTop: 'Volver arriba',
   },
   labels: {

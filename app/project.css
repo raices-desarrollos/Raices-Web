@@ -91,6 +91,14 @@
   object-position: 50% 30%;
 }
 
+/* 15 % más cerca del edificio: el recorte de la cortina termina en 1, no en este encuadre. */
+.pj-hero-media.img-curtain img,
+.pj-hero-media.img-curtain.is-visible img,
+.pj-hero-media.img-curtain.is-visible:hover img {
+  transform: scale(1.15);
+  transform-origin: 50% 40%;
+}
+
 .pj-hero-veil {
   position: absolute;
   inset: 0;

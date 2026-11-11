@@ -12,7 +12,12 @@ export default function Philosophy() {
       <div className="split-grid">
         <div className="reveal">
           {philosophy.kicker ? <p className="kicker">{philosophy.kicker}</p> : null}
-          <RevealLines as="h2" id="filosofia-title" className="title-stroke" text={philosophy.title} />
+          <RevealLines
+            as="h2"
+            id="filosofia-title"
+            lines={['La confianza se gana', 'cumpliendo.']}
+            lineClassNames={['', 'title-stroke-line']}
+          />
         </div>
         <div className="text-stack reveal">
           {philosophy.paragraphs.map((paragraph) => (
