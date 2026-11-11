@@ -1,6 +1,6 @@
 import { asset, partners, routes } from './shared';
 
-const renderNote = 'Material comercial. Renders de referencia.';
+const renderNote = '';
 const referenceNote = 'Imagen de referencia';
 
 /** WebP derivado de `docs/assets/ceibo-vidal`, con el mismo nombre de versión. */
