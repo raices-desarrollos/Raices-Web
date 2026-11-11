@@ -4,7 +4,7 @@ export const contact = {
   whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '5491136994200',
   whatsappDisplay: '+54 9 11 3699-4200',
   whatsappMessage: 'Hola, quiero recibir información sobre Ceibo Vidal.',
-  email: 'contacto@raicesdesarrolladores.com.ar',
+  email: 'raicesdevelopers@gmail.com',
   /**
    * Endpoint del worker de email (`functions/contact-worker.js`).
    * Si está vacío, el formulario no finge un envío: avisa que el email no está activo.

@@ -14,7 +14,7 @@ La interfaz parte de Carbón `#101210` y Caliza `#D1C7BA`. El resto de tokens se
 
 **Personalidad visual:** dark architectural luxury. Editorial, cinematográfica y sobria. Arquitectura contemporánea, atención al detalle, confianza sin lenguaje de inmobiliaria genérica.
 
-**Conceptos:** hacemos edificios donde nosotros mismos viviríamos; criterio, simplicidad y soluciones duraderas. El slogan vigente es «Espacios para habitar» (no hace falta repetirlo en cada página). **«Espacios para echar raíces» está descartado definitivamente: no reintroducirlo en UI, contenido, SEO ni documentos.** La vegetación integrada sigue en la identidad arquitectónica y no reemplaza ese mensaje.
+**Conceptos:** hacemos edificios donde nosotros mismos viviríamos; criterio, simplicidad y soluciones duraderas. El footer usa la frase de la Home, «Hacemos edificios / donde nosotros mismos viviríamos.» (`brand.slogan`). «Espacios para habitar» ya no se muestra. **«Espacios para echar raíces» está descartado definitivamente: no reintroducirlo en UI, contenido, SEO ni documentos.** La vegetación integrada sigue en la identidad arquitectónica y no reemplaza ese mensaje.
 
 **Principios**
 
@@ -280,7 +280,7 @@ Idea de composición: **el texto apoyado sobre el plano de la vereda.** El edifi
 
 ### Footer (`.site-footer`)
 
-- Logo completo en Caliza (`logo-on-dark`) a 120px de alto, slogan «Espacios para habitar» (`brand.slogan`), navegación, email, WhatsApp, dirección de Ceibo Vidal. Tres columnas iguales (4 / 4 / 4).
+- Logo completo en Caliza (`logo-on-dark`) a 120px de alto, la frase «Hacemos edificios / donde nosotros mismos viviríamos.» (`brand.slogan`), navegación, email, WhatsApp, dirección de Ceibo Vidal. El pie ya no lleva la leyenda de renders. Tres columnas iguales (4 / 4 / 4).
 - Línea legal en Montserrat 500 11px mayúscula (`0.06em`); “Volver arriba ↑”.
 
 ### Cierre (`.cta-band`)

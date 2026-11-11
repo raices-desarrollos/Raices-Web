@@ -33,8 +33,8 @@ export const aboutContent = {
     lead: 'Tres criterios guían cada decisión, de la obra a los detalles.',
     points: [
       { label: 'Simplicidad', text: 'Valoramos la simplicidad.' },
-      { label: 'Durabilidad', text: 'Preferimos las soluciones duraderas a las modas.' },
       { label: 'Funcionalidad', text: 'Nos gustan los espacios luminosos, funcionales y fáciles de vivir.' },
+      { label: 'Durabilidad', text: 'Preferimos las soluciones duraderas a las modas.' },
     ],
   },
   promise: {

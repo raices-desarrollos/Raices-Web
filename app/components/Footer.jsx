@@ -53,7 +53,6 @@ export default function Footer() {
         <p>
           © {year} {brand.name} · {brand.city}
         </p>
-        <p>{ui.footer.disclaimer}</p>
         <a href="#contenido">
           {ui.footer.backToTop}
           <span aria-hidden="true"> ↑</span>
