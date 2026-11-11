@@ -103,17 +103,19 @@ export default function ProjectCarousel({ items }) {
             aria-roledescription="diapositiva"
             aria-label={`${carousel.slide} ${i + 1} ${carousel.of} ${items.length}`}
             style={{ '--ratio': `${item.width} / ${item.height}` }}>
-            <img
-              src={item.src}
-              srcSet={item.srcSet}
-              sizes="(max-width: 759px) 80vw, 46vw"
-              width={item.width}
-              height={item.height}
-              alt={item.alt}
-              loading="lazy"
-              decoding="async"
-              draggable="false"
-            />
+            <span className="pc-frame">
+              <img
+                src={item.src}
+                srcSet={item.srcSet}
+                sizes="(max-width: 759px) 80vw, 46vw"
+                width={item.width}
+                height={item.height}
+                alt={item.alt}
+                loading="lazy"
+                decoding="async"
+                draggable="false"
+              />
+            </span>
             <span className="pc-caption label">{item.title}</span>
           </li>
         ))}
